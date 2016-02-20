@@ -68,7 +68,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用的debug方法">
 <meta property="og:url" content="http://yoursite.com/2016/02/19/常用的debug方法/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Allen's Notes">
 <meta property="og:description" content="下面是所有的调试方法
 #1.方法断点
 主要是定义在方法上，它的作用是只关心函数的参数以及返回值
@@ -77,10 +77,10 @@
 
 2.Field WatchPoint（字段断点）    用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点    使用方法        就是在字段上下一个断点
 3.Java Exception breakpoint（异常断点">
-<meta property="og:image" content="http://yoursite.com/img/commonDebugMethod/1.png">
-<meta property="og:image" content="http://yoursite.com/img/commonDebugMethod/2.png">
-<meta property="og:image" content="http://yoursite.com/2016/02/19/常用的debug方法/img/commonDebugMethod/3.png">
-<meta property="og:updated_time" content="2016-02-20T02:41:24.331Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/3.png">
+<meta property="og:updated_time" content="2016-02-20T03:08:53.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用的debug方法">
 <meta name="twitter:description" content="下面是所有的调试方法
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -108,10 +108,10 @@
   };
 </script>
 
-  <title> 常用的debug方法 | Hexo </title>
+  <title> 常用的debug方法 | Allen's Notes </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -137,7 +137,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Hexo</span>
+      <span class="site-title">Allen's Notes</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -164,7 +164,7 @@
             
               <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
             
-            首頁
+            首页
           </a>
         </li>
       
@@ -174,7 +174,7 @@
             
               <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
             
-            歸檔
+            归档
           </a>
         </li>
       
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
             
-            標籤
+            标签
           </a>
         </li>
       
@@ -239,7 +239,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">發表於</span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2016-02-19T12:11:16+08:00" content="2016-02-19">
               2016-02-19
             </time>
@@ -266,12 +266,12 @@
       
 
       
-        <p></p><h3>下面是所有的调试方法<br><br><img src="img/commonDebugMethod/1.png" alt="Alt text"><br><img src="img/commonDebugMethod/2.png" alt="Alt text"><p></p>
+        <p></p><h3>下面是所有的调试方法<br><br><img src="/uploads/img/commonDebugMethod/1.png" alt="Alt text"><br><img src="/uploads/img/commonDebugMethod/2.png" alt="Alt text"><p></p>
 <p>#1.方法断点<br></p>
 <pre><code>主要是定义在方法上，它的作用是只关心函数的参数以及返回值
 </code></pre><p>##使用方法<br></p>
 <pre><code>就是在方法上下一个断点就可以了
-</code></pre><p><img src="2016/02/19/常用的debug方法/img/commonDebugMethod/3.png" alt="Alt text"></p>
+</code></pre><p><img src="/uploads/img/commonDebugMethod/3.png" alt="Alt text"></p>
 <p>2.Field WatchPoint（字段断点）<br>    用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点<br>    使用方法<br>        就是在字段上下一个断点</p>
 <p>3.Java Exception breakpoint（异常断点）<br>    当出现用户关心的异常时，就是在触发异常的地方挂起，也就是在发生异常的地方触发断点<br>    使用方法<br>        选择关心的异常就可以了</p>
 <p>4.日志断点<br>    在需要打印日志来查看异常的地方，直接使用断点，而不需要在代码里自己去添加打log的代码，来完成日志的打印<br>    使用方法<br>        在断点上右键进行相应的设置就可以了</p>
@@ -284,20 +284,6 @@
     <footer class="post-footer">
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/02/19/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
       
 
       
@@ -343,10 +329,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目錄
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            本站概覽
+            站点概览
           </li>
         </ul>
       
@@ -362,8 +348,8 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">文章</span>
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">日志</span>
             </a>
           </div>
           
@@ -439,11 +425,11 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  主題 -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
