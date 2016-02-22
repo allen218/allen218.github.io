@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="Allen's Notes">
 <meta property="og:description" content="背景   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
 1.开启gradle单独的守护进程&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
-<meta property="og:updated_time" content="2016-02-22T09:14:06.474Z">
+<meta property="og:updated_time" content="2016-02-22T09:16:43.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加快Gradle编译速度的6个小技巧">
 <meta name="twitter:description" content="背景   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
@@ -253,7 +253,7 @@
 
       
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。</p>
-<p><strong>1.开启gradle单独的守护进程</strong><br><br>&nbsp;&nbsp;&nbsp;&nbsp;为gradle单独开启一个进程来执行<br><br>   开启方式：(window)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;找到C:\Users\<username>.gradle目录，在此目录下创建 <b>gradle.properties</b> 文件，并在文件里添加:<br>    <pre><code>org.gradle.daemon=true</code></pre></username></p>
+<h1 id="1-开启gradle单独的守护进程"><a href="#1-开启gradle单独的守护进程" class="headerlink" title="1.开启gradle单独的守护进程"></a><strong>1.开启gradle单独的守护进程</strong><br></h1><p>&nbsp;&nbsp;&nbsp;&nbsp;为gradle单独开启一个进程来执行<br><br>   开启方式：(window)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;找到C:\Users\<username>.gradle目录，在此目录下创建 <b>gradle.properties</b> 文件，并在文件里添加:<br>    <pre><code>org.gradle.daemon=true</code></pre></username></p>
 
       
     </div>
@@ -397,7 +397,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-开启gradle单独的守护进程"><span class="nav-number">2.</span> <span class="nav-text">1.开启gradle单独的守护进程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
