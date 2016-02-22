@@ -57,22 +57,19 @@
 
 
 
-<meta name="description" content="背景  随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
-1.开启gradle单独的守护进程
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
+<meta name="description" content="背景   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
+1.开启gradle单独的守护进程&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
 <meta property="og:type" content="article">
 <meta property="og:title" content="加快Gradle编译速度的6个小技巧">
 <meta property="og:url" content="http://yoursite.com/2016/02/22/加快Gradle编译速度的6个小技巧/index.html">
 <meta property="og:site_name" content="Allen's Notes">
-<meta property="og:description" content="背景  随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
-1.开启gradle单独的守护进程
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
-<meta property="og:updated_time" content="2016-02-22T09:08:04.981Z">
+<meta property="og:description" content="背景   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
+1.开启gradle单独的守护进程&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
+<meta property="og:updated_time" content="2016-02-22T09:14:06.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加快Gradle编译速度的6个小技巧">
-<meta name="twitter:description" content="背景  随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
-1.开启gradle单独的守护进程
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
+<meta name="twitter:description" content="背景   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。
+1.开启gradle单独的守护进程&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;为gra">
 
 
 
@@ -255,13 +252,9 @@
       
 
       
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>  随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。</p>
-<p><strong>1.开启gradle单独的守护进程</strong></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;为gradle单独开启一个进程来执行</p>
-<p>开启方式：(window)</p>
-<p>找到C:\Users\<username>.gradle目录，在此目录下创建 <b>gradle.properties</b> 文件，并在文件里添加:</username></p>
-<pre><code>org.gradle.daemon=true
-</code></pre>
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。</p>
+<p><strong>1.开启gradle单独的守护进程</strong><br><br>&nbsp;&nbsp;&nbsp;&nbsp;为gradle单独开启一个进程来执行<br><br>   开启方式：(window)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;找到C:\Users\<username>.gradle目录，在此目录下创建 <b>gradle.properties</b> 文件，并在文件里添加:<br>    <pre><code>org.gradle.daemon=true</code></pre></username></p>
+
       
     </div>
 
