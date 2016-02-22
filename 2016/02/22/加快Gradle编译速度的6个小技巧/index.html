@@ -57,15 +57,16 @@
 
 
 
-<meta name="description" content="留点东西....">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Allen's Notes">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="##背景随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="加快Gradle编译速度的6个小技巧">
+<meta property="og:url" content="http://yoursite.com/2016/02/22/加快Gradle编译速度的6个小技巧/index.html">
 <meta property="og:site_name" content="Allen's Notes">
-<meta property="og:description" content="留点东西....">
+<meta property="og:description" content="##背景随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创">
+<meta property="og:updated_time" content="2016-02-22T08:57:56.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Allen's Notes">
-<meta name="twitter:description" content="留点东西....">
+<meta name="twitter:title" content="加快Gradle编译速度的6个小技巧">
+<meta name="twitter:description" content="##背景随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创">
 
 
 
@@ -83,7 +84,7 @@
   };
 </script>
 
-  <title> Allen's Notes - 留点东西.... </title>
+  <title> 加快Gradle编译速度的6个小技巧 | Allen's Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -102,9 +103,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -183,15 +182,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-
-    
-      
 
   
   
@@ -211,10 +204,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/02/22/加快Gradle编译速度的6个小技巧/" itemprop="url">
-                  加快Gradle编译速度的6个小技巧
-                </a>
+                加快Gradle编译速度的6个小技巧
               
             
           </h1>
@@ -259,12 +249,8 @@
       
 
       
-        
-          
-            <p>##背景<br>随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创</p>
+        <p>##背景<br>随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创</p>
 
-          
-        
       
     </div>
 
@@ -272,113 +258,32 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/02/19/Android常用的debug方法/" rel="next" title="Android常用的debug方法">
+                <i class="fa fa-chevron-left"></i> Android常用的debug方法
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/02/19/Android常用的debug方法/" itemprop="url">
-                  Android常用的debug方法
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-19T12:11:16+08:00" content="2016-02-19">
-              2016-02-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/02/19/Android常用的debug方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/Android常用的debug方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><img src="/uploads/img/girl/a1.jpg" alt="girl"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/19/Android常用的debug方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
 
-  </section>
-
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -386,6 +291,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/02/22/加快Gradle编译速度的6个小技巧/"
+           data-title="加快Gradle编译速度的6个小技巧" data-url="http://yoursite.com/2016/02/22/加快Gradle编译速度的6个小技巧/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -405,8 +318,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/img/a21.jpg"
@@ -461,6 +383,23 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -535,6 +474,167 @@
   
 
   
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   
 
