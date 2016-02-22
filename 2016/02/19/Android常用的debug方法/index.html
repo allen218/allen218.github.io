@@ -73,7 +73,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/7.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/8.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/commonDebugMethod/9.png">
-<meta property="og:updated_time" content="2016-02-22T08:49:25.107Z">
+<meta property="og:updated_time" content="2016-02-22T09:22:20.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android常用的debug方法">
 <meta name="twitter:description">
@@ -261,26 +261,26 @@
       
         <p><img src="/uploads/img/girl/a1.jpg" alt="girl"><br><a id="more"></a></p>
 <p></p><h3>下面是所有的调试方法<br><br><img src="/uploads/img/commonDebugMethod/1.png" alt="Alt text"><br><img src="/uploads/img/commonDebugMethod/2.png" alt="Alt text"><p></p>
-<h1 id="1-方法断点"><a href="#1-方法断点" class="headerlink" title="##1.方法断点"></a>##<h2><strong>1.方法断点</strong><br></h2></h1><pre><code>主要是定义在方法上，它的作用是只关心函数的参数以及返回值
+<h1 id="1-方法断点"><a href="#1-方法断点" class="headerlink" title="1.方法断点"></a><strong>1.方法断点</strong><br></h1><pre><code>主要是定义在方法上，它的作用是只关心函数的参数以及返回值
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <pre><code>就是在方法上下一个断点就可以了
 </code></pre><p><img src="/uploads/img/commonDebugMethod/3.png" alt="Alt text"></p>
-<h1 id="2-Field-WatchPoint（字段断点）"><a href="#2-Field-WatchPoint（字段断点）" class="headerlink" title="##2.Field WatchPoint（字段断点）"></a>##<h2><strong>2.Field WatchPoint（字段断点）</strong></h2></h1><pre><code>用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点
+<h1 id="2-Field-WatchPoint（字段断点）"><a href="#2-Field-WatchPoint（字段断点）" class="headerlink" title="2.Field WatchPoint（字段断点）"></a><strong>2.Field WatchPoint（字段断点）</strong></h1><pre><code>用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <pre><code>就是在字段上下一个断点
 </code></pre><p><img src="/uploads/img/commonDebugMethod/4.png" alt="alt"></p>
-<h1 id="h2-gt-3-Java-Exception-breakpoint（异常断点）"><a href="#h2-gt-3-Java-Exception-breakpoint（异常断点）" class="headerlink" title="##h2&gt;3.Java Exception breakpoint（异常断点）"></a>##h2&gt;<strong>3.Java Exception breakpoint（异常断点）</strong></h1><pre><code>当出现用户关心的异常时，就是在触发异常的地方挂起，也就是在发生异常的地方触发断点
+<h1 id="3-Java-Exception-breakpoint（异常断点）"><a href="#3-Java-Exception-breakpoint（异常断点）" class="headerlink" title="3.Java Exception breakpoint（异常断点）"></a><strong>3.Java Exception breakpoint（异常断点）</strong></h1><pre><code>当出现用户关心的异常时，就是在触发异常的地方挂起，也就是在发生异常的地方触发断点
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <pre><code>选择关心的异常就可以了
 </code></pre><p>   <img src="/uploads/img/commonDebugMethod/5.png" alt="alt"><br>   <img src="/uploads/img/commonDebugMethod/6.png" alt="alt">    </p>
-<h1 id="4-日志断点"><a href="#4-日志断点" class="headerlink" title="4.日志断点"></a><h2><strong>4.日志断点</strong></h2></h1><pre><code>在需要打印日志来查看异常的地方，直接使用断点，而不需要在代码里自己去添加打log的代码，来完成日志的打印
+<h1 id="4-日志断点"><a href="#4-日志断点" class="headerlink" title="4.日志断点"></a><strong>4.日志断点</strong></h1><pre><code>在需要打印日志来查看异常的地方，直接使用断点，而不需要在代码里自己去添加打log的代码，来完成日志的打印
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <pre><code>在断点上右键进行相应的设置就可以了
 </code></pre><p><img src="/uploads/img/commonDebugMethod/7.png" alt="alt"></p>
-<h1 id="5-条件断点"><a href="#5-条件断点" class="headerlink" title="5.条件断点"></a><h2><strong>5.条件断点</strong></h2></h1><pre><code>设置一个条件，当条件满足时，触发此断点，一般用于遍历数据和集合时来设置关心的条件
+<h1 id="5-条件断点"><a href="#5-条件断点" class="headerlink" title="5.条件断点"></a><strong>5.条件断点</strong></h1><pre><code>设置一个条件，当条件满足时，触发此断点，一般用于遍历数据和集合时来设置关心的条件
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <p>  <img src="/uploads/img/commonDebugMethod/8.png" alt="alt">      </p>
-<h1 id="6-Evaluate-Exception（求值）"><a href="#6-Evaluate-Exception（求值）" class="headerlink" title="6.Evaluate Exception（求值）"></a><h2><strong>6.Evaluate Exception（求值）</strong></h2></h1><pre><code>主要是查看相应对象的相应值以及可以动态输入一些代码来得到相应的值
+<h1 id="6-Evaluate-Exception（求值）"><a href="#6-Evaluate-Exception（求值）" class="headerlink" title="6.Evaluate Exception（求值）"></a><strong>6.Evaluate Exception（求值）</strong></h1><pre><code>主要是查看相应对象的相应值以及可以动态输入一些代码来得到相应的值
 </code></pre><p>&nbsp;&nbsp;&nbsp;使用方法</p>
 <pre><code>在断点已经被挂起时，在相应的Object上使用alt+f8来进入查看界面
 </code></pre><p><img src="/uploads/img/commonDebugMethod/9.png" alt="alt"></p>
@@ -428,15 +428,15 @@
             
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">下面是所有的调试方法
-##1.方法断点主要是定义在方法上，它的作用是只关心函数的参数以及返回值
+1.方法断点主要是定义在方法上，它的作用是只关心函数的参数以及返回值
    使用方法
 就是在方法上下一个断点就可以了
 
-##2.Field WatchPoint（字段断点）用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点
+2.Field WatchPoint（字段断点）用在字段上，也就是变量上，它的作用是当被下断点的字段被访问或者修改时，触发此断点
    使用方法
 就是在字段上下一个断点
 
-##h2>3.Java Exception breakpoint（异常断点）当出现用户关心的异常时，就是在触发异常的地方挂起，也就是在发生异常的地方触发断点
+3.Java Exception breakpoint（异常断点）当出现用户关心的异常时，就是在触发异常的地方挂起，也就是在发生异常的地方触发断点
    使用方法
 选择关心的异常就可以了
           
@@ -451,7 +451,7 @@
    使用方法
 在断点已经被挂起时，在相应的Object上使用alt+f8来进入查看界面
 
-</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-方法断点"><span class="nav-number"></span> <span class="nav-text">##1.方法断点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">1.方法断点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Field-WatchPoint（字段断点）"><span class="nav-number"></span> <span class="nav-text">##2.Field WatchPoint（字段断点）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">2.Field WatchPoint（字段断点）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#h2-gt-3-Java-Exception-breakpoint（异常断点）"><span class="nav-number"></span> <span class="nav-text">##h2>3.Java Exception breakpoint（异常断点）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-日志断点"><span class="nav-number"></span> <span class="nav-text">4.日志断点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">4.日志断点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-条件断点"><span class="nav-number"></span> <span class="nav-text">5.条件断点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">5.条件断点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Evaluate-Exception（求值）"><span class="nav-number"></span> <span class="nav-text">6.Evaluate Exception（求值）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">6.Evaluate Exception（求值）</span></a></div>
+</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-方法断点"><span class="nav-number"></span> <span class="nav-text">1.方法断点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Field-WatchPoint（字段断点）"><span class="nav-number"></span> <span class="nav-text">2.Field WatchPoint（字段断点）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Java-Exception-breakpoint（异常断点）"><span class="nav-number"></span> <span class="nav-text">3.Java Exception breakpoint（异常断点）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-日志断点"><span class="nav-number"></span> <span class="nav-text">4.日志断点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-条件断点"><span class="nav-number"></span> <span class="nav-text">5.条件断点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Evaluate-Exception（求值）"><span class="nav-number"></span> <span class="nav-text">6.Evaluate Exception（求值）</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
