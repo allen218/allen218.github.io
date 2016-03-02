@@ -189,6 +189,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
 
     
       
@@ -212,8 +221,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/02/22/加快Gradle编译速度的6个小技巧/" itemprop="url">
-                  加快Gradle编译速度的6个小技巧
+                <a class="post-title-link" href="/2016/03/02/Android实现全局弹窗的三种方式/" itemprop="url">
+                  Android实现全局弹窗的三种方式
                 </a>
               
             
@@ -226,8 +235,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-22T16:51:11+08:00" content="2016-02-22">
-              2016-02-22
+            <time itemprop="dateCreated" datetime="2016-03-02T21:37:10+08:00" content="2016-03-02">
+              2016-03-02
             </time>
           </span>
 
@@ -237,8 +246,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/22/加快Gradle编译速度的6个小技巧/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/22/加快Gradle编译速度的6个小技巧/" itemprop="commentsCount"></span>
+                <a href="/2016/03/02/Android实现全局弹窗的三种方式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/Android实现全局弹窗的三种方式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -260,101 +269,18 @@
 
       
         
-          
-            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>   随着项目导入的不断扩大,使用Android studio的gradle编译的时间越来越久，笔者写这篇博客时，Android Studio版本是1.5.1(2.0还beta版，笔者没有升级)，于是在各大blog跑了一下，整理了一下比较全面的gradle优化方法.所有方法均来自各大blog，并非原创。</p>
-<h1 id="1-开启gradle单独的守护进程"><a href="#1-开启gradle单独的守护进程" class="headerlink" title="1.开启gradle单独的守护进程"></a><strong>1.开启gradle单独的守护进程</strong><br></h1><p>&nbsp;&nbsp;&nbsp;&nbsp;为gradle单独开启一个进程来执行<br><br>   开启方式：(window)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;找到C:\Users\<username>.gradle目录，在此目录下创建 <b>gradle.properties</b> 文件，并在文件里添加:<br>    <pre><code>org.gradle.daemon=true</code></pre></username></p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/19/Android常用的debug方法/" itemprop="url">
-                  Android常用的debug方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-19T12:11:16+08:00" content="2016-02-19">
-              2016-02-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/02/19/Android常用的debug方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/Android常用的debug方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/girl/a1.jpg" alt="girl"><br>
+          <h1 id="前期需求"><a href="#前期需求" class="headerlink" title="前期需求"></a><strong>前期需求</strong></h1><pre><code>我们公司最近需要开发一个功能，大致要求是：通过复制一个分享出去的文字(这段文字有一定的规则，比如满足某种格式
+#文字#....url....)当用户复制了这段文字，打开了我们的app，就会对文字进行检查，满足条件，就提取相应的条件去
+服务器请求，当数据请求下来后，就会通过弹窗的形式提示用户，并提供直达相应页面的跳转。需求大概就是这样了。
+</code></pre><p><strong>1.弹窗的创建</strong></p>
+<blockquote>
+<p>要创建弹窗，首先想到是的通过哪几种方式来创建，我想到了三种可以创建弹窗的方式:</p>
+<blockquote>
+<p>1.通过PopWindow来实现<br>2.通过WindowManager的addview的方式来创建<br>3.使用dialog样式的Activity来实现</p>
+</blockquote>
+<p>以上三种方式都是可以的。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/19/Android常用的debug方法/#more" rel="contents">
+            <a class="btn" href="/2016/03/02/Android实现全局弹窗的三种方式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
