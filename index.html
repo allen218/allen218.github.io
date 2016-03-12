@@ -214,6 +214,123 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="url">
+                  RecyclerView每个Item展示倒计时
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
+              2016-03-12
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
+<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
+</blockquote>
+<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
+<p><strong>这里有几个问题需要解决?</strong>  </p>
+<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
+<blockquote>
+<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
+</blockquote>
+<p>2.以什么方式来进行item时间的更新？  </p>
+<blockquote>
+<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
+</blockquote>
+<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
+<blockquote>
+<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
+</blockquote>
+<p>4.性能优化问题？</p>
+<blockquote>
+<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/12/RecyclerView每个Item展示倒计时/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/02/Android实现全局弹窗的三种方式/" itemprop="url">
                   Android实现全局弹窗的三种方式
                 </a>
@@ -266,8 +383,7 @@
           <h1 id="前期需求"><a href="#前期需求" class="headerlink" title="前期需求"></a><strong>前期需求</strong></h1><blockquote>
 <p>我们公司最近需要开发一个功能，大致要求是：通过复制一个分享出去的文字(这段文字有一定的规则，比如满足某种格式#文字#….url….)当用户复制了这段文字，打开了我们的app，就会对文字进行检查，满足条件，<br>就提取相应的条件去服务器请求，当数据请求下来后，就会通过弹窗的形式提示用户，并提供直达相应页面的跳转。需求大概就是这样了。</p>
 </blockquote>
-<p><strong>1.弹窗的创建</strong></p>
-<blockquote>
+<h1 id="1-弹窗的创建"><a href="#1-弹窗的创建" class="headerlink" title="1.弹窗的创建"></a><strong>1.弹窗的创建</strong></h1><blockquote>
 <p>要创建弹窗，首先想到是的通过哪几种方式来创建，我想到了三种可以创建弹窗的方式:</p>
 <blockquote>
 <p>1.通过PopWindow来实现<br>2.通过WindowManager的addview的方式来创建<br>3.使用dialog样式的Activity来实现</p>
@@ -440,7 +556,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
