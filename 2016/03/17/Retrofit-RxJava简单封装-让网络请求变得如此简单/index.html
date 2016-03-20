@@ -57,15 +57,19 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Allen'Notes">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="前提
+我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit+RxJava简单封装-让网络请求变得如此简单">
+<meta property="og:url" content="http://yoursite.com/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
+<meta property="og:description" content="前提
+我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
+<meta property="og:updated_time" content="2016-03-20T08:38:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Allen'Notes">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Retrofit+RxJava简单封装-让网络请求变得如此简单">
+<meta name="twitter:description" content="前提
+我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
 
 
 
@@ -83,7 +87,7 @@
   };
 </script>
 
-  <title> Allen'Notes </title>
+  <title> Retrofit+RxJava简单封装-让网络请求变得如此简单 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -102,9 +106,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -185,15 +187,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-
-    
-      
 
   
   
@@ -213,10 +209,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" itemprop="url">
-                  Retrofit+RxJava简单封装-让网络请求变得如此简单
-                </a>
+                Retrofit+RxJava简单封装-让网络请求变得如此简单
               
             
           </h1>
@@ -262,9 +255,7 @@
       
 
       
-        
-          
-            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
+        <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
 <p>我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响应式的编程，更符合现实生活的定义。然后呢，Retrofit出来也很久了，很早就听说过这个库非常好用，只是之前一直停留在1.9，没有出2.0的正式版，又一直没用，刚好今年年初，2.0出来了，呵呵，终于有机会来玩玩了。。.</p>
 </blockquote>
 <h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a><strong>目的</strong></h1><blockquote>
@@ -467,12 +458,12 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
 </code></pre><p>这个简单的RxBus已经被我用来处理上面全局跳转<code>用户中心</code>了。当然在全局使用，Rxbus的注册需要写在<code>Application</code>里的.</p>
 <p>好了，今天的网络封装就写到这里的。</p>
 
-          
-        
       
     </div>
 
     <div>
+      
+        
       
     </div>
 
@@ -480,341 +471,32 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/03/12/RecyclerView每个Item展示倒计时/" rel="next" title="RecyclerView每个Item展示倒计时">
+                <i class="fa fa-chevron-left"></i> RecyclerView每个Item展示倒计时
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="url">
-                  RecyclerView每个Item展示倒计时
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
-              2016-03-12
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
-</blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
-<blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
-</blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/12/RecyclerView每个Item展示倒计时/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/02/Android实现全局弹窗的三种方式/" itemprop="url">
-                  Android实现全局弹窗的三种方式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-02T21:37:10+08:00" content="2016-03-02">
-              2016-03-02
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/02/Android实现全局弹窗的三种方式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/Android实现全局弹窗的三种方式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="前期需求"><a href="#前期需求" class="headerlink" title="前期需求"></a><strong>前期需求</strong></h1><blockquote>
-<p>我们公司最近需要开发一个功能，大致要求是：通过复制一个分享出去的文字(这段文字有一定的规则，比如满足某种格式#文字#….url….)当用户复制了这段文字，打开了我们的app，就会对文字进行检查，满足条件，<br>就提取相应的条件去服务器请求，当数据请求下来后，就会通过弹窗的形式提示用户，并提供直达相应页面的跳转。需求大概就是这样了。</p>
-</blockquote>
-<h1 id="1-弹窗的创建"><a href="#1-弹窗的创建" class="headerlink" title="1.弹窗的创建"></a><strong>1.弹窗的创建</strong></h1><blockquote>
-<p>要创建弹窗，首先想到是的通过哪几种方式来创建，我想到了三种可以创建弹窗的方式:</p>
-<blockquote>
-<p>1.通过PopWindow来实现<br>2.通过WindowManager的addview的方式来创建<br>3.使用dialog样式的Activity来实现</p>
-</blockquote>
-<p>以上三种方式都是可以的。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/02/Android实现全局弹窗的三种方式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/19/Android常用的debug方法/" itemprop="url">
-                  Android常用的debug方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-19T12:11:16+08:00" content="2016-02-19">
-              2016-02-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/02/19/Android常用的debug方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/Android常用的debug方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/girl/a1.jpg" alt="girl"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/19/Android常用的debug方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -822,6 +504,14 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/"
+           data-title="Retrofit+RxJava简单封装-让网络请求变得如此简单" data-url="http://yoursite.com/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -841,8 +531,17 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/img/a21.jpg"
@@ -897,6 +596,23 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目的"><span class="nav-text">目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件构成"><span class="nav-text">文件构成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-RequestService处理"><span class="nav-text">1.RequestService处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-RequestBuilder处理"><span class="nav-text">2.RequestBuilder处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-RequestApi处理"><span class="nav-text">3.RequestApi处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-ErrorHandle错误处理"><span class="nav-text">4.ErrorHandle错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-可能出现问题处理"><span class="nav-text">5.可能出现问题处理</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -971,6 +687,167 @@ public &lt;T extends Object&gt; Observable&lt;T&gt; toObservable(final Class&lt;
   
 
   
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   
 
