@@ -1,0 +1,785 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="1.ActivityActivity在Android中负责ui处理,所有的页面都需要它来进行展示。当然fragment也可以用来展示数据，但是它必须要依附于Activity。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发进阶第一章—Android的构成基石读书笔记">
+<meta property="og:url" content="http://yoursite.com/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/index.html">
+<meta property="og:site_name" content="Allen'Notes">
+<meta property="og:description" content="1.ActivityActivity在Android中负责ui处理,所有的页面都需要它来进行展示。当然fragment也可以用来展示数据，但是它必须要依附于Activity。">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/3.png">
+<meta property="og:updated_time" content="2016-03-27T16:17:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发进阶第一章—Android的构成基石读书笔记">
+<meta name="twitter:description" content="1.ActivityActivity在Android中负责ui处理,所有的页面都需要它来进行展示。当然fragment也可以用来展示数据，但是它必须要依附于Activity。">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android开发进阶第一章—Android的构成基石读书笔记 | Allen'Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Allen'Notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android开发进阶第一章—Android的构成基石读书笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-27T13:48:14+08:00" content="2016-03-27">
+              2016-03-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Activity"><a href="#1-Activity" class="headerlink" title="1.Activity"></a>1.Activity</h1><p><code>Activity</code>在<code>Android</code>中负责<code>ui</code>处理,所有的页面都需要它来进行展示。当然<code>fragment</code>也可以用来展示数据，但是它必须要依附于<code>Activity</code>。<br><a id="more"></a></p>
+<h2 id="1-1Activity的构成"><a href="#1-1Activity的构成" class="headerlink" title="1.1Activity的构成"></a><strong>1.1Activity的构成</strong></h2><p><code>Activity</code>的构成从外到内由<code>Activity</code> -&gt; <code>PhoneWindow</code> -&gt; <code>DecorView</code> -&gt; <code>DefaultLayout</code>(这里指的是布局最外层的<code>FrameLayout</code>) -&gt; <code>Content title Layout</code>/<code>mContentParent</code> -&gt; /<code>Content Layout</code>(这一部分就是我们通过setContentView来进行设置的部分,添加到<code>mContentParent</code>)。<br><img width="400" height="800" src="/uploads/img/AndroidAdvanceDevelop/1/1.png"><br>从上图可以看出，我们的<code>Activity</code>在不使用<code>setContentView</code>方法来填充布局时，其实已经有了默认的布局。当我们创建一个<code>Activity</code>时，不进行setContentView设置时，打开该<code>Activity</code>能正常显示，只是显示的是空白页面而已。</p>
+<h2 id="1-2Activity启动模式"><a href="#1-2Activity启动模式" class="headerlink" title="1.2Activity启动模式"></a><strong>1.2Activity启动模式</strong></h2><p><code>Activity</code>的启动模式主要分为<code>standard</code>、<code>SingTop</code>、<code>SingTask</code>、<code>SingInstance</code>四种启动模式。<br><code>standard模式</code>:也就是<code>Activity</code>默认的启动模式，每打开一个<code>Activity</code>就在任务栈里创建一个实例。<br><code>SingTop模式</code>:栈顶模式,如果当前启动的<code>Activity</code>已经在栈顶了，就不会重新去创建该实例，反之，就会去创建。<br><code>SingTask</code>:单任务模式，这个是说在同一个任务栈里同一个<code>Activity</code>只会存在一个实例，如果任务栈里已经存在该实例，那么就会把该实例之上的实例全部出栈，让该实例回到栈顶。但是在不同的任务栈可以同时出现。它的范围是在同一任务栈。<br><code>SingInstance</code>：单实例模式,属于<code>SingInstance</code>模式的<code>Activity</code>在被启动的时候，会单独开一个任务栈来存放该实例。也就是说整个操作系统只会存在这么一份该<code>Activity</code>的实例，它的范围是整个系统。</p>
+<h2 id="1-3关于newIntent什么时候被调用的问题"><a href="#1-3关于newIntent什么时候被调用的问题" class="headerlink" title="1.3关于newIntent什么时候被调用的问题"></a><strong>1.3关于newIntent什么时候被调用的问题</strong></h2><p>之前在一家公司面试的时候，面试官就问了这个问题，而我没答上来，今天刚好可以来说说我们的newIntent什么时候会被调用。上面讲了<code>Activity</code>的启动模式，而这个<code>newIntent()</code>方法又是和启动模式密不可分的。主要是这样子的。如果在启动<code>Activity</code>时，不会调用<code>oncreate</code>方法时，就是调用我们的<code>newIntent</code>方法，因为要传递<code>Intent</code>信息嘛。</p>
+<h1 id="2-Service和AIDL-Android-接口定义语言"><a href="#2-Service和AIDL-Android-接口定义语言" class="headerlink" title="2.Service和AIDL(Android 接口定义语言)"></a>2.Service和AIDL(Android 接口定义语言)</h1><p><code>service</code>主要是处理非UI界面的业务处理，也就是程序在后台处理的解决方案。它的生命周期比较简单,只有三个方法:<code>onCreate</code>(主要是在服务启动的时候调用,同一服务多次启动只会被调用一次),<code>onStartCommand</code>(服务每次启动都会被调用一次),<code>onDestory</code>(服务被销毁的时候被调用)。要使用服务必须要在<code>Androidmanifest</code>配置文件里进行注册，然后通过<code>Context.startService</code>方法来开启服务。当然也可以通过<code>bindService</code>来启动服务。</p>
+<h2 id="2-1-service的运行线程"><a href="#2-1-service的运行线程" class="headerlink" title="2.1 service的运行线程"></a>2.1 service的运行线程</h2><p><code>service</code>默认是运行在<code>ui</code>线程的,所以在<code>service</code>里不能处理耗时的操作，不然会阻塞<code>ui</code>线程，造成<code>ui</code>线程卡顿。如果有耗时的操作需要开子线程来处理。当然，我们可以在<code>Androidmanifest</code>文件注册的时候指定<code>service</code>运行在单独的线程。</p>
+<h2 id="2-2-service线程优先级"><a href="#2-2-service线程优先级" class="headerlink" title="2.2 service线程优先级"></a>2.2 service线程优先级</h2><blockquote>
+<p>这里有个问题就是：我们的四大组件都是运行在主进程里的，那么，很多地方都是说Android进程优先级，那同一进程，何来优先级，所以我把这壮大理解为线程，四大组件运行在默认运行在同一进程的不同线程里，这样理解不知道有没有问题，未验证。  </p>
+</blockquote>
+<p>Android中线程优先级为(1-5)：<br><strong>1.前台线程(foreground process)</strong><br>这里主要有:  </p>
+<blockquote>
+<p>1.当前用户操作的<code>Activity</code>所在线程<br>2.和我们<code>Activity</code>通过<code>bindService</code>进行绑定的<code>Service</code>所在线程<br>3.调用了<code>startForeground</code>的<code>Service</code>所在线程  </p>
+</blockquote>
+<p><strong>2.可见线程(Visible process)</strong><br>这里主要有：  </p>
+<blockquote>
+<p>1.调用了onPause()，但没有执行<code>onStop</code>处于暂停状态的<code>Activity</code><br>2.绑定到处于暂停状态的<code>Activity</code>的<code>Service</code></p>
+</blockquote>
+<p><strong>3.服务线程(service process)</strong>  </p>
+<blockquote>
+<p>这就是我们<code>Service</code>默认的优先级。  </p>
+</blockquote>
+<p><strong>4.后台线程(Background process)</strong><br>这里主要有：  </p>
+<blockquote>
+<p>1.处理停止状态的<code>Activity</code>，也就是调用了<code>onStop</code>方法的<code>Activity</code>  </p>
+</blockquote>
+<p><strong>5.空线程(Empty process)</strong>  </p>
+<hr>
+<p>服务的默认优先级为3，也就是说当系统资源不够用的时候会优先<code>kill</code>掉我们的<code>Service</code>，当系统资源充足的情况下我们的<code>service</code>又会自动运行进来。我们可以通过<code>startForeground</code>来提升我们<code>Service</code>的优先级。</p>
+<h2 id="2-3提升Service优先级示例"><a href="#2-3提升Service优先级示例" class="headerlink" title="2.3提升Service优先级示例"></a>2.3提升<code>Service</code>优先级示例</h2><p>通过<code>startForeground</code>来调用<code>service</code>时会在我们通知栏出现一个<code>service</code>的界面。我们通过仿墨迹天气来简单实现一下通知栏提示的例子。</p>
+<pre><code>/**
+ * Created by allen on 16/3/27.
+ */
+public class WeatherService extends Service {
+private static final int NOTIFY_ID = 222;
+
+@Nullable
+@Override
+public IBinder onBind(Intent intent) {
+    return null;
+}
+
+@Override
+public void onCreate() {
+    super.onCreate();
+    showNotifycation();
+}
+
+private void showNotifycation() {
+    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+            .setSmallIcon(R.drawable.a1)
+            .setContentTitle(getString(R.string.weather_title))
+            .setContentText(&quot;今天中转阵雨&quot;);
+
+    //创建通知被点击是触发的Intent
+    Intent resultIntent = new Intent(this, MainActivity.class);
+
+    //创建任务栈Builder
+    TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+    taskStackBuilder.addParentStack(MainActivity.class);
+    taskStackBuilder.addNextIntent(resultIntent);
+
+    //获取延时任务并设置到通知栏
+    PendingIntent resultPendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+    mBuilder.setContentIntent(resultPendingIntent);
+
+    //创建通知栏管理器并发送通知
+    NotificationManager nManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+    //构建通知
+    Notification mNotification = mBuilder.build();
+    nManager.notify(NOTIFY_ID, mNotification);
+    startForeground(NOTIFY_ID, mNotification);
+
+
+}
+</code></pre><p>上面代码运行的样子<br><img width="360" height="640" src="/uploads/img/AndroidAdvanceDevelop/1/2.png"><br>点击之后会跳转到我们设置的<code>MainActivity</code>。</p>
+<h2 id="2-4-AIDL-Android-接口定义语言"><a href="#2-4-AIDL-Android-接口定义语言" class="headerlink" title="2.4 AIDL(Android 接口定义语言)"></a>2.4 AIDL(Android 接口定义语言)</h2><p><code>AIDL</code>解决的问题就是在不同的进程之间让应用程序通信，也就是在不同的应用程序之前进行通信。<code>AIDL</code>主要是一个进程间通信的接口定义规范。<br>编译器根据<code>AIDL</code>文件生成一个系列对应的Java类，通过预先定义的接口和Binder来完成进程中的通信，也就是说最终进程间通信实际是通过底层<code>Binder</code>来完成的。<br><strong>AIDL运行原理</strong><br>说白了，<code>AIDL</code>定义一个接口，客户端(也就是调用端)通过<code>bindService</code>来与远程服务端建立一个连接，远程服务端返回一个<code>IBinder</code>对象，该对象其实是服务端<code>Binder</code>的一个代理<code>BinderProxy</code>，客户端拿到这个代理之后,通过<code>asInterface</code>将服务端的<code>BinderProxy</code>对象包装成本地的<code>Proxy</code>，并将远程服务端的<code>BinderProxy</code>对象赋值给了<code>Proxy</code>对象的<code>mRemote</code>字段，客户端就是通过这个<code>mRemote</code>执行远程函数调用的。</p>
+<h2 id="2-5关于AIDL现实生活中的例子说明"><a href="#2-5关于AIDL现实生活中的例子说明" class="headerlink" title="2.5关于AIDL现实生活中的例子说明"></a>2.5关于AIDL现实生活中的例子说明</h2><p>打个比方，两家公司正在进行一个合作磋商，这次合作已经签署了合同，只是还有些细枝末节的问题还在沟通。大BOSS当然比较忙，这些小事就安排一个手下来处理沟通。由于两家公司比较远，双方代表通过电话来进行沟通。BOSS-A对A职员说，这次支付的酬劳不能低于10W.于是A职员就打电话跟B职员进行电话说明，职员B就去请示BOSS-B，BOSS-B确认后就由职员B回复职员A，最后由职员A将BOSS-B的回复反馈给了BOSS-A.<br>这里BOSS-A和BOSS-B两者分别代表<code>Binder</code>通信客户端和服务器;职员A和职员B分别代表<code>BinderProxy</code>和<code>Proxy</code>;而电话通信方式就代表了我们的<code>Binder</code>。</p>
+<h1 id="3-BroadCast-广播"><a href="#3-BroadCast-广播" class="headerlink" title="3.BroadCast(广播)"></a>3.BroadCast(广播)</h1><p><code>BroadCast</code>在<code>Android</code>中是进行跨进程通信的主要手段，它的实现其实就是一个订阅模式–也就是我们通常所说的观察者模式。它可以在应用程序内部甚至可以在应用程序之间来进行通信。<code>BroadCast</code>最大的特点就是广播的发送者不必知道接收方是否接收数据，以及接收方怎么处理数据，通过这种形式将发送者和接收者完全的解耦，它们之间通过<code>intent</code>来进行数据的传递。</p>
+<h2 id="3-1-BroadCast分类"><a href="#3-1-BroadCast分类" class="headerlink" title="3.1 BroadCast分类"></a>3.1 BroadCast分类</h2><p><strong>3.1.1普通广播</strong><br>普通广播是完全异步的，通过<code>sendBroadCast</code>来发送广播，消息传递效率比较高。因为是异步的关系，那接收者的接收顺序也是不确定的。缺点：接收者并不能处理广播或者将广播继续传递，并且无法终止广播，直到广播接收者全部接收到广播后，广播才会停止。</p>
+<p><strong>3.1.2有序广播</strong><br>有序广播通过<code>sendOrderBroadCast</code>来发送广播。广播接收者可以设定接收广播的优先级，优先级越高，就越是先接收到广播;每个广播接收者都可以对接收到的广播进行修改，通过<code>setResult()</code>方法来将广播传递给下一个接收者，同时通过<code>getResult</code>来接收上一个广播接收者传递过来的数据，或者直接中断广播的传递。</p>
+<p><strong>3.1.3本地广播</strong><br>在<code>sdk21</code>的v4包中新增了本地广播，也就是<code>LocalBroadCastManager</code>.之前的广播都是整个系统级别的，所有的应用程序都可以接收到广播，这样子会存在一些安全隐患。所以就有了本地广播。本地广播主要是将广播的传播范围从全局的缩小到单个应用级别内。它与普通广播的用法基本相同，只是在调用相应方法的时候，使用<code>LocalBroadcastManager.getInstance(Context context)</code>来调用相应的方法即可。没有特别需求的应用，都应该用本地广播来代替普通广播。</p>
+<p><strong>3.1.4 sticky广播</strong><br><code>sticky</code>广播通过<code>sendStickyBroadCast</code>来发送广播，用此函数发送的广播会一直滞留在内存中，当有匹配的广播接收者注册时，该广播接收者就会接收到此广播。使用此广播时要添加一个权限：<br><code>&lt;uses-permission android:name=&quot;android.permission.BROADCAST_STICKY&quot;/&gt;</code><br>此广播只保留最后一条广播，并且一直保留下去，需要调用removeStickyBroadCast来移除该广播。</p>
+<h1 id="4-ContentProvider-处共享数据"><a href="#4-ContentProvider-处共享数据" class="headerlink" title="4.ContentProvider(处共享数据)"></a>4.ContentProvider(处共享数据)</h1><p><code>ContentProvider</code>主要是用来不同应用程序间进行数据库访问的一种技术。一般情况下用得非常少，我们一般只会以消费者的角色去系统程序里获取一些比如联系人,短信相关的数据。在使用<code>ContentProvider</code>时，我们通过Uri来对要访问的资源进行定位。</p>
+<h2 id="4-1-Uri的组成"><a href="#4-1-Uri的组成" class="headerlink" title="4.1 Uri的组成"></a>4.1 Uri的组成</h2><p>uri的组成分为四部分:schema,authority,path,id.<br><img width="640" height="160" src="/uploads/img/AndroidAdvanceDevelop/1/3.png"><br>schema:Android固定设置为content://。xxx://这就是schema的格式<br>authority:用于唯一标识这个<code>ContentProvider</code>，外部调用者可以通过这个标识来找到它。<br>path:指定要操作的数据库表<br>id:可选字段,比如某个联系人:content://contacts/people/5,这个5表示id，也就是查询联系人id为5的数据</p>
+<p>关于<code>ContentProvider</code>就写到这里吧，用得太少了。。。</p>
+<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h1><p><code>Android</code>四大组件使用组件化的思想，使得<code>Android</code>变得非常灵活，<code>Activity</code>提供<code>UI</code>界面的管理;<code>Service</code>提供与<code>UI</code>无关的服务;<code>ContentProvider</code>用于在不同应用程序中共享数据;<code>BroadCast</code>用于完成跨进程的数据通信，而这四者通过<code>Intent</code>连接到了一起,但彼此之间却几乎没有耦合。组件式开发的设计模式，是非常灵活且可复用的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/26/Java-Lambda基础入门/" rel="next" title="Java Lambda基础入门">
+                <i class="fa fa-chevron-left"></i> Java Lambda基础入门
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/27/ListView原理解析/" rel="prev" title="ListView原理及设计模式浅析">
+                ListView原理及设计模式浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/"
+           data-title="Android开发进阶第一章—Android的构成基石读书笔记" data-url="http://yoursite.com/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/img/a21.jpg"
+               alt="allen wong" />
+          <p class="site-author-name" itemprop="name">allen wong</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/allen218" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/allen-wang-74-17" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> zhihu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Activity"><span class="nav-text">1.Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1Activity的构成"><span class="nav-text">1.1Activity的构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2Activity启动模式"><span class="nav-text">1.2Activity启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3关于newIntent什么时候被调用的问题"><span class="nav-text">1.3关于newIntent什么时候被调用的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Service和AIDL-Android-接口定义语言"><span class="nav-text">2.Service和AIDL(Android 接口定义语言)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-service的运行线程"><span class="nav-text">2.1 service的运行线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-service线程优先级"><span class="nav-text">2.2 service线程优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3提升Service优先级示例"><span class="nav-text">2.3提升Service优先级示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-AIDL-Android-接口定义语言"><span class="nav-text">2.4 AIDL(Android 接口定义语言)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5关于AIDL现实生活中的例子说明"><span class="nav-text">2.5关于AIDL现实生活中的例子说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-BroadCast-广播"><span class="nav-text">3.BroadCast(广播)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-BroadCast分类"><span class="nav-text">3.1 BroadCast分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-ContentProvider-处共享数据"><span class="nav-text">4.ContentProvider(处共享数据)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Uri的组成"><span class="nav-text">4.1 Uri的组成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-总结"><span class="nav-text">5.总结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">allen wong</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"allen218"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+
+</body>
+</html>
