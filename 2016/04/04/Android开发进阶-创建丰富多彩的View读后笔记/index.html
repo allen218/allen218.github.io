@@ -57,15 +57,37 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Allen'Notes">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
+1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发进阶_创建丰富多彩的View读后笔记">
+<meta property="og:url" content="http://yoursite.com/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
+<meta property="og:description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
+1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/7.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/8.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/9.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/10.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/11.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/12.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/13.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/14.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/15.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/16.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/17.png">
+<meta property="og:updated_time" content="2016-04-04T15:30:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Allen'Notes">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Android开发进阶_创建丰富多彩的View读后笔记">
+<meta name="twitter:description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
+1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/1.png">
 
 
 
@@ -83,7 +105,7 @@
   };
 </script>
 
-  <title> Allen'Notes </title>
+  <title> Android开发进阶_创建丰富多彩的View读后笔记 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -102,9 +124,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -185,15 +205,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-
-    
-      
 
   
   
@@ -213,10 +227,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/" itemprop="url">
-                  Android开发进阶_创建丰富多彩的View读后笔记
-                </a>
+                Android开发进阶_创建丰富多彩的View读后笔记
               
             
           </h1>
@@ -262,9 +273,7 @@
       
 
       
-        
-          
-            <h1 id="1-自定义View"><a href="#1-自定义View" class="headerlink" title="1.自定义View"></a>1.自定义View</h1><p>自定义<code>view</code>有几种类型，分别为：继承自<code>View</code>的完全自定义;继承自系统控件比如<code>ImageView</code>实现特定的效果;还有就是实现<code>ViewGroup</code>实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是<code>View</code>的测量与布局、<code>View</code>的绘制、触摸事件的处理、动画等。  </p>
+        <h1 id="1-自定义View"><a href="#1-自定义View" class="headerlink" title="1.自定义View"></a>1.自定义View</h1><p>自定义<code>view</code>有几种类型，分别为：继承自<code>View</code>的完全自定义;继承自系统控件比如<code>ImageView</code>实现特定的效果;还有就是实现<code>ViewGroup</code>实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是<code>View</code>的测量与布局、<code>View</code>的绘制、触摸事件的处理、动画等。  </p>
 <h2 id="1-自定义ImageView"><a href="#1-自定义ImageView" class="headerlink" title="1.自定义ImageView"></a>1.自定义ImageView</h2><p>这里我们实现一个自定义的<code>ImageView</code>，先上整体源码，再一步步来分析它。</p>
 <pre><code> public SimpleImageView(Context context) {
     this(context, null);
@@ -375,12 +384,12 @@ public void scrollTo(int y) {
 <h2 id="5-2-ObjectAnimation"><a href="#5-2-ObjectAnimation" class="headerlink" title="5.2 ObjectAnimation"></a>5.2 ObjectAnimation</h2><p><code>valueAnimation</code>虽然强大，但它并没有直接对某个对象的某个属性值进行修改，只是模拟了属性值的变化。我们只能通过设置监听值的变化再来手动的设置对某个对象的某个属性进行修改来达到动画的效果。这显然多转了一个弯，用起来就没有那么的直接、方便。<code>ObjectAnimation</code>就是在继承<code>valueAnimation</code>的基础上，进行了一层封装，让我们可以直接在创建<code>ObjectAnimation</code>对象的时候，通过<code>ofInt</code>或者<code>ofFolat</code>等静态工厂函数来直接进行对某个对象属性的值的修改来完成动画，这样更加的方便、直接。比如对<code>ImageView</code>做一个从0.1到1.0的渐变动画。<img src="/uploads/img/AndroidAdvanceDevelop/3/16.png" alt="图1">这里的<code>ofFloat</code>静态工厂方法接收至少四个参数，第一个参数为要操作的对象;第二个参数为对象的属性名，这里的属性名是要对象能够通过<code>setXXX</code>的方式来进行设置的属性名，而且此属性的<code>setXXX</code>方法只接收一个参数的才可以。剩下的参数是可变参数，也就是长度是可变的，最少需要设置两个参数，也就是动画的起始参数，和结尾参数。如果设置多个参数，则会在这些参数中进行平滑的动画过渡。</p>
 <h2 id="5-3-AnimatorSet-动画合集"><a href="#5-3-AnimatorSet-动画合集" class="headerlink" title="5.3 AnimatorSet(动画合集)"></a>5.3 AnimatorSet(动画合集)</h2><p>有时候我们要将多个动画合在一起执行，这时就需要<code>AnimatorSet</code>来组合这些动画。此合集可以属性动画进行组合。<code>AnimatorSet</code>提供了一个<code>play</code>的方法，此方法接收一个<code>Animator</code>对象，然后返回一个<code>Animator.Builder</code>实例。此实例包括5个核心方法：<br><strong>1.after(Animator anim)</strong><br>在anim动画执行完后，再执行前面调用after方法的动画。<br><strong>2.after(long delay)</strong><br>将调用after的动画延迟多少时间后再执行。<br><strong>3.befroe(Animator anim)</strong><br>在anim动画执行之前执行调用before的动画。<br><strong>4.with(Animator anim)</strong><br>将调用with的动画和anim动画一起执行。<br><strong>5.playTogather(Animator… anims)</strong><br>将多个动画一起执行。<br>我们来看看下面的例子：<img src="/uploads/img/AndroidAdvanceDevelop/3/17.png" alt="图1">这里首先执行after参数里的动画anim3,然后anim1和anim2一起执行。</p>
 
-          
-        
       
     </div>
 
     <div>
+      
+        
       
     </div>
 
@@ -388,826 +397,32 @@ public void scrollTo(int y) {
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/03/30/PulltoRefresh源码分析/" rel="next" title="PulltoRefresh源码分析">
+                <i class="fa fa-chevron-left"></i> PulltoRefresh源码分析
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/03/30/PulltoRefresh源码分析/" itemprop="url">
-                  PulltoRefresh源码分析
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-30T10:57:46+08:00" content="2016-03-30">
-              2016-03-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/30/PulltoRefresh源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/30/PulltoRefresh源码分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/2/2.png" alt="图2">  </p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/30/PulltoRefresh源码分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/27/ListView原理解析/" itemprop="url">
-                  ListView原理及设计模式浅析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-27T20:24:13+08:00" content="2016-03-27">
-              2016-03-27
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/27/ListView原理解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/ListView原理解析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/1/5.png" alt="图1"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/27/ListView原理解析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" itemprop="url">
-                  Android开发进阶第一章—Android的构成基石读书笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-27T13:48:14+08:00" content="2016-03-27">
-              2016-03-27
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/1/1.png" alt="图1"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/26/Java-Lambda基础入门/" itemprop="url">
-                  Java Lambda基础入门
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-26T16:41:54+08:00" content="2016-03-26">
-              2016-03-26
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/26/Java-Lambda基础入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/26/Java-Lambda基础入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h1><p>经常在使用Rxjava或者RxBind等一些函数式编程语言的时候就会发现有很多简写的语句，比如<code>()-&gt;{}</code>这样子的东西，刚开始看不懂这些都代表什么意思，更不知道要怎么去写这样子看起来有逼格的代码，查了些资料，发现原来这是JAVA 8新特性<code>Lambda表达式</code>。喜欢研究新技术的我呢，当然是不会落下这学习新东西的机会，于是，玩了一周的零碎时间来看了下我们的<code>Lambda表达式</code>,今天来总结一下我对<code>Lambda表达式</code>的粗浅认识。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/26/Java-Lambda基础入门/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" itemprop="url">
-                  Retrofit+RxJava简单封装-让网络请求变得如此简单
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-17T15:18:23+08:00" content="2016-03-17">
-              2016-03-17
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
-<p>我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响应式的编程，更符合现实生活的定义。然后呢，Retrofit出来也很久了，很早就听说过这个库非常好用，只是之前一直停留在1.9，没有出2.0的正式版，又一直没用，刚好今年年初，2.0出来了，呵呵，终于有机会来玩玩了。。.</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="url">
-                  RecyclerView每个Item展示倒计时
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
-              2016-03-12
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
-</blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
-<blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
-</blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/12/RecyclerView每个Item展示倒计时/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/02/Android实现全局弹窗的三种方式/" itemprop="url">
-                  Android实现全局弹窗的三种方式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-02T21:37:10+08:00" content="2016-03-02">
-              2016-03-02
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/02/Android实现全局弹窗的三种方式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/Android实现全局弹窗的三种方式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="前期需求"><a href="#前期需求" class="headerlink" title="前期需求"></a><strong>前期需求</strong></h1><blockquote>
-<p>我们公司最近需要开发一个功能，大致要求是：通过复制一个分享出去的文字(这段文字有一定的规则，比如满足某种格式#文字#….url….)当用户复制了这段文字，打开了我们的app，就会对文字进行检查，满足条件，<br>就提取相应的条件去服务器请求，当数据请求下来后，就会通过弹窗的形式提示用户，并提供直达相应页面的跳转。需求大概就是这样了。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/02/Android实现全局弹窗的三种方式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/19/Android常用的debug方法/" itemprop="url">
-                  Android常用的debug方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-19T12:11:16+08:00" content="2016-02-19">
-              2016-02-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/02/19/Android常用的debug方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/Android常用的debug方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>   <img src="/uploads/img/commonDebugMethod/5.png" alt="alt"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/19/Android常用的debug方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -1215,6 +430,14 @@ public void scrollTo(int y) {
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/"
+           data-title="Android开发进阶_创建丰富多彩的View读后笔记" data-url="http://yoursite.com/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -1234,8 +457,17 @@ public void scrollTo(int y) {
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/img/a21.jpg"
@@ -1290,6 +522,23 @@ public void scrollTo(int y) {
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-自定义View"><span class="nav-text">1.自定义View</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-自定义ImageView"><span class="nav-text">1.自定义ImageView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-view的尺寸测量"><span class="nav-text">2.view的尺寸测量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-specMode规格的3种类型"><span class="nav-text">3.specMode规格的3种类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-MeasureSpec的由来"><span class="nav-text">4.MeasureSpec的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-优化后的自定义ImageView"><span class="nav-text">5.优化后的自定义ImageView</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Canvs和Paint"><span class="nav-text">2.Canvs和Paint</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-save和restore方法"><span class="nav-text">2.1 save和restore方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Scroller的使用"><span class="nav-text">3.Scroller的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-ScrollerView例子"><span class="nav-text">3.1 ScrollerView例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4动画"><span class="nav-text">4动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Frame动画-帧动画"><span class="nav-text">4.1 Frame动画(帧动画)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2补间动画-tween动画"><span class="nav-text">4.2补间动画(tween动画)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5属性动画"><span class="nav-text">5属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-valueAnimation"><span class="nav-text">5.1 valueAnimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-ObjectAnimation"><span class="nav-text">5.2 ObjectAnimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-AnimatorSet-动画合集"><span class="nav-text">5.3 AnimatorSet(动画合集)</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -1364,6 +613,167 @@ public void scrollTo(int y) {
   
 
   
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   
 
