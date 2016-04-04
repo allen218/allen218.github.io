@@ -57,28 +57,23 @@
 
 
 
-<meta name="description" content="1.简介ListView是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。
-2.展示列表所需要的元素组成
-1.需要用来展示列表的ListView2.用来组织数据并映射到ListView的Adapter3.需要展示的数据集4.需要展示的View模板">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ListView原理及设计模式浅析">
 <meta property="og:url" content="http://yoursite.com/2016/03/27/ListView原理解析/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="1.简介ListView是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。
-2.展示列表所需要的元素组成
-1.需要用来展示列表的ListView2.用来组织数据并映射到ListView的Adapter3.需要展示的数据集4.需要展示的View模板">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/4.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/8.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/6.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/7.png">
-<meta property="og:updated_time" content="2016-03-27T16:17:56.000Z">
+<meta property="og:updated_time" content="2016-04-02T11:30:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ListView原理及设计模式浅析">
-<meta name="twitter:description" content="1.简介ListView是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。
-2.展示列表所需要的元素组成
-1.需要用来展示列表的ListView2.用来组织数据并映射到ListView的Adapter3.需要展示的数据集4.需要展示的View模板">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/4.png">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
 
 
 
@@ -264,9 +259,10 @@
       
 
       
-        <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p><code>ListView</code>是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/1/5.png" alt="图1"><br><a id="more"></a></p>
+<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p><code>ListView</code>是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。</p>
 <h1 id="2-展示列表所需要的元素组成"><a href="#2-展示列表所需要的元素组成" class="headerlink" title="2.展示列表所需要的元素组成"></a>2.展示列表所需要的元素组成</h1><blockquote>
-<p>1.需要用来展示列表的<code>ListView</code><br>2.用来组织数据并映射到<code>ListView</code>的<code>Adapter</code><br>3.需要展示的数据集<br>4.需要展示的<code>View</code>模板<br><a id="more"></a></p>
+<p>1.需要用来展示列表的<code>ListView</code><br>2.用来组织数据并映射到<code>ListView</code>的<code>Adapter</code><br>3.需要展示的数据集<br>4.需要展示的<code>View</code>模板</p>
 </blockquote>
 <h1 id="3-各组成之间的关系"><a href="#3-各组成之间的关系" class="headerlink" title="3.各组成之间的关系"></a>3.各组成之间的关系</h1><p><code>ListView</code>只负责加载、管理视图，至于有多少数据，每一项数据要怎么来展示，这些它都不关心。<br><code>Adapter</code>使用<code>Adapter</code>模式，使用抽象方式将用户需要指定的数据抽象出来，让用户去实现。比如：有多少数据需要展示、用什么方式来进行展示等等。<br>需要实现的<code>Adapter</code>的函数为：</p>
 <blockquote>

@@ -63,10 +63,30 @@
 <meta property="og:url" content="http://yoursite.com/2016/03/30/PulltoRefresh源码分析/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:updated_time" content="2016-03-30T02:57:46.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/7.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/8.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/9.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/10.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/11.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/13.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/14.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/15.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/16.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/17.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/18.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/19.png">
+<meta property="og:updated_time" content="2016-04-02T11:51:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PulltoRefresh源码分析">
 <meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/2/2.png">
 
 
 
@@ -252,7 +272,129 @@
       
 
       
-        
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/2/2.png" alt="图2">  </p>
+<a id="more"></a>
+<h1 id="1-前提"><a href="#1-前提" class="headerlink" title="1.前提"></a>1.前提</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此篇文章分析的源码已被我使用Android Studio重新编译，后传到了我的github中，地址:<a href="https://github.com/allen218/PullToRefresh" target="_blank" rel="external">https://github.com/allen218/PullToRefresh</a> 大家可以到此地址去进行下载。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天我们对整个项目里的东西几种实现分别进行分析，在分析之前先大概说下此项目的设计原理吧</p>
+<h1 id="2-设计思想"><a href="#2-设计思想" class="headerlink" title="2.设计思想"></a>2.设计思想</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以说此项目是在自定义View的基础上完成了功能的实现,设计非常之巧妙.<code>RefreshLayoutBase</code>作为基类继承自<code>ViewGroup</code>,在<code>RefreshLayoutBase</code>完成了下拉刷新部分的布局和加载更多部分的布局，而中间内容部分的布局则下放到子类去完成。同时在<code>RefreshLayoutBase</code>里完成的此控件的<code>onMeasure</code>和<code>onLayout</code>的操作，让控件以上、中、下的<code>LinearLayout</code>方式完成的布局。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还有一个重要的问题就是什么时候下拉刷新以及什么时候加载更多？这里使用是<code>isTop()</code>和<code>isBottom</code>两个标志位进行抽象，下放到子类去实现，因为只有子类也就是内容部分知道自己的状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同时使用了<code>状态机</code>来定义了一系列的状态，以标识当前是否可以刷新以及其处于哪个状态，以通过相应的状态来进行操作。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还有一个重要的地方就是这里的<code>下拉刷新</code>以及<code>加载更多</code>的事件滚动都是通过<code>Scroller</code>来进行的，非常的顺滑。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说完了大概的设计之后，我们就来一个一个的分析其实现吧。</p>
+<h1 id="3-基类RefreshLayoutBase分析"><a href="#3-基类RefreshLayoutBase分析" class="headerlink" title="3.基类RefreshLayoutBase分析"></a>3.基类RefreshLayoutBase分析</h1><pre><code>public abstract class RefreshLayoutBase&lt;T extends View&gt; extends ViewGroup implements
+    OnScrollListener {
+</code></pre><p>首先继承的是<code>ViewGroup</code>，也就是说这是一个自定义控件，当需要完成<code>onMeasure</code>，<code>onLayout</code>的操作</p>
+<pre><code>/**
+ * 用于滚动
+ */
+protected Scroller mScroller;
+
+/**
+ * 下拉刷新时显示的header view
+ */
+protected View mHeaderView;
+
+/**
+ * 上拉加载更多时显示的footer view
+ */
+protected View mFooterView;
+
+/**
+ * 本次触摸滑动y坐标上的偏移量
+ */
+protected int mYOffset;
+
+/**
+ * 内容视图, 即用户触摸导致下拉刷新、上拉加载的主视图. 比如ListView, GridView等.
+ */
+protected T mContentView;
+
+/**
+ * 最初的滚动位置.第一次布局时滚动header的高度的距离
+ */
+protected int mInitScrollY = 0;
+/**
+ * 最后一次触摸事件的y轴坐标
+ */
+protected int mLastY = 0;
+
+/**
+ * 空闲状态
+ */
+public static final int STATUS_IDLE = 0;
+
+/**
+ * 下拉或者上拉状态, 还没有到达可刷新的状态
+ */
+public static final int STATUS_PULL_TO_REFRESH = 1;
+
+/**
+ * 下拉或者上拉状态
+ */
+public static final int STATUS_RELEASE_TO_REFRESH = 2;
+/**
+ * 刷新中
+ */
+public static final int STATUS_REFRESHING = 3;
+
+/**
+ * LOADING中
+ */
+public static final int STATUS_LOADING = 4;
+
+/**
+ * 当前状态
+ */
+protected int mCurrentStatus = STATUS_IDLE;
+
+/**
+ * header中的箭头图标
+ */
+private ImageView mArrowImageView;
+/**
+ * 箭头是否向上
+ */
+private boolean isArrowUp;
+/**
+ * header 中的文本标签
+ */
+private TextView mTipsTextView;
+/**
+ * header中的时间标签
+ */
+private TextView mTimeTextView;
+/**
+ * header中的进度条
+ */
+private ProgressBar mProgressBar;
+/**
+ * 屏幕高度
+ */
+private int mScreenHeight;
+/**
+ * Header 高度
+ */
+private int mHeaderHeight;
+/**
+ * 下拉刷新监听器
+ */
+protected OnRefreshListener mOnRefreshListener;
+/**
+ * 加载更多回调
+ */
+protected OnLoadListener mLoadListener;
+</code></pre><p>这里定义了一系列的属性，这里主要有下拉刷新显示的<code>Hearder View</code>，以及使用泛型修辞的<code>Content View</code>和加载更多的<code>Footer View</code>.</p>
+<p>接下来看看其构造<br><img src="/uploads/img/AndroidAdvanceDevelop/2/1.png" alt="图1"><br>首先这里使用了一个循环调用来串起了三个构造函数。在构造函数里进行了<code>Scroller</code>的创建，以及对屏幕高度的获取，然后调用<code>initLayout</code>来初始化布局。  </p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/2/2.png" alt="图2"><br>在初始化布局里我们完成了<code>HearView</code>，<code>Content View</code>，<code>Footer View</code>三者的初始化动作，最后将其添加到此<code>ViewGroup</code>控件里<br>在这里我们看看<code>Content View</code>的初始化处理吧<br><img src="/uploads/img/AndroidAdvanceDevelop/2/3.png" alt="图3"><br>这里直接将其抽象化，由子类继承去完成其<code>View</code>的布局。这里也顺便列出其它两个需要子类去完成的方法。<br><img src="/uploads/img/AndroidAdvanceDevelop/2/4.png" alt="图3"><br>这两个方法就是让子类对自已是否处于顶部或者底部做一个处理。</p>
+<p>接下来我们就跟着控件的执行顺序来看看其<code>OnMeasure</code>的处理吧。<br><img src="/uploads/img/AndroidAdvanceDevelop/2/5.png" alt="图3">这里主要对子<code>View</code>进行了测量，然后将子<code>View</code>的高度进行了累加，因为这里是自上而下的<code>LinearLayout</code>布局，所以测量起来也相对方便，得到所有子<code>View</code>的高度后，就相当于得到了控件自己的高度，而宽度直接从父<code>View</code>传过来的<code>widthMeasure</code>里通过<code>getSize</code>获取就能得到。最后能过<code>setMeasureDimension</code>设置控件自身的宽高。 </p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/2/6.png" alt="图3">这里首先为各子<code>View</code>来进行布局，也就是指定各子<code>View</code>显示的位置。然后计算<code>header view</code>的高度,最后通过<code>Scroller</code>滚动其<code>hearder view</code>的高度将其隐藏</p>
+<p>经过上面<code>onMeasure</code>和<code>onLayout</code>的操作，其控件就可以显示出来了，当然这里还需要子类对<code>content View</code>进行实现。</p>
+<p>接下来，就是相关事件分发的处理了。<br><img src="/uploads/img/AndroidAdvanceDevelop/2/7.png" alt="图3">这里首先通过<code>down</code>获得当前触摸点在屏幕上Y轴的距离，然后通过<code>Move</code>来得到差值以判断是否是下拉过程。然后在<code>move</code>环节通过差值和<code>isTop</code>判断是否可以下拉刷新以对当前触摸事件进行拦截处理。</p>
+<p>如果<code>onInterceptTouchEvent</code>返回的值为<code>true</code>，也就是说该控件对事件进行了拦截，此时就是调用我们的<code>onTouchEvent</code>方法。（当然这里插一个题外话，如果我们的<code>onTouchListener</code>返回的值是<code>false</code>的话，这里的<code>onTouchEvent</code>是不会被调用的.因为<code>OnTouchListener</code>的事件优化级比<code>onTouchEvent</code>高).<br><img src="/uploads/img/AndroidAdvanceDevelop/2/8.png" alt="图3">这里首先获取到差值，在不是刷新的状态下继续对<code>headerView</code>进行滑动，以及更改一些<code>headerView</code>里的布局信息。最后在<code>up</code>状态下进行刷新的操作。我们再来看看它是怎么进行刷新的吧.</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/2/9.png" alt="图3">这里主要是通过回调来通知监听者更新数据。<code>changeHeaderViewStaus</code>这个方法比较重要。</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/2/10.png" alt="图3">这个方法主要做的事情就是判断是否需要显示下拉刷新。首先得到控件滑动的距离,也就是得到<code>headerView</code>滑动的距离，当距离大于高度的1/2或者小于1/2时，都通过<code>scroller</code>来准备相应的滚动。最后通过<code>invalidate</code>来让<code>scroller</code>工作进来，进行顺滑的滚动。</p>
+<p>刷新完成后，需要调用<code>refreshCompeled</code>来对<code>headerView</code>进行复原的处理。<img src="/uploads/img/AndroidAdvanceDevelop/2/11.png" alt="图3"><br>到此下拉刷新的操作就已经完成了。接下来要看的是<code>加载更多</code>的是怎么操作的。<br>加载更多相对来讲就要简单很多了，主要是通过<code>onscroll</code>方法的监听来完成的。我们先来看看<code>onScroll</code>方法的处理吧。这里只处理了<code>ListView</code>的加载更多处理。这里实现了<code>ListView</code>的<code>OnScrollListener</code>。<img src="/uploads/img/AndroidAdvanceDevelop/2/13.png" alt="图3">通过这两个方法就完成了加载更多的操作。<br>至此<code>RefreshLayoutBase</code>基类就分析完毕了。</p>
+<h1 id="4-RefreshListView文件分析"><a href="#4-RefreshListView文件分析" class="headerlink" title="4.RefreshListView文件分析"></a>4.RefreshListView文件分析</h1><p>其实基类分析完后，其它的都比较简单了，只需要设置其<code>Content View</code>，然后完成是否可以下拉刷新及加载更多的操作就可以了.<img src="/uploads/img/AndroidAdvanceDevelop/2/14.png" alt="图3"></p>
+<h1 id="5-RefreshSlideDeleteListView文件分析"><a href="#5-RefreshSlideDeleteListView文件分析" class="headerlink" title="5.RefreshSlideDeleteListView文件分析"></a>5.RefreshSlideDeleteListView文件分析</h1><p>其它的都和<code>RefreshListView</code>实现上差不多，只有这个<code>RefreshSlideDeleteListView</code>的实现比较特别，所以特意拿出来分析一下。</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/2/15.png" alt="图3"></p>
+<p>这里主要是对事件分发的拦截操作，我们先看<code>onInterceptTouchEvent</code><br><img src="/uploads/img/AndroidAdvanceDevelop/2/16.png" alt="图3">这里的<code>slideItemView</code>方法比较重要，它主要处理的是删除按钮的显示与隐藏的操作，在<code>onTouchEvent</code>方法里也会调用此方法，到时候再进行分析。这里主要看的是一个<code>getItemPosition</code>方法，在这个方法里处理的是当前手指所触摸到的item的position.<br><img src="/uploads/img/AndroidAdvanceDevelop/2/17.png" alt="图3"></p>
+<p>当在<code>onInterceptTouchEvent</code>返回<code>true</code>后，会调用<code>onTouchEvent</code>方法<img src="/uploads/img/AndroidAdvanceDevelop/2/18.png" alt="图3">这里<code>isSlideValid</code>主要是处理滑动删除展开或者收起<br><img src="/uploads/img/AndroidAdvanceDevelop/2/19.png" alt="图3"><br>到这里<code>RefreshSlideDeleteListView</code>的分析也就完成了。</p>
+
       
     </div>
 
@@ -401,7 +543,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-设计思想"><span class="nav-text">2.设计思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-基类RefreshLayoutBase分析"><span class="nav-text">3.基类RefreshLayoutBase分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-RefreshListView文件分析"><span class="nav-text">4.RefreshListView文件分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-RefreshSlideDeleteListView文件分析"><span class="nav-text">5.RefreshSlideDeleteListView文件分析</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
