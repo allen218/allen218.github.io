@@ -57,14 +57,13 @@
 
 
 
-<meta name="description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
-1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android开发进阶_创建丰富多彩的View读后笔记">
 <meta property="og:url" content="http://yoursite.com/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
-1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/18.jpg">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/1.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/3.png">
@@ -82,12 +81,11 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/15.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/16.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/17.png">
-<meta property="og:updated_time" content="2016-04-04T15:30:49.000Z">
+<meta property="og:updated_time" content="2016-04-04T15:38:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发进阶_创建丰富多彩的View读后笔记">
-<meta name="twitter:description" content="1.自定义View自定义view有几种类型，分别为：继承自View的完全自定义;继承自系统控件比如ImageView实现特定的效果;还有就是实现ViewGroup实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是View的测量与布局、View的绘制、触摸事件的处理、动画等。  
-1.自定义ImageView这里我们实现一个自定义的ImageView，先上整体源码，再一步步">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/1.png">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/3/18.jpg">
 
 
 
@@ -273,7 +271,8 @@
       
 
       
-        <h1 id="1-自定义View"><a href="#1-自定义View" class="headerlink" title="1.自定义View"></a>1.自定义View</h1><p>自定义<code>view</code>有几种类型，分别为：继承自<code>View</code>的完全自定义;继承自系统控件比如<code>ImageView</code>实现特定的效果;还有就是实现<code>ViewGroup</code>实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是<code>View</code>的测量与布局、<code>View</code>的绘制、触摸事件的处理、动画等。  </p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/3/18.jpg" alt="图1"><br><a id="more"></a></p>
+<h1 id="1-自定义View"><a href="#1-自定义View" class="headerlink" title="1.自定义View"></a>1.自定义View</h1><p>自定义<code>view</code>有几种类型，分别为：继承自<code>View</code>的完全自定义;继承自系统控件比如<code>ImageView</code>实现特定的效果;还有就是实现<code>ViewGroup</code>实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是<code>View</code>的测量与布局、<code>View</code>的绘制、触摸事件的处理、动画等。  </p>
 <h2 id="1-自定义ImageView"><a href="#1-自定义ImageView" class="headerlink" title="1.自定义ImageView"></a>1.自定义ImageView</h2><p>这里我们实现一个自定义的<code>ImageView</code>，先上整体源码，再一步步来分析它。</p>
 <pre><code> public SimpleImageView(Context context) {
     this(context, null);

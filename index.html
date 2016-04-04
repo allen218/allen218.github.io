@@ -263,119 +263,12 @@
 
       
         
-          
-            <h1 id="1-自定义View"><a href="#1-自定义View" class="headerlink" title="1.自定义View"></a>1.自定义View</h1><p>自定义<code>view</code>有几种类型，分别为：继承自<code>View</code>的完全自定义;继承自系统控件比如<code>ImageView</code>实现特定的效果;还有就是实现<code>ViewGroup</code>实现布局类(也可将系统控件进行组合，组成自定义组合控件)。这里比较重要的就是<code>View</code>的测量与布局、<code>View</code>的绘制、触摸事件的处理、动画等。  </p>
-<h2 id="1-自定义ImageView"><a href="#1-自定义ImageView" class="headerlink" title="1.自定义ImageView"></a>1.自定义ImageView</h2><p>这里我们实现一个自定义的<code>ImageView</code>，先上整体源码，再一步步来分析它。</p>
-<pre><code> public SimpleImageView(Context context) {
-    this(context, null);
-}
-
-public SimpleImageView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-
-    initPaint();
-
-    initAttrs(attrs);
-}
-
-private void initPaint() {
-    mPaint = new Paint();
-    //设置无锯齿
-    mPaint.setAntiAlias(true);
-}
-
-private void initAttrs(AttributeSet attrs) {
-    TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SimpleImageView);
-    //通过xml属性获取drawable文件
-    mDrawable = typedArray.getDrawable(R.styleable.SimpleImageView_src);
-
-    typedArray.recycle();
-
-    measureDrawable();
-}
-
-private void measureDrawable() {
-    if (mDrawable != null) {
-        //获取图片本来的宽度和高度
-        mDrawableWidth = mDrawable.getIntrinsicWidth();
-        mDrawableHeight = mDrawable.getIntrinsicHeight();
-    }
-}
-
-@Override
-protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    //设置控件的宽高和图片一样大
-    setMeasuredDimension(mDrawableWidth, mDrawableHeight);
-}
-
-@Override
-protected void onDraw(Canvas canvas) {
-    if (mDrawable == null) {
-        return;
-    }
-    //将图片绘制出来
-    canvas.drawBitmap(((BitmapDrawable) mDrawable).getBitmap(), getLeft(), getTop(), mPaint);
-}
-</code></pre><p>先来看看初始化<code>initAttrs</code>的代码吧<br> <img src="/uploads/img/AndroidAdvanceDevelop/3/1.png" alt="图1">这里主要是通过自定义属性的<code>TypedArray</code>，然后通过<code>属性名</code>来获取相应属性所对应的值，获取然后要对<code>TypedArray</code>进行释放，因为<code>TypedArray</code>是比较消耗资源的，而且容易造成内存泄露。最后通过<code>measureDrawble</code>来测量图片的大小。<br> 接下来我们来看看<code>measureDrawable</code>方法都做了些什么吧<img src="/uploads/img/AndroidAdvanceDevelop/3/2.png" alt="图1">这里主要是获取到了图片的原始宽高</p>
-<p>看完了初始化部分的代码，跟着代码的执行顺序，我们现在要看看<code>onMeasure</code>都做了些什么.<img src="/uploads/img/AndroidAdvanceDevelop/3/3.png" alt="图1">这里主要是通过<code>setMeasureDimension</code>来设置自已的宽高。这里的宽高就是图片原始的大小。<br>设置完大小后，因为是<code>View</code>，所以不能进行<code>onlayout</code>的操作，就直接来看看<code>onDraw</code>方法。<img src="/uploads/img/AndroidAdvanceDevelop/3/4.png" alt="图1">这里主要的操作就是将获取到的drawable画出来。这样就完成了图片的显示了。</p>
-<p>这里有个问题，就是图片显示的大小一定就是图片的原始大小图片，也就是说只有在设置<code>wrap_content</code>布局后才能正确的显示。如果设置<code>match_parent</code>或者指定具体的宽高都是没有效果的。</p>
-<h2 id="2-view的尺寸测量"><a href="#2-view的尺寸测量" class="headerlink" title="2.view的尺寸测量"></a>2.view的尺寸测量</h2><p>在视图树渲染时<code>View</code>系统的绘制流程会从<code>RootView</code>的<code>performTraversals</code>方法中开始，在其内部调用<code>View</code>的<code>measure</code>方法,这个<code>measure()</code>接收两个参数分别为<code>widthMeasureSpec</code>和<code>heightMeasureSpec</code>，这两个参数分别用来确定视图的宽、高的规格和大小。<code>onMeasure</code>是在父视图调用的，也就是父视图对自己的期望。<br><code>MeasureSpec</code>由两部分组成,<code>specSize</code>和<code>specMode</code>。<code>specSize</code>代表期望子视图的大小,<code>specMode</code>代表规格。  </p>
-<h2 id="3-specMode规格的3种类型"><a href="#3-specMode规格的3种类型" class="headerlink" title="3.specMode规格的3种类型"></a>3.specMode规格的3种类型</h2><p><strong>1.EXACTLY</strong><br>表示父视图希望子视图的大小是由<code>specSize</code>决定的，系统默认为按照这个大小来进行设置。开发人员当然也可以按照自己的意愿来设置成任意的大小。此类型对应的布局方式是<code>match_parent</code>或者指定具体的宽高。<br><strong>2.AT_MOST</strong><br>表示子视图最多可以设置<code>specSize</code>中指定的大小，开发人员应该尽可能小的去设置这个视图，并且保证不会超过<code>spceSize</code>。系统默认会按照这个规则来设置子视图的大小，开发人员也可以按照自己的意愿来设置任意大小。这个类型对应的布局方式是<code>wrap_content</code>.<br><strong>3.UNSPECIFIED</strong><br>表示开发人员可以将视图设置成任意大小，没有任何限制，这种模式比较少见，不太会用到。</p>
-<h2 id="4-MeasureSpec的由来"><a href="#4-MeasureSpec的由来" class="headerlink" title="4.MeasureSpec的由来"></a>4.MeasureSpec的由来</h2><p>在视图树的根部<code>ViewRootImpl</code>里的<code>measureHierarchy()</code>函数里<code>measureSpce</code>被创建。 <img src="/uploads/img/AndroidAdvanceDevelop/3/5.png" alt="图1">这里可以看到<code>MeasureSpec</code>是通过<code>getRootMeasureSpec</code>函数来创建的。这个函数的第一个参数表示窗口的宽度或高度，第二个参数是在创建<code>viewGroup</code>时被赋值的。它们都等于<code>match_parent</code>。然后我们来看看<code>getRootMeasureSpec</code>函数吧。 <img src="/uploads/img/AndroidAdvanceDevelop/3/6.png" alt="图1">这里可以看到<code>MeasureSpec</code>是通过<code>MeasureSpec.makeMeasureSpec</code>来进行创建的，而这里的参数<code>windowSize</code>都是填充屏幕，所以根视图都是占满整个屏幕的。<br>创建完MeasureSpec后，就调用<code>performMeasure</code>函数来一层一层的对视图树中的视图来进行测量了。当前<code>View</code>调用自己的<code>measure</code>方法，而在<code>measure</code>方法里会调用子<code>View</code>的<code>onMeasure</code>方法，子<code>view</code>通过在<code>onMeasure</code>获得父类传来的<code>measureSpec</code>后，获得父类对自己的期望，从中得到<code>specSize</code>和<code>specMode</code>,然后再通过setDimension给自己设置宽和高。</p>
-<h2 id="5-优化后的自定义ImageView"><a href="#5-优化后的自定义ImageView" class="headerlink" title="5.优化后的自定义ImageView"></a>5.优化后的自定义ImageView</h2><p>我们来重构一下我们上面自定义的<code>ImageView</code>的<code>onMeasure</code>函数。<img src="/uploads/img/AndroidAdvanceDevelop/3/7.png" alt="图1">这里通过<code>widthMeasureSpec</code>和<code>heightMeasureSpec</code>分别获得宽和高的<code>spceSize</code>大小和<code>specMode</code>规格。再通过<code>setDismension</code>来设置当前<code>view</code>的宽和高。<br><img src="/uploads/img/AndroidAdvanceDevelop/3/8.png" alt="图1">通过规格来得到相应的宽和高。这里主要是当规格为<code>EXACTLY</code>，需要使用父类指定的宽和高来进行设置。</p>
-<h1 id="2-Canvs和Paint"><a href="#2-Canvs和Paint" class="headerlink" title="2.Canvs和Paint"></a>2.Canvs和Paint</h1><p>canvs是画布的意思，在Android中，整个<code>view</code>就是一个画布，开发人员通过画笔在这张画布上画出各种图形，元素，例如：各种形状，文字或图片等。<br>paint是用来在<code>canvs</code>上绘制的工具，可以通过设置<code>paint</code>的属性来绘制不同的效果。</p>
-<h2 id="2-1-save和restore方法"><a href="#2-1-save和restore方法" class="headerlink" title="2.1 save和restore方法"></a>2.1 save和restore方法</h2><p>对于<code>canvs</code>这里有两个比较重要的方法，<code>save</code>和<code>restore</code>。<code>save</code>方法保存的是当前<code>canvas</code>的状态，就像玩游戏里的存档一样，记录了当前的一个点。而<code>restore</code>就是恢复到当前保留的状态。</p>
-<p>这里我们使用<code>save</code>和<code>restore</code>方法来在之前的自定义<code>ImageView</code>上实现竖直显示的文字。这里我们只需要修改<code>onDraw</code>里面的代码。<img src="/uploads/img/AndroidAdvanceDevelop/3/9.png" alt="图1">先保存<code>canvs</code>的状态，然后将<code>canvs</code>旋转90度，旋转后在来画文字，这个时候<code>canvs</code>是横着的，而文字同样也是横着的。最后将<code>canvs</code>恢复到以前的竖着的状态，此时文字自然也就变成了竖着的了。</p>
-<h1 id="3-Scroller的使用"><a href="#3-Scroller的使用" class="headerlink" title="3.Scroller的使用"></a>3.Scroller的使用</h1><p><code>Scroller</code>是一个让<code>view</code>平滑滚动的辅助类，它通过startScroll来设置滚动的参数，即滚动起始点坐标(x,y)以及x,y轴上要滚动的距离。<code>Scroller</code>它封装了滚动时间、滚动目标(x,y)轴坐标点以及每一个时间内<code>View</code>应该滚动到的(x、y)轴坐标点。这样用户就可以在有效的滚动周期内通过<code>scroller</code>的<code>getCurrX</code>、<code>getCurrY</code>来获得当前时间点需要滚动的位置，然后通过<code>scrollTo</code>或<code>scrollBy</code>去滚动到相应的位置。<br><strong>什么时候滚动停止？</strong><br>我们覆写<code>view</code>里的<code>computeScroll</code>方法，这个方法是每次<code>view</code>绘制都是被调用的。在此方法里通过<code>scroller</code>的<code>computeScrollOffset</code>来进行判断是否滚动完成。当返回true说明还没有完成，在还没有完成的情况下，我们通过调用<code>scroller</code>的<code>getCurrX</code>或者<code>getCurrY</code>来获取当前时刻需要滚动到目标的位置，然后通过<code>scrollTo</code>或<code>scrollBy</code>进行滚动。每次执行完后，还需要调用<code>postInvalidate</code>或<code>Invalidate</code>导致<code>View</code>重绘，如此循环，直到<code>computeScrollOffset</code>返回<code>false</code>，也就是滚动完成为此。  </p>
-<h2 id="3-1-ScrollerView例子"><a href="#3-1-ScrollerView例子" class="headerlink" title="3.1 ScrollerView例子"></a>3.1 ScrollerView例子</h2><p>先上源码</p>
-<pre><code>public class ScrollerLayout extends FrameLayout {
-private Scroller mScroller;
-
-public ScrollerLayout(Context context) {
-    this(context, null);
-}
-
-public ScrollerLayout(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    mScroller = new Scroller(context);
-}
-
-@Override
-public void computeScroll() {
-    if (mScroller.computeScrollOffset()) {
-        //说明还未完成
-        //滚动到此,View应该滚动到的x,y坐标上
-        scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-        //请求重新绘制,导致computeScroll方法又会被执行,直到computeScrollOffset返回为false
-        //说明滚动完成
-        postInvalidate();
-    }
-}
-
-/**
- * 向外提供一个y轴滚动的方法
- *
- * @param y
- */
-public void scrollTo(int y) {
-
-    //第1,2参数分别为滚动的起始点水平,垂直的滚动偏移量
-    //第3,4参数分别为在水平,垂直方向上滚动的距离,这里只沿Y轴滚动
-    mScroller.startScroll(getScrollX(), getScrollY(), 0, y);
-
-    invalidate();
-}
-}
-</code></pre><p>上面执行的顺序是，先完成构造方法的执行，初始化<code>scroller</code>实例，然后提供了一个供调用的方法，当函数被调用后，首先通过<code>startScroll</code>封装了初始点及要滚动的目标点。然后通过<code>invalidate</code>导致<code>view</code>的重绘，以使<code>computeScroll</code>被执行，从而通过<code>computeScrollOffset</code>来计算是否滚动完成，如果未完成，则通过<code>getCurrY</code>获取当前时刻需要滚动的目标点，最后通过<code>invalidate</code>让<code>view</code>的绘制循环起来，直到<code>computeScrollOffset</code>返回<code>false</code>为止。</p>
-<h1 id="4动画"><a href="#4动画" class="headerlink" title="4动画"></a>4动画</h1><p>动画分为<code>frame</code>动画(帧动画)、补间动画、属性动画以及5.0后又增加的<code>vectorDrawable</code>动画。</p>
-<h2 id="4-1-Frame动画-帧动画"><a href="#4-1-Frame动画-帧动画" class="headerlink" title="4.1 Frame动画(帧动画)"></a>4.1 Frame动画(帧动画)</h2><p>帧动画是一系列图片按照一定的顺序进行展示的过程，和放电影的机制相似，它的原理是在一定的时间段内切换多张有细微差异的图片从而达到动画播放的结果。<br>帧动画可以使用<code>xml</code>来实现，也可以完全使用代码实现。使用<code>xml</code>实现时，需要放在res目录下的<code>drawable</code>目录下，当使用<code>xml</code>时,文件名可以通过资源<code>id</code>来引用，如果使用完全编码实现，需要使用<code>AnimationDrawable</code>对象。如果使用<code>xml</code>来编码时，根元素需要使用<code>animation-list</code>，它可以包含1或者n个<code>&lt;item&gt;</code>元素.<code>android:onshot</code>如果设置为<code>true</code>说明只播放一次，如果为<code>false</code>则循环播放。<code>&lt;item&gt;</code>表示一帧动画，有两个属性，一个<code>android:drawable</code>表示当前帧要显示的图片，另一个<code>android:duration</code>表示当前帧播放的时间，单位为毫秒。<br><code>xml</code>格式：<br><img src="/uploads/img/AndroidAdvanceDevelop/3/10.png" alt="图1">定义好之后，我们还需要把动画设置给某个<code>view</code>。例如，这里设置给<code>imageView</code>作为背景。<img src="/uploads/img/AndroidAdvanceDevelop/3/11.png" alt="图1">但是，此时动画仍然还是不会播放，想要播放需要得到动画后调用<code>start</code>方法让其播放。<img src="/uploads/img/AndroidAdvanceDevelop/3/12.png" alt="图1"><br>使用代码编码完成:<img src="/uploads/img/AndroidAdvanceDevelop/3/13.png" alt="图1">  </p>
-<h2 id="4-2补间动画-tween动画"><a href="#4-2补间动画-tween动画" class="headerlink" title="4.2补间动画(tween动画)"></a>4.2补间动画(tween动画)</h2><p>补间动画就是通过对某个控件进行位移、翻转、渐变、缩放的一种转换过程，补间动画也分为<code>xml</code>或者代码实现两种方式。<br><strong>xml实现</strong><br><img src="/uploads/img/AndroidAdvanceDevelop/3/14.png" alt="图1">其中<code>set</code>表示动画集合，如果只是做单独的动画则不需要此元素，直接使用内部元素即可。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;alpha&gt;</code>表示渐变动画;与之对应的<code>Java</code>对象为<code>alphaAnimation</code>.<code>android:fromAlpha</code>表示起始<code>alpha</code>值，取值范围为0.1-1.0。分别代表从透明到不透明。<code>android:toAlpha</code>表示结尾的<code>alpha</code>值。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;scale&gt;</code>表示缩放动画;与之对应的<code>Java</code>对象为<code>ScaleAnimation</code>。<code>android:fromXScale</code>表示起始的<code>x</code>轴上相对自身的缩放比例。比如1.0代表自身无变化，2.0表示比自身大一倍。<code>android:toXScale</code>表示结尾的缩放比例。<code>android:pivotX</code>表示缩放的中轴点X坐标,如果想位于图片<code>x</code>轴的中间就可以使用0.5或者50%。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;translate&gt;</code>表示位移动画；对应<code>Java</code>的对象为<code>TranslateAnimation</code>.<code>android:fromXDelta</code>表示起始<code>x</code>轴的位置;<code>android:toDelta</code>表示结尾<code>x</code>轴的位置。这里的四个参数都可以使用浮点数、num%、num%p这三种来表示。浮点数表示相对于自身位置的浮点数；num%表示相对自身位置的百分比，比如<code>toXDelta</code>设置为<code>100%</code>，表示移动距离为自己的1倍。num%p表示相对父类位置的百分比。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>rotate</code>表示旋转动画；对应<code>Java</code>的对象为<code>RotateAnimation</code>。<code>android:fromDegrees</code>表示旋转的起始角度，浮点值，单位：度。<code>android:pivotY</code>的值也有三种表示方式,浮点数、num%、num%p。浮点数表示旋转中心距离自身左边缘或者上边缘的距离;num%表示旋转中心距离自身左边缘或上边缘的百分比;num%p表示旋转中心距离距离父类左边缘或上边缘的百分比。</p>
-<h1 id="5属性动画"><a href="#5属性动画" class="headerlink" title="5属性动画"></a>5属性动画</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性动画是<code>Android</code>3.0后推出来的动画包，属性动画不在是针对<code>View</code>来进行设计的，也不在只是<code>alpha</code>、<code>scale</code>、<code>translate</code>、<code>rotate</code>这几种简单的动画操作，同时也不在仅仅是一种视觉上的操作。属性动画是通过不断的修改对象的属性的值来实现的。属性动画可以对任何对象的属性来做一个不断改变的动画操作。我们只需要告诉系统动画要操作的属性、动画时长、需要执行哪种类型的动画以及动画初始值和结束值，剩下的操作就交给系统来完成了。  </p>
-<h2 id="5-1-valueAnimation"><a href="#5-1-valueAnimation" class="headerlink" title="5.1 valueAnimation"></a>5.1 valueAnimation</h2><p><code>valueAnimation</code>是属性动画的核心类，<code>valueAnimation</code>内部使用一种循环机制来计算值与值之间的动画过渡，我们只需要设置属性的取值范围，动画的运行时长提供给<code>valueAnimation</code>，它就会自动帮我们计算出属性值在各个动画运行时间段的取值。这些值会按照一定的计算方式让动画实现平滑移动。除此之外，<code>valueAnimation</code>还负责管理动画的播放次数、播放模式、以及对动画设置监听器等。我们通过一个例子来看看<code>valueAnimation</code>的实现吧。<img src="/uploads/img/AndroidAdvanceDevelop/3/15.png" alt="图1">其实属性动画就是模拟一段动画属性值不断变化的操作，我们通过这个变化，在不同的时间点获取到相应的变化的属性值来进行属性的设置，以此来完成动画。  </p>
-<h2 id="5-2-ObjectAnimation"><a href="#5-2-ObjectAnimation" class="headerlink" title="5.2 ObjectAnimation"></a>5.2 ObjectAnimation</h2><p><code>valueAnimation</code>虽然强大，但它并没有直接对某个对象的某个属性值进行修改，只是模拟了属性值的变化。我们只能通过设置监听值的变化再来手动的设置对某个对象的某个属性进行修改来达到动画的效果。这显然多转了一个弯，用起来就没有那么的直接、方便。<code>ObjectAnimation</code>就是在继承<code>valueAnimation</code>的基础上，进行了一层封装，让我们可以直接在创建<code>ObjectAnimation</code>对象的时候，通过<code>ofInt</code>或者<code>ofFolat</code>等静态工厂函数来直接进行对某个对象属性的值的修改来完成动画，这样更加的方便、直接。比如对<code>ImageView</code>做一个从0.1到1.0的渐变动画。<img src="/uploads/img/AndroidAdvanceDevelop/3/16.png" alt="图1">这里的<code>ofFloat</code>静态工厂方法接收至少四个参数，第一个参数为要操作的对象;第二个参数为对象的属性名，这里的属性名是要对象能够通过<code>setXXX</code>的方式来进行设置的属性名，而且此属性的<code>setXXX</code>方法只接收一个参数的才可以。剩下的参数是可变参数，也就是长度是可变的，最少需要设置两个参数，也就是动画的起始参数，和结尾参数。如果设置多个参数，则会在这些参数中进行平滑的动画过渡。</p>
-<h2 id="5-3-AnimatorSet-动画合集"><a href="#5-3-AnimatorSet-动画合集" class="headerlink" title="5.3 AnimatorSet(动画合集)"></a>5.3 AnimatorSet(动画合集)</h2><p>有时候我们要将多个动画合在一起执行，这时就需要<code>AnimatorSet</code>来组合这些动画。此合集可以属性动画进行组合。<code>AnimatorSet</code>提供了一个<code>play</code>的方法，此方法接收一个<code>Animator</code>对象，然后返回一个<code>Animator.Builder</code>实例。此实例包括5个核心方法：<br><strong>1.after(Animator anim)</strong><br>在anim动画执行完后，再执行前面调用after方法的动画。<br><strong>2.after(long delay)</strong><br>将调用after的动画延迟多少时间后再执行。<br><strong>3.befroe(Animator anim)</strong><br>在anim动画执行之前执行调用before的动画。<br><strong>4.with(Animator anim)</strong><br>将调用with的动画和anim动画一起执行。<br><strong>5.playTogather(Animator… anims)</strong><br>将多个动画一起执行。<br>我们来看看下面的例子：<img src="/uploads/img/AndroidAdvanceDevelop/3/17.png" alt="图1">这里首先执行after参数里的动画anim3,然后anim1和anim2一起执行。</p>
-
-          
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/3/18.jpg" alt="图1"><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
