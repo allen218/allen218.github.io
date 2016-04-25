@@ -59,21 +59,16 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ListView原理及设计模式浅析">
-<meta property="og:url" content="http://yoursite.com/2016/03/27/ListView原理解析/index.html">
+<meta property="og:title" content="浅谈代码重构的重要性和方法">
+<meta property="og:url" content="http://yoursite.com/2016/04/21/浅谈代码重构的重要性和方法/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/4.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/8.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/6.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/7.png">
-<meta property="og:updated_time" content="2016-04-02T11:30:20.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/27.png">
+<meta property="og:updated_time" content="2016-04-24T08:14:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ListView原理及设计模式浅析">
+<meta name="twitter:title" content="浅谈代码重构的重要性和方法">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/27.png">
 
 
 
@@ -91,7 +86,7 @@
   };
 </script>
 
-  <title> ListView原理及设计模式浅析 | Allen'Notes </title>
+  <title> 浅谈代码重构的重要性和方法 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -213,7 +208,7 @@
             
             
               
-                ListView原理及设计模式浅析
+                浅谈代码重构的重要性和方法
               
             
           </h1>
@@ -225,8 +220,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-27T20:24:13+08:00" content="2016-03-27">
-              2016-03-27
+            <time itemprop="dateCreated" datetime="2016-04-21T11:28:24+08:00" content="2016-04-21">
+              2016-04-21
             </time>
           </span>
 
@@ -236,8 +231,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/27/ListView原理解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/ListView原理解析/" itemprop="commentsCount"></span>
+                <a href="/2016/04/21/浅谈代码重构的重要性和方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/21/浅谈代码重构的重要性和方法/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -259,49 +254,18 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/1/5.png" alt="图1"><br><a id="more"></a></p>
-<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p><code>ListView</code>是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。</p>
-<h1 id="2-展示列表所需要的元素组成"><a href="#2-展示列表所需要的元素组成" class="headerlink" title="2.展示列表所需要的元素组成"></a>2.展示列表所需要的元素组成</h1><blockquote>
-<p>1.需要用来展示列表的<code>ListView</code><br>2.用来组织数据并映射到<code>ListView</code>的<code>Adapter</code><br>3.需要展示的数据集<br>4.需要展示的<code>View</code>模板</p>
-</blockquote>
-<h1 id="3-各组成之间的关系"><a href="#3-各组成之间的关系" class="headerlink" title="3.各组成之间的关系"></a>3.各组成之间的关系</h1><p><code>ListView</code>只负责加载、管理视图，至于有多少数据，每一项数据要怎么来展示，这些它都不关心。<br><code>Adapter</code>使用<code>Adapter</code>模式，使用抽象方式将用户需要指定的数据抽象出来，让用户去实现。比如：有多少数据需要展示、用什么方式来进行展示等等。<br>需要实现的<code>Adapter</code>的函数为：</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/27.png" alt="img1"><br><a id="more"></a></p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>随着开发进度的放慢，程序的主体功能已大致完成，在需求渐渐少下来的时候，我们就需要有计划的对原有的一些代码进行整理，使其结构清晰，更容易被人所阅读，也更容易来进行修改，添加新功能。当然，我个人是不赞成特意分配一些时间来进行重构，也就是把重构当作一个单独的事情区分出来进行特别的处理。我认为当我们在新功能的添加过程中就应该嗅出代码里的<code>坏味道</code>，然后，对代码进行小规模重构，使其能够很顺利的添加新的功能，同时不引入新的问题。但由于历史原因，前期开发也许没有足够的时间，没有详细的设计，以及没有严格的规范要求等等，都使得我们需要在后面的时候里对前期的代码进行重构。目前我的处境正是如此。</p>
+<h1 id="为什么要进行重构？"><a href="#为什么要进行重构？" class="headerlink" title="为什么要进行重构？"></a>为什么要进行重构？</h1><p>我们的整个开发流程首先是要先对程序进行总体的设计，此时的设计是一种根据经验的推测性设计，让程序系统按照既定的想法进行程序的开发;而事情住住不会按照我们预想的那样顺利的进行，或者说不能完全按照我们先前的设计顺利的进行。此时，就需要我们运用<code>重构</code>来修正我们设计上的偏差，让其更加适应需求的变化，保证程序的质量。<br>这里借用《改善既有代码》一书里的说明。</p>
 <blockquote>
-<p>1.getCount():指定当前有多少数据需要展示<br>2.getItem(int):获取当前<code>position</code>位置的数据<br>3.getItemId(int):直接返回当前对应的<code>position</code><br>4.getView(int,View,ViewGroup):返回当前<code>position</code>对应的<code>item</code>的<code>view</code></p>
+<p>1.难以阅读的程序，难以修改<br>2.逻辑重复的程序，难以修改<br>3.添加新行为时需要修改已有代码时，难以修改<br>4.带复杂条件逻辑的程序，难以修改  </p>
 </blockquote>
-<h1 id="4-ListView原理"><a href="#4-ListView原理" class="headerlink" title="4.ListView原理"></a>4.ListView原理</h1><p>当处理较大的数据时，<code>Listview</code>并不是一次性加载所有数据，而是只加载铺满整个屏幕的数据。当屏幕向下滚动时，第一个元素离开了屏幕之后会进入到<code>Listview</code>里的一个<code>Recycler</code>集合中，<code>Recycler</code>会将当前视图缓存。这时最下面需要填充一个新的元素，<code>ListView</code>会先去<code>Recycler</code>集合里去取，如果有就会复用此视图，如果没有就接着创建。通过<code>getView(int,View,ViewGroup)</code>方法将所取到的数据传递给用户来进行复用，如果没有传递的<code>convertView</code>将为<code>null</code>.<br><img width="480" height="360" src="/uploads/img/AndroidAdvanceDevelop/1/4.png"><br>上面这张图很好的说明了<code>ListView</code>的复用原理。</p>
-<pre><code>@Override
-public View getView(int position, View convertView, ViewGroup parent) {
-    View mView = null;
-    if (convertView != null)
-        mView = convertView;
-    else {
-        //重新加载视图
-        mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, null);
-    }
-    //这里将数据和视图进行绑定
-
-    return mView;
-}
-</code></pre><p>这里的<code>position</code>表示当前<code>item</code>是第几项数据，<code>convertView</code>表示缓存的<code>item view</code>，<code>parent</code>表示<code>item view</code>的父视图，这里所指的就是我们的<code>Listview</code>。这里最重要的就是<code>convertView</code>，如果<code>convertView</code>不为空，可以直接复用该视图，如果为空，就要重新创建视图，最后返回当前<code>item</code>所对应的已绑定数据的<code>view</code>.</p>
-<h1 id="5-ListView设计模式解析"><a href="#5-ListView设计模式解析" class="headerlink" title="5.ListView设计模式解析"></a>5.ListView设计模式解析</h1><p><code>listView</code>运用了<code>Adapter</code>模式，而在<code>Adapter</code>类中却还运用了观察者模式，<code>Adapter</code>内部有一个被观察者类，<code>ListView</code>作为它的一个观察者,在将<code>Adapter</code>设置给<code>ListView</code>时，<code>ListView</code>就被当作观察者注册到了<code>Adapter</code>内的被观察者对象上了。<br>我们以<code>ListView</code>的数据刷新来通过源码实现来看看其设计模式</p>
-<pre><code>@Override
-public void setAdapter(ListAdapter adapter) {
-    //代码省略...
-    super.setAdapter(adapter);
-        //代码省略...
-    mDataSetObserver = new AdapterDataSetObserver();
-    mAdapter.registerDataSetObserver(mDataSetObserver);
-        //代码省略...
-}
-</code></pre><p>上面源码说明在<code>setAdapter</code>方法里创建了一个<code>AdapterDataSetObserver</code>对象，并把该对象注册到了<code>mAdapter</code>。</p>
-<p>再来看看我们<code>Adapter</code>的父类<code>BaseAdapter</code></p>
-<p>在<code>BaseAdapter</code>基类中我们看到了上面的<code>AdapterDataSetObserver</code>类被注册到了<code>DataSetObservable</code>被观察者对象中。<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/8.png"></p>
-<p>接下来我们来看看<code>DataSetObservable</code>类<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/5.png"><br>从图上可以看出<code>DataSetObservable</code>就是继承了<code>Java</code>提供的被观察者对象，并通过<code>notifyChanged</code>来通知注册了的观察者对象。</p>
-<p>到这里还是没有看到<code>ListView</code>注册了<code>Adapter</code>。而注册的是<code>AdapterDataSetObserver</code>对象。那我们就去看看这个<code>AdapterDataSetObservable</code>这个对象的实现吧。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/6.png"><br>从图上可以看出，这是一个典型的Observer的实现，通过实现<code>onChanged</code>来接收被观察都传递过来的数据。在<code>onChanged</code>方法里调用了父类的方法，我们去父类一探究竟。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/7.png"><br>在<code>AdapterDataSetObserver</code>的<code>onChanged</code>方法中，我们获取了<code>item</code>的个数，以及调用<code>requestLayout</code>方法来进行重新布局，绘制整个<code>listView</code>的<code>item View</code>.执行完此过程后，<code>ListView</code>中的数据就得到了刷新。</p>
-<p>这里的<code>AdapterDataSetObserver</code>对象里调用的都是<code>AdapterView</code>或者<code>ViewGroup</code>类的属性或方法完成功能.而<code>ListView</code>继承自<code>AdapterView</code>.因此，只可以说<code>AdapterDataSetObserver</code>只是在外层做了一下包装，核心的功能应该是<code>ListView</code>，确切的说是<code>AdapterView</code>。<code>ListView</code>通过<code>Adapter</code>模式、观察者模式、以及使用<code>item View</code>复用来高效的展示列表数据</p>
-
+<p>以上四点基本上阐述了需要进行重构的原因，重构就是要解决以上问题，让程序变得容易修改。重构要达到的目的是：</p>
+<blockquote>
+<p>1.容易阅读<br>2.所有逻辑都只在唯一的地点指定<br>3.新的改动不会危及现有行为<br>4.尽可能简单表达条件逻辑  </p>
+</blockquote>
+<p>好吧，让我们开始重构吧！</p>
+<h1 id="重构的难点"><a href="#重构的难点" class="headerlink" title="重构的难点"></a>重构的难点</h1><h1 id="重构的原则"><a href="#重构的原则" class="headerlink" title="重构的原则"></a>重构的原则</h1><h1 id="哪些场景需要用到重构"><a href="#哪些场景需要用到重构" class="headerlink" title="哪些场景需要用到重构"></a>哪些场景需要用到重构</h1><h2 id="1-Duplicated-Code-重复代码"><a href="#1-Duplicated-Code-重复代码" class="headerlink" title="1.Duplicated Code(重复代码)"></a>1.Duplicated Code(重复代码)</h2><h2 id="2-Long-Method-过长函数"><a href="#2-Long-Method-过长函数" class="headerlink" title="2.Long Method(过长函数)"></a>2.Long Method(过长函数)</h2><h2 id="3-Large-Class-过大的类"><a href="#3-Large-Class-过大的类" class="headerlink" title="3.Large Class(过大的类)"></a>3.Large Class(过大的类)</h2><h1 id="常用的重构方法"><a href="#常用的重构方法" class="headerlink" title="常用的重构方法"></a>常用的重构方法</h1>
       
     </div>
 
@@ -318,16 +282,16 @@ public void setAdapter(ListAdapter adapter) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" rel="next" title="Android开发进阶第一章—Android的构成基石读书笔记">
-                <i class="fa fa-chevron-left"></i> Android开发进阶第一章—Android的构成基石读书笔记
+              <a href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/" rel="next" title="Android开发进阶_创建丰富多彩的View读后笔记">
+                <i class="fa fa-chevron-left"></i> Android开发进阶_创建丰富多彩的View读后笔记
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/30/PulltoRefresh源码分析/" rel="prev" title="PulltoRefresh源码分析">
-                PulltoRefresh源码分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/04/23/Android开发进阶——性能优化读后笔记/" rel="prev" title="Android开发进阶——性能优化读后笔记">
+                Android开发进阶——性能优化读后笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -354,8 +318,8 @@ public void setAdapter(ListAdapter adapter) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/27/ListView原理解析/"
-           data-title="ListView原理及设计模式浅析" data-url="http://yoursite.com/2016/03/27/ListView原理解析/">
+      <div class="ds-thread" data-thread-key="2016/04/21/浅谈代码重构的重要性和方法/"
+           data-title="浅谈代码重构的重要性和方法" data-url="http://yoursite.com/2016/04/21/浅谈代码重构的重要性和方法/">
       </div>
     
   </div>
@@ -454,7 +418,7 @@ public void setAdapter(ListAdapter adapter) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介"><span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-展示列表所需要的元素组成"><span class="nav-text">2.展示列表所需要的元素组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-各组成之间的关系"><span class="nav-text">3.各组成之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-ListView原理"><span class="nav-text">4.ListView原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ListView设计模式解析"><span class="nav-text">5.ListView设计模式解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行重构？"><span class="nav-text">为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重构的难点"><span class="nav-text">重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重构的原则"><span class="nav-text">重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哪些场景需要用到重构"><span class="nav-text">哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的重构方法"><span class="nav-text">常用的重构方法</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
