@@ -57,37 +57,18 @@
 
 
 
-<meta name="description" content="需求
-今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 
-
-1.需求分析
-这里有几个问题需要解决?  
-1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？
-
-这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RecyclerView每个Item展示倒计时">
 <meta property="og:url" content="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="需求
-今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 
-
-1.需求分析
-这里有几个问题需要解决?  
-1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？
-
-这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起">
-<meta property="og:updated_time" content="2016-03-12T07:51:42.000Z">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
+<meta property="og:updated_time" content="2016-04-25T02:49:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView每个Item展示倒计时">
-<meta name="twitter:description" content="需求
-今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 
-
-1.需求分析
-这里有几个问题需要解决?  
-1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？
-
-这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
 
 
 
@@ -273,7 +254,9 @@
       
 
       
-        <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/45.png" alt="img1"></p>
+<a id="more"></a>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
 <p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
 </blockquote>
 <h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
@@ -292,7 +275,7 @@
 </blockquote>
 <p>4.性能优化问题？</p>
 <blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。<br><a id="more"></a></p>
+<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。</p>
 </blockquote>
 </blockquote>
 <h1 id="2-定时器工具类的实现"><a href="#2-定时器工具类的实现" class="headerlink" title="2.定时器工具类的实现"></a><strong>2.定时器工具类的实现</strong></h1><blockquote>

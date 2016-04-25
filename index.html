@@ -851,7 +851,7 @@
 
       
         
-          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h1><p>经常在使用Rxjava或者RxBind等一些函数式编程语言的时候就会发现有很多简写的语句，比如<code>()-&gt;{}</code>这样子的东西，刚开始看不懂这些都代表什么意思，更不知道要怎么去写这样子看起来有逼格的代码，查了些资料，发现原来这是JAVA 8新特性<code>Lambda表达式</code>。喜欢研究新技术的我呢，当然是不会落下这学习新东西的机会，于是，玩了一周的零碎时间来看了下我们的<code>Lambda表达式</code>,今天来总结一下我对<code>Lambda表达式</code>的粗浅认识。</p>
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/4/47.png" alt="img1"><br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/26/Java-Lambda基础入门/#more" rel="contents">
               阅读全文 &raquo;
@@ -949,9 +949,7 @@
 
       
         
-          <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
-<p>我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响应式的编程，更符合现实生活的定义。然后呢，Retrofit出来也很久了，很早就听说过这个库非常好用，只是之前一直停留在1.9，没有出2.0的正式版，又一直没用，刚好今年年初，2.0出来了，呵呵，终于有机会来玩玩了。。.</p>
-</blockquote>
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/4/46.png" alt="img1"><br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/#more" rel="contents">
               阅读全文 &raquo;
@@ -1049,26 +1047,7 @@
 
       
         
-          <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
-</blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
-<blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
-</blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。<br>
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/4/45.png" alt="img1"></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/12/RecyclerView每个Item展示倒计时/#more" rel="contents">
               阅读全文 &raquo;
@@ -1166,8 +1145,7 @@
 
       
         
-          <h1 id="前期需求"><a href="#前期需求" class="headerlink" title="前期需求"></a><strong>前期需求</strong></h1><blockquote>
-<p>我们公司最近需要开发一个功能，大致要求是：通过复制一个分享出去的文字(这段文字有一定的规则，比如满足某种格式#文字#….url….)当用户复制了这段文字，打开了我们的app，就会对文字进行检查，满足条件，<br>就提取相应的条件去服务器请求，当数据请求下来后，就会通过弹窗的形式提示用户，并提供直达相应页面的跳转。需求大概就是这样了。<br>
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/4/44.png" alt="img1"></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/02/Android实现全局弹窗的三种方式/#more" rel="contents">
               阅读全文 &raquo;

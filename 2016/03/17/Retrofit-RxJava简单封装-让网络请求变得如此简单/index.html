@@ -57,19 +57,18 @@
 
 
 
-<meta name="description" content="前提
-我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Retrofit+RxJava简单封装-让网络请求变得如此简单">
 <meta property="og:url" content="http://yoursite.com/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="前提
-我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
-<meta property="og:updated_time" content="2016-03-20T08:40:42.000Z">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/46.png">
+<meta property="og:updated_time" content="2016-04-25T03:00:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Retrofit+RxJava简单封装-让网络请求变得如此简单">
-<meta name="twitter:description" content="前提
-我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/46.png">
 
 
 
@@ -255,10 +254,10 @@
       
 
       
-        <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/46.png" alt="img1"><br><a id="more"></a></p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a><strong>前提</strong></h1><blockquote>
 <p>我们公司处理网络请求是封装了okhttp，然后使用AsyncTask来然而异步网络请求，每次写一个网络请求都要创建一个AsyncTask文件，然后，处理一大堆的事件，虽然对AsyncTask进行了一层封装，但每次写都觉得不爽，而且AsyncTask又比较消耗系统资源，至从学习了Rxjava后，感觉，太爽了，一个链式调用就解决了以前很多代码还能实现的问题，既简洁，又阅读方便，最重要的它是函数响应式的编程，更符合现实生活的定义。然后呢，Retrofit出来也很久了，很早就听说过这个库非常好用，只是之前一直停留在1.9，没有出2.0的正式版，又一直没用，刚好今年年初，2.0出来了，呵呵，终于有机会来玩玩了。。.</p>
 </blockquote>
-<a id="more"></a>
 <h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a><strong>目的</strong></h1><blockquote>
 <p>通过Rxjava与Retrofit的结合，让请求变得非常简单，而且在源头解决错误信息的处理，让获取数据的最终端只需要处理数据请求成功就可以了。。</p>
 </blockquote>
