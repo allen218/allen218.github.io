@@ -1,0 +1,915 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发进阶——Git版本控制读后笔记">
+<meta property="og:url" content="http://yoursite.com/2016/04/26/Android开发进阶——Git版本控制/index.html">
+<meta property="og:site_name" content="Allen'Notes">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/54.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/48.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/49.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/50.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/51.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/52.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/53.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/55.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/56.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/57.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/58.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/59.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/60.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/61.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/62.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/63.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/64.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/65.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/66.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/67.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/68.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/69.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/70.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/71.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/72.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/73.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/74.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/75.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/76.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/77.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/78.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/79.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/80.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/81.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/82.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/83.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/84.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/85.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/86.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/87.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/88.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/89.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/90.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/91.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/92.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/93.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/94.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/95.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/96.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/97.png">
+<meta property="og:updated_time" content="2016-05-05T15:17:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发进阶——Git版本控制读后笔记">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/54.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android开发进阶——Git版本控制读后笔记 | Allen'Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Allen'Notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android开发进阶——Git版本控制读后笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-26T20:48:46+08:00" content="2016-04-26">
+              2016-04-26
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/26/Android开发进阶——Git版本控制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/Android开发进阶——Git版本控制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/54.png" alt="img"><br><a id="more"></a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>&emsp;&emsp;今天我们就来说说Git版本控制吧，相信大家都有用或者将要用也或者曾经有用吧。如果你还没有使用Git或者对其没有了解的话，今天这篇博客非常适合你。这篇博客的主要内容从Git的原理、Git的配置、到Git的基本命令的使用及说明，然后使用Git命令在<code>Github</code>创建一个完整的仓库;最后使用fork方式在<code>Github</code>上参与开源项目及其背后的逻辑再对Git版本控制来作一个比较基础、全面的了解。</p>
+<h1 id="1-Git起源"><a href="#1-Git起源" class="headerlink" title="1.Git起源"></a>1.Git起源</h1><p>&emsp;&emsp;在早期的<code>Linux</code>开源项目中，有着众多的参与者，绝大多数的<code>Linux</code>内核维护工作都花在了提交补丁和保存归档等繁琐，重复的事务上。到2002年，整个项目组开始启用分布式版本控制系统<code>BitKeeper</code>来管理和维护自己的代码，但好景不长，到2005年<code>BitKeeper</code>公司就收回了<code>Linux</code>开源团队免费使用<code>BitKeeper</code>的权力。这就迫使<code>Linux</code>团队不得不更换版本控制系统。此时，<code>Linux</code>之父<code>Linus</code>决定自己开发一套版本控制系统。在开发系统之前，先对系统作了几个大致的要求：</p>
+<blockquote>
+<p>1.速度<br>2.简单的设计<br>3.对非线性开发的强力支持(也就是允许成百上千的开发者同时开发)<br>4.完全分布式<br>5.有能力高效管理类似<code>Linux</code>内核这样的大型项目   </p>
+</blockquote>
+<p>有了目标之后，事情就变得好办了。身为<code>Linux</code>之父的<code>Linus</code>花了两周时间就用C完成了一个分布式版本控制系统，这就是<code>Git</code>的第一版！经历一个月之后，<code>Linux</code>内核源码就由<code>Git</code>来管理了。<br>如今，Git已经非常成熟，越来越多的公司都使用<code>Git</code>作为自己的版本控制系统来管理代码，特别是开源部分，世界上最大的开源网站<code>Github</code>就是基于<code>Git</code>来让开发者管理开源项目的。  </p>
+<h1 id="2-Git基本原理"><a href="#2-Git基本原理" class="headerlink" title="2.Git基本原理"></a>2.Git基本原理</h1><p>&emsp;&emsp;像我这一代的程序员除了<code>Git</code>外就只用过<code>SVN</code>吧。个人感觉在国内这两个占主流。两者虽然在操作上非常相似，但是两者在实现上有着本质的区别。<code>Git</code>属于分布式版本控制系统，而<code>SVN</code>属于集中式版本控制系统。<code>Git</code>的每一个节点都是平等的，不需要依赖其它任何节点，就可以完成对代码的修改、记录与提交，最后再将本地的代码提交到主干来进行合并。而<code>SVN</code>依赖于中心服务器，如果与中心服务器断开，就不能对代码进行版本控制。接下来就来了解一下Git的基本原理吧！  </p>
+<h2 id="2-1-直接记录快照，而非差异比较"><a href="#2-1-直接记录快照，而非差异比较" class="headerlink" title="2.1.直接记录快照，而非差异比较"></a>2.1.直接记录快照，而非差异比较</h2><p>&emsp;&emsp;<code>Git</code>与<code>SVN</code>的差别在于：<code>Git</code>只关心文件数据整体是否发生变化，而<code>SVN</code>只关心文件内容的具体差异。<img src="/uploads/img/AndroidAdvanceDevelop/4/48.png" alt="img">SVN在每个版本下对有变化的文件 进行一次记录，没有变化的不处理。<br><img src="/uploads/img/AndroidAdvanceDevelop/4/49.png" alt="img">而Git更像是把变化的文件做快照后，记录在一个微型的文件系统里。每次提交更新时，Git都会去遍历一次所有文件的指纹信息并对文件做统一快照，然后保存一个指向这个快照的索引。为了提高性能，若文件没有发生变化，也就是指纹信息没有改变，<code>Git</code>不会再次保存，而只对上次保存的快照做一个链接。</p>
+<h2 id="2-2近乎所有操作都在本地执行"><a href="#2-2近乎所有操作都在本地执行" class="headerlink" title="2.2近乎所有操作都在本地执行"></a>2.2近乎所有操作都在本地执行</h2><p>&emsp;&emsp;在使用<code>Git</code>来进行版本控制时，一般会先从服务器上<code>pull</code>一份项目源代码保存在本地，这份本地的源代码与服务器上的可以说是cp下来完全一样的。之后在项目中的操作基本上只需要同这个本地仓库来进行操作，就可以对代码进行版本记录与控制。也就是说代码成功cp之后，基本上就不需要网络，就可以对当前代码进行版本控制。而<code>SVN</code>几乎所有的版本控制的操作都必须要在有网络的情况下进行。这也就是为什么<code>Git</code>比<code>SVN</code>要快得多。<br>举个例子，如果你需要查看某个文件的历史记录，<code>Git</code>不需要到服务器上去取数据，而是直接从本地数据库里记取后展示给你看。如果想要查看当前版本的文件与一个月前的版本文件之间的差异，<code>Git</code>会取出一个月前的快照与当前文件做一个差异计算，而不用去请求服务器，或者是把老版本的文件拉到本地来做比较。<code>Git</code>的本地化操作使开发对代码的代码管理非常方便，无论你身处何处都能完成对代码进行版本控制，这样极大的提高的开发的效率。  </p>
+<h2 id="2-3时刻保持数据完整性"><a href="#2-3时刻保持数据完整性" class="headerlink" title="2.3时刻保持数据完整性"></a>2.3时刻保持数据完整性</h2><p>&emsp;&emsp;在保存<code>Git</code>之前，会对所有的数据进行内容的校验和计算，并将结果作为数据的唯一标识和索引。如果文件变得不完整，比如：文件传输没有完成、磁盘损坏导致的数据丢失等，<code>Git</code>都会通过前后<code>SHA</code>之间的比对而立即察觉。<br><code>Git</code>是通过<code>SHA-1</code>算法计算数据的校验和，通过对文件内容或目录结构计算出一个<code>SHA-1</code>的哈希值，作为指纹字符串，该字符串由40个十六进制字符(0-f)来进行表示的。看进来像这样。<img src="/uploads/img/AndroidAdvanceDevelop/4/50.png" alt="img"><code>Git</code>的实现完全依赖于此指纹字符串，我们会在各种场合下看到类似的字符串。比如通过在<code>Git</code>项目中使用<code>Git log</code>命令来查看提交历史时，就能看到相应的指纹字符串。<img src="/uploads/img/AndroidAdvanceDevelop/4/51.png" alt="img">  </p>
+<h2 id="2-4多数操作仅添加文件"><a href="#2-4多数操作仅添加文件" class="headerlink" title="2.4多数操作仅添加文件"></a>2.4多数操作仅添加文件</h2><p>&emsp;&emsp;这里要说的是，大多数的<code>Git</code>操作可能都是向数据库添加数据，而像删除数据等操作就需要谨慎，因为这种操作是一种不可撤销的操作，一旦操作失误，就无法进行回退和恢复。这里就需要我们养成定期向远程仓库提交代码的习惯，这样的话，即使本地数据不小心被误删，也可以从远程仓库来进行恢复。  </p>
+<h2 id="2-5文件的3种状态"><a href="#2-5文件的3种状态" class="headerlink" title="2.5文件的3种状态  "></a>2.5文件的3种状态  </h2><p>&emsp;&emsp;要了解<code>Git</code>的工作模式，就必须先了解在<code>Git</code>管理下的项目的3种状态。对于任何一个文件，在<code>Git</code>内部只有3种状态：  </p>
+<blockquote>
+<ol>
+<li>已提交(committed):表示该文件已经被安全地保存在本地数据库。  即执行了<code>git commit</code>命令。  </li>
+<li>已修改(modified):表示已修改了某个文件，但还没有提交保存。  </li>
+<li>已暂存(staged):表示已修改的文件放在下次提交时要保存的清单中，也就是执行了<code>git add</code>命令。</li>
+</ol>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/52.png" alt="img">由此图可以看出Git管理项目时的，文件流转的三个区域：  </p>
+<blockquote>
+<ol>
+<li>Git工作目录:Git对哪个目录进行版本控制，那么这个目录就叫做工作目录。工作目录里的数据实际上都是从Git目录的压缩对象数据库中提取出来的。    </li>
+<li>暂存区域:只不过是一个简单的文件，一般都放在Git目录中。也就是执行了<code>Git add</code>命令后文件添加到下次提交要保存的清单的存放位置。  </li>
+<li>本地仓库:将数据存放到数据库文件中进行保存。  </li>
+</ol>
+</blockquote>
+<p>每个项目都有一个Git目录(当前项目根目录下隐藏的.git目录)，这是Git用来保存元数据和对象数据库的地方。每次克隆镜像仓库时，实际上复制的就是此目录的内容。  </p>
+<p><strong>基本的Git工作流程</strong></p>
+<blockquote>
+<p>1.在工作目录中修改某个文件<br>2.对修改后的文件进行快照，然后保存到暂存区域<br>3.提交更新，将保存在暂存区域的文件快照永久转储到数据库中  </p>
+</blockquote>
+<h1 id="3-Git的基本配置"><a href="#3-Git的基本配置" class="headerlink" title="3.Git的基本配置"></a>3.Git的基本配置</h1><p>&emsp;&emsp;<code>Git</code>提供了一个<code>Git config</code>的命令行工具来对<code>Git</code>进行配置。通过<code>Git config</code>配置的参数可以保存到操作系统三个不同的地方，各自代表不同的意思。  </p>
+<blockquote>
+<ol>
+<li><code>/etc/gitconfig</code>:表示系统中对所有用户都普遍适用的配置。若使用<code>git config</code>时用–System选项，读写的就是这个文件。  </li>
+<li><code>~/.gitconfig</code>:用户目录下的配置文件只适用于该用户。若使用<code>git config</code>时用<code>--global</code>选项，读写的就是这个文件。  </li>
+<li>当前项目下的<code>.git/config</code>:该配置仅仅针对当前项目有效。也就是使用<code>git config</code>不带参数选项。 </li>
+<li>每一个级别的配置都会覆盖上层的相同配置，覆盖的优先级为3&gt;2&gt;1  </li>
+</ol>
+</blockquote>
+<p>接下来就说几个比较重要的配置。<br>第一个需要配置的不是你的个人用户名称和电子邮箱地址。每次<code>Git</code>提交时都会引用这两条信息，说明是谁提交了一时更新。</p>
+<blockquote>
+<p>git config –global user.name “yourname”<br>git config –global user.email yourname@example.com  </p>
+</blockquote>
+<p>如上所示，如果命令中包含了<code>--global</code>则表示更改的配置文件位于当前用户主目录下的那个。以后你所有的项目都会默认使用此配置里的用户信息。如果在某个特定项目想要更改用户信息的话，就使用上面去掉<code>--global</code>的命令，这样，配置信息就会保存到当前项目的<code>.git/config</code>文件中。<br>第二个比较常用的配置就是，在解决合并冲突时使用哪种差异分析工具。这里可以使用的差异工具有<code>kdiff3</code>、<code>tkdiff</code>、<code>meld</code>、<code>xxdiff</code>、<code>emerge</code>、<code>vimdiff</code>、<code>gvimdiff</code>、<code>ecmerge</code>、<code>opendiff</code>.<br>要查看已有的配置可以使用<code>git conifg --list</code>来查询。这里列表了所有的配置信息。<img src="/uploads/img/AndroidAdvanceDevelop/4/53.png" alt="img"><br>另外还有一些配置高亮显示的命令：  </p>
+<blockquote>
+<p>git config –global color.status auto //查看状态时高亮显示<br>git config –global color.branch auto  //分支名高亮<br>git config –global color.ui auto  //自动高亮 </p>
+</blockquote>
+<p>最后一个可以提升你效率的配置就是命令的别名配置。例如：<code>checkout</code>命令可以简化为<code>co</code>，status可以设置为<code>st</code>.设置别名命令如下：  </p>
+<blockquote>
+<p>git conifg –global alias.新名字 原始命令  </p>
+</blockquote>
+<p>如：将<code>checkout</code>改成<code>co</code>的命令为： </p>
+<blockquote>
+<p>git config –global alias.co checkout  </p>
+</blockquote>
+<p>配置后就可以直接用<code>git co</code>来代替<code>git checkout</code>了。</p>
+<h1 id="4-Git基本命令"><a href="#4-Git基本命令" class="headerlink" title="4.Git基本命令"></a>4.Git基本命令</h1><p>&emsp;&emsp;使用Git可以使用两种方式进行操作，分别为:<code>Git</code>命令行和<code>GUI</code>操作。但是为了了解<code>Git</code>的工作原理，我们一定要先从命令行入手，就算了以后要使用<code>GUI</code>进行操作也是在熟悉了<code>Git</code>命令行的操作下进行。后面我们从<code>Git</code>的常用命令行来一步一步的进行说明。</p>
+<h2 id="4-1-Git-init（初始化"><a href="#4-1-Git-init（初始化" class="headerlink" title="4.1 Git init（初始化)"></a>4.1 Git init（初始化)</h2><p>&emsp;&emsp;<code>Git init</code>是<code>Git</code>进行操作的第一步，该命令是在项目根目录创建一个隐藏的<code>.Git</code>目录。该目录存放了<code>Git</code>的配置信息，<code>Git</code>就是使用此目录来对项目进行版本控制的，也就是项目的快照以及其它的数据信息都是保存在此目录的。例如：我创建了一个名叫<code>git_proect</code>的目录。在该目录下使用了<code>git init</code>来进行初始化。<img src="/uploads/img/AndroidAdvanceDevelop/4/55.png" alt="img">  </p>
+<h2 id="4-2-Git-Status（查看当前状态）"><a href="#4-2-Git-Status（查看当前状态）" class="headerlink" title="4.2 Git Status（查看当前状态）"></a>4.2 Git Status（查看当前状态）</h2><p>&emsp;&emsp;在使用了<code>Git init</code>进行项目的初始化之后，在<code>Git Status</code>中使用最频繁的一条命令，此条命令的意思是查看当前项目的状态。例如：我现在在该目录下创建一个文件<code>HelloWorld.java</code>，然后来查看一下当前的状态。<img src="/uploads/img/AndroidAdvanceDevelop/4/56.png" alt="img">图上比较显眼的就是红色部分，也就是我们创建的<code>HelloWorld.java</code>文件。这里显示红色表示当前文件还没有被添加到git管理。而红色框里的内容意思是使用<code>git add</code>可以将任何文件添加到<code>Git</code>进行管理。使用<code>git add</code>也就是我们前面所说的三种状态下的已暂存。也就是先把当前文件或者目录添加到git文件提交清单中，下次<code>commit</code>时被提交到<code>git</code>本地仓库。</p>
+<h2 id="4-3-Git-Add（添加文件到追踪列表）"><a href="#4-3-Git-Add（添加文件到追踪列表）" class="headerlink" title="4.3 Git Add（添加文件到追踪列表）"></a>4.3 Git Add（添加文件到追踪列表）</h2><p>&emsp;&emsp;<code>Git add</code>方法的作用是将当前一个或者多个文件添加到<code>Git</code>追踪列表中，也就是通过<code>Git add</code>来将文件添加到<code>Git</code>版本控制。一般情况下，<code>git add</code>后面跟参数为一个文件或者<code>.</code>。</p>
+<blockquote>
+<ol>
+<li>git add HelloWorld.java  //将此文件添加到<code>Git</code>   </li>
+<li>git add .   //将当前目录下的所有文件，包括子目录下的文件全部添加到<code>git</code>  </li>
+</ol>
+</blockquote>
+<p>使用<code>git add HelloWorld.java</code>之后，我们再来通过<code>git status</code>来查看当前的状态变化。<img src="/uploads/img/AndroidAdvanceDevelop/4/57.png" alt="img">这里<code>HelloWorld.java</code>已经从红色变成了绿色，说明此文件已经被添加到了git。这里说明一下，平时要养成<code>git status</code>来查看当前状态，以避免遗漏。<br>我们已经知道了怎么添加一个文件或者目录到git中，而当我们想要移除一个文件呢？我们该怎么操作？其实上面的()里面就已经有了说明，<code>git rm --cached &lt;file&gt;</code>来对文件作移除操作。</p>
+<h2 id="4-4-Git-commited（提交）"><a href="#4-4-Git-commited（提交）" class="headerlink" title="4.4 Git commited（提交）"></a>4.4 Git commited（提交）</h2><p>&emsp;&emsp;一般使用<code>git add</code>添加文件到<code>git</code>追踪目录中的时机是当一个功能已经被完成，并且想要添加到本地仓库中。使用完<code>git add</code>添加文件后，我们需要使用<code>git commited</code>来将暂存文件中的文件添加到本地仓库。此时，你的代码才是真正添加到了git本地仓库。一般，提交<code>git</code>的方式有两种：  </p>
+<blockquote>
+<ol>
+<li>git commit -m “提交说明文字”  //通过-m在提交时添加简短说明  </li>
+<li>git commit //不加说明信息，直接使用<code>git commit</code>提交，会跳转到编辑器。  </li>
+</ol>
+</blockquote>
+<p>使用第一种方式快捷、方便，不需要跳转到编辑器就完成了代码提交。但是当说明的内容比较多时，第一种方式就不太合适了，此时就需要使用第二种方式来添加单独到编辑器里进行内容的说明了。使用第二种方式，是这样子的。<img src="/uploads/img/AndroidAdvanceDevelop/4/58.png" alt="img">在没有<code>#</code>的空白区域添加要说明的文字，之后，保存。就完成了文件的提交。此时我们使用<code>git status</code>来查看当前的状态。<img src="/uploads/img/AndroidAdvanceDevelop/4/59.png" alt="img">红框部分说明当前已经没有可以提交的文件。到这里说明，此次创建的文件就已经提交到了本地仓库。  </p>
+<h2 id="4-5-Git-log-查看历史提交记录"><a href="#4-5-Git-log-查看历史提交记录" class="headerlink" title="4.5 Git log(查看历史提交记录)"></a>4.5 Git log(查看历史提交记录)</h2><p>&emsp;&emsp;<code>git log</code>的作用是查看历史提交的记录，也就是查看某个文件被修改的记录。比如：我们上面添加了一个<code>HelloWorld.java</code>的文件，此时我们使用<code>git log</code>来查看当前项目的历史提交记录。<img src="/uploads/img/AndroidAdvanceDevelop/4/60.png" alt="img">上面的信息说明我们的项目只提交过一次，所以，只有一条提交历史记录。</p>
+<h2 id="4-6-Git-clone-下载项目"><a href="#4-6-Git-clone-下载项目" class="headerlink" title="4.6 Git clone(下载项目)"></a>4.6 Git clone(下载项目)</h2><p>&emsp;&emsp;很多时候我们需要将别人托管在网站上的开源库下载到本地计算机，此时我们需要用到<code>git clone</code>将远程代码库下载到本地。比如：我们需要下载<code>DynamicAPK</code>这个项目到本地，可以使用  </p>
+<blockquote>
+<p>git  clone  <a href="https://github.com/CtripMobile/DynamicAPK.git" target="_blank" rel="external">https://github.com/CtripMobile/DynamicAPK.git</a>  </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/61.png" alt="img"></p>
+<h2 id="4-7-Git-branch（不同分支）"><a href="#4-7-Git-branch（不同分支）" class="headerlink" title="4.7 Git branch（不同分支）"></a>4.7 Git branch（不同分支）</h2><p>&emsp;&emsp;此命令可以查看或者创建新的分支。在<code>git_project</code>里，使用<code>git status</code>查看当前状态，会发现命令行里都有一个<code>master</code>标识。<img src="/uploads/img/AndroidAdvanceDevelop/4/62.png" alt="img">表明当前处理<code>master</code>分支。当<code>Git</code>初始化之后，会默认创建一个<code>master</code>分支，你的操作也默认在<code>master</code>分支进行，不同的分支的文件相互不影响。我们可以通过<code>git branch</code>来查看当前项目的分支情况，以及当前操作位于哪个分区。<img src="/uploads/img/AndroidAdvanceDevelop/4/63.png" alt="img">图上表明，当前项目下只有一个<code>master</code>默认分支。当你需要开发一个聊天的新功能，但是又没有太大的把握能够如期顺利的完成，为了安全起见，此时就需要新建一个新的分支，然后将聊天的功能代码在新建的分支下进行<code>coding</code>。<img src="/uploads/img/AndroidAdvanceDevelop/4/64.png" alt="img">在图上我们创建了一个<code>talking</code>的分支，然后查看了当前的分支状态。带<code>*</code>号说明我们当前所处的位置是在<code>master</code>分支下。那么，我们需要到<code>talking</code>来进行<code>coding</code>要怎么办呢？此时我们需要使用<code>git checkout</code>命令来进行切换。  </p>
+<h2 id="4-8-Git-Checkout（切换分支）"><a href="#4-8-Git-Checkout（切换分支）" class="headerlink" title="4.8 Git Checkout（切换分支）"></a>4.8 Git Checkout（切换分支）</h2><p>&emsp;&emsp;<code>git checkout</code>的作用为切换分支和恢复数据。当我们需要切换到<code>talking</code>分支时我们可以使用  </p>
+<blockquote>
+<p>git  checkout  分支名(这里为talking) </p>
+</blockquote>
+<p>来将当前位置切换到<code>talking</code>分支。<img src="/uploads/img/AndroidAdvanceDevelop/4/65.png" alt="img">可以看到，当前分支已经切换到<code>talking</code>，也就是<code>*</code>所指向的分支。此时我们在当前分支创建一个<code>chat.java</code>的文件，然后在<code>chat.java</code>里添加相应的实现聊天的代码。将<code>chat.java</code>开发完成后，我们通过下面两条代码将代码添加到了仓库。  </p>
+<blockquote>
+<p>git  add  chat.java<br>git  commit -m  “add chat.java”  </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/66.png" alt="img">由于我们是在分支<code>talking</code>下进行聊天代码的添加的。也就是<code>master</code>没有受到任何影响。<img src="/uploads/img/AndroidAdvanceDevelop/4/67.png" alt="img">从图上也可以看出，当前<code>master</code>目录是没有<code>chat.java</code>文件的。如果我们的聊天功能发现了一个不可修复的bug，我们只好放弃<code>talking</code>分支，那么我们可以先切换到<code>master</code>分支，然后通过使用<code>git branch -d</code>命令来将<code>talking</code>分支移除。</p>
+<blockquote>
+<p>git    checkout    master<br>git    branch    -D    talking   </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/68.png" alt="img"><br><code>git checkout</code>的另外一个功能是恢复到修改之前的代码。假如:<code>HelloWorld.java</code>的原来代码为<img src="/uploads/img/AndroidAdvanceDevelop/4/69.png" alt="img">经过一番<code>coding</code>之后，代码变得面目全非了。<img src="/uploads/img/AndroidAdvanceDevelop/4/70.png" alt="img">而由于代码过于混乱，导致之前正确的代码也变得不可用，此时需要恢复到当前未修改的状态，可以使用<code>git checkout</code>命令来进行恢复。</p>
+<blockquote>
+<p>git    checkout    –    HelloWorld.java  </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/71.png" alt="img"></p>
+<h2 id="4-9-Git-merge（合并分支）"><a href="#4-9-Git-merge（合并分支）" class="headerlink" title="4.9 Git merge（合并分支）"></a>4.9 Git merge（合并分支）</h2><p>&emsp;&emsp;上一节我们在分支<code>talking</code>下开发了一个聊天功能，如果开发成功了，我们需要将<code>talking</code>分支与<code>master</code>分支进行合并，此时需要使用<code>git merge</code>命令来进行合并。我们要提交<code>talking</code>分支到本地仓库，然后切换到<code>master</code>分支，使用<code>git merge talking</code>来进行合并，如果没有冲突，那么<code>master</code>分支将会和<code>talking</code>分支合并。<img src="/uploads/img/AndroidAdvanceDevelop/4/72.png" alt="img">合并成功，可以看到<code>master</code>分支下已经有了<code>chat.java</code>聊天功能的文件了。</p>
+<h2 id="4-10-解决冲突"><a href="#4-10-解决冲突" class="headerlink" title="4.10 解决冲突"></a>4.10 解决冲突</h2><p>&emsp;&emsp;当我们在使用<code>git merge</code>命令时，如果没有冲突都会自动合并，否则将会提示哪些文件产生了冲突。冲突主要是由于多个人同时修改了同一个文件的相同地方所造成的，<code>Git</code>系统不知道应该使用哪部分的代码。解决冲突的方式就是让开发人员自己选择需要保留哪一部分的代码和删除哪一部分的代码。<br>比如，开发A和开发B共同开发<code>chat.java</code>聊天文件，两人都修改了函数<code>eat()</code>内部的代码，此时开发A先添加到了线上的版本控制系统，而此时开发B从线上系统里<code>checkout</code>出最新代码，这时就会发生冲突，需要开发人员来手动进行合并。<br>由于在本地测试比较方便，这里就通过在不同分支修改同一文件，然后再进行合并，由于相同文件内的相应方法同时被修改，此时，也会产生冲突，需要解决冲突。<img src="/uploads/img/AndroidAdvanceDevelop/4/73.png" alt="img"><img src="/uploads/img/AndroidAdvanceDevelop/4/74.png" alt="img">开发人员都修改了<code>eat()</code>方法。此时，使用<code>git merge</code>来合并代码会报冲突。<img src="/uploads/img/AndroidAdvanceDevelop/4/75.png" alt="img">图片上提示，需要打开<code>chat.java</code>来进行合并代码。<img src="/uploads/img/AndroidAdvanceDevelop/4/76.png" alt="img"><code>&gt;&gt;&gt;&gt;&gt;&gt; HEAD</code>表示冲突从此处开始,<code>======</code>表示分割代码冲突的两部分，<code>&gt;&gt;&gt;&gt;&gt;talking</code>表示冲突结束的地方，这里的<code>talking</code>表示冲突的分支。到底要留下个部分或者两个部分的代码都留下，这要由开发人员来判定了。这里我们需要移除分支<code>talking</code>的代码。移除后，代码就变成这样子了。<img src="/uploads/img/AndroidAdvanceDevelop/4/77.png" alt="img"></p>
+<h2 id="4-11-Git-tag-为版本打标签"><a href="#4-11-Git-tag-为版本打标签" class="headerlink" title="4.11 Git tag(为版本打标签)"></a>4.11 Git tag(为版本打标签)</h2><p>&emsp;&emsp;当我们的一个迭代的版本的所有功能都开发完毕，而且都已经经过测试之后，此时，我们通过会为此版本来进行一个标记，也就是为此版本打一个标签。建议大家为每个正式的版本添加一个标签，为便于方便后续版本的检索与维护。通过<code>git tag</code>命令可以查看当前项目的所有标签信息。新建一个<code>tag</code>的命令为：</p>
+<blockquote>
+<p>git   tag   -a   标签名   -m  “这里为描述信息”  //创建标签</p>
+</blockquote>
+<p>通过</p>
+<blockquote>
+<p>git   show   标签名    //查看当前标签信息<br><img src="/uploads/img/AndroidAdvanceDevelop/4/78.png" alt="img"></p>
+</blockquote>
+<p>通过  </p>
+<blockquote>
+<p>git   tag   -d   标签名   //删除标签</p>
+</blockquote>
+<h2 id="4-12-Git-help（帮助文档）"><a href="#4-12-Git-help（帮助文档）" class="headerlink" title="4.12 Git help（帮助文档）"></a>4.12 Git help（帮助文档）</h2><p>&emsp;&emsp;上面所说的一些都是常用的命令，并没有讲得很深，很全。如果对某些命令不是很清楚，或者想了解一些高级的功能，可以通过使用<code>git help</code>查看帮助文档来进行了解。比如我们想要查看<code>tag</code>的相关说明，则使用<code>git help tag</code>来进行查看。<img src="/uploads/img/AndroidAdvanceDevelop/4/79.png" alt="img">这里主要有四项，需要说明一个每一项显示的内容。</p>
+<blockquote>
+<ol>
+<li><code>NAME</code>:描述<code>git tag</code>命令的作用简介  </li>
+<li><code>SYNOPSIS</code>:该<code>git tag</code>命令的参数简介  </li>
+<li><code>DESCRIPTION</code>:该命令的功能及相关参数的介绍  </li>
+<li><code>OPTIONS</code>:各参数的详细说明</li>
+</ol>
+</blockquote>
+<h1 id="5-项目协作——github"><a href="#5-项目协作——github" class="headerlink" title="5.项目协作——github"></a>5.项目协作——github</h1><p>&emsp;&emsp;<code>github</code>是一个共享虚拟主机服务，用于存放通过<code>Git</code>进行版本控制的软件代码和项目。<code>github</code>分为两种用户：一种是免费用户；另一种是付费用户。两个用户类型都可以在<code>github</code>创建公开的仓库。不同的是，付费用户可以在<code>github</code>上创建私有的、不对外公开的仓库。<code>github</code>还提供图表功能，使用图表的方式展示开发者怎么在代码仓库上工作及其开发活跃度。学习使用<code>github</code>来进行版本控制、多人协作将是你必备的技能，也是你参与到开源世界的第一步。  </p>
+<h2 id="5-1-SSH-key配置"><a href="#5-1-SSH-key配置" class="headerlink" title="5.1 SSH key配置"></a>5.1 SSH key配置</h2><p>&emsp;&emsp;要使用<code>github</code>的第一步就是注册帐号。在注册完帐号之后，为了避免每次进行交互时都需要输入帐号名和密码，我们需要在本地配置生成一个<code>SSH key</code>，并将此<code>SSH key</code>添加到<code>github</code>.添加<code>SSH key</code>的目的是：使得在使用远程命令时<code>github</code>能够识别我们的机器，并给予相应的操作权限。<br><strong>1.生成SSH key</strong><br>&emsp;&emsp;首先在本机中生成一个<code>SSH key</code>,使用下面的命令生成：  </p>
+<blockquote>
+<p>ssh-keygen   -t    rsa   -b   4096   -C   “youremail”     //youremail代表你在github上注册时所使用的邮箱  </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/80.png" alt="img">此时会询问你文件保存在哪个目录，这里默认保存的是/Users/你的用户名/.ssh目录下。直接回车即可。回车之后，就依次输出如下提示.<br><img src="/uploads/img/AndroidAdvanceDevelop/4/81.png" alt="img">这里是输入密码和确认密码。这里可以直接回车，就相当于没有输入密码。输入完毕之后，就会出现下面的结果。<img src="/uploads/img/AndroidAdvanceDevelop/4/82.png" alt="img">上面的含义是在/Users/mac/目录下生成了<code>aaa</code>和<code>aaa.pub</code>两个文件。这里主要是因为我重新配置了生成文件所存放的目录，所以这里的文件为<code>aaa</code>和<code>aaa.pub</code>，如果没有改变的情况下，应该是在<code>.ssh</code>目录下生成了<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件。<br>操作到这里，只是在本地生成了<code>SSH key</code>文件。接下来我们需要在<code>Github</code>上绑定该生成的<code>key</code>。我们首先需要打开<code>.pub</code>文件，这里我们的例子是<code>aaa.pub</code>文件。文件内容如下：<img src="/uploads/img/AndroidAdvanceDevelop/4/83.png" alt="img">最后是你的邮箱。复制这段<code>key</code>文字，然后，打开<code>github</code>，进入个人页面，在<code>Personal settings</code>的<code>SSH and GPG keys</code>里选择添加新<code>key</code>，也就是点击<code>new SSH key</code>.点击后出现下面页面。<img src="/uploads/img/AndroidAdvanceDevelop/4/84.png" alt="img">为此key取一个名字，然后将复制的本地<code>key</code>信息复制到这里。然后点击<code>Add SSH key</code>来完成对<code>key</code>的添加。<img src="/uploads/img/AndroidAdvanceDevelop/4/85.png" alt="img">如果设置没错的话，此时本地<code>SSH key</code>就与<code>Github</code>关联上了。可以通过  </p>
+<blockquote>
+<p>git   -T   youremail     //这里的youremail替换成你在github上注册时用的邮箱  </p>
+</blockquote>
+<p>如果出现下面提示，则说明配置成功。<img src="/uploads/img/AndroidAdvanceDevelop/4/86.png" alt="img">好吧，开始你的<code>github</code>开源之旅吧！  </p>
+<h2 id="5-2项目托管——git-remote"><a href="#5-2项目托管——git-remote" class="headerlink" title="5.2项目托管——git remote  "></a>5.2项目托管——git remote  </h2><p>&emsp;&emsp;我们前面创建了<code>git_project</code>，然后又配置好了<code>SSH key</code>，接下来我们需要把本地的<code>git_project</code>托管到<code>github</code>上。首先需要在<code>github</code>上新建一个项目。<img src="/uploads/img/AndroidAdvanceDevelop/4/87.png" alt="img">新建完项目之后，复制项目中的路径。<img src="/uploads/img/AndroidAdvanceDevelop/4/88.png" alt="img">需要在本地项目里进行相关配置，将<code>github</code>上的项目和本地项目进行关联。命令如下：  </p>
+<blockquote>
+<p>git   remote   add   origin   github项目路径地址  </p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/89.png" alt="img">通过上述命令我们就为本地项目添加了一个名为<code>origin</code>、地址为<code>git@github.com:allen218/git_project.git</code>的远程仓库。可以通过<code>git remote -v</code>命令来查看本地项目的远程仓库地址。<img src="/uploads/img/AndroidAdvanceDevelop/4/90.png" alt="img">一个项目可以对应多个远程仓库，你可以在进行<code>push</code>或者<code>pull</code>时来进行切换。  </p>
+<h2 id="5-3项目推送到远程仓库——git-push"><a href="#5-3项目推送到远程仓库——git-push" class="headerlink" title="5.3项目推送到远程仓库——git push"></a>5.3项目推送到远程仓库——git push</h2><p>&emsp;&emsp;本地项目和<code>github</code>关联之后，就可以在本地项目和远程仓库之间进行同步数据了。用户可以将本地项目同步到远程仓库，实现在线的版本控制。在进行同步之前，应该确保你的本地状态为已提交，也就是使用了<code>git commit</code>提交了代码之后的状态。<br>我们通过<code>git push</code>来将本地项目推送到远程仓库(这里为github)中。命令格式为：  </p>
+<blockquote>
+<p>git &nbsp;push &nbsp;远程仓库名(这里为上面配置的origin) &nbsp;分支名或tag名  </p>
+</blockquote>
+<p>如，上面的项目<code>git_project</code>提交到<code>github</code>使用的命令为:</p>
+<blockquote>
+<p>git &nbsp;push &nbsp;origin &nbsp;master:master  </p>
+</blockquote>
+<p>我们的分支名为<code>master:master</code>，第一个<code>master</code>代表本地的<code>master</code>分支;第二个远程的<code>master</code>分支，也就是将本地的<code>master</code>添加到远程的<code>master</code>分支上。如果本地分支名和远程分支名为一致，只需写一个分支名即可。可以简写为:  </p>
+<blockquote>
+<p>git &nbsp;push &nbsp; origin &nbsp;master</p>
+</blockquote>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/4/91.png" alt="img"><br>如果需要将本地的<code>net</code>分支添加到远程<code>master</code>分支，则使用<code>net:master</code>，如果需要删除远程仓库的某个分支，命令如下：</p>
+<blockquote>
+<p>git &emsp;push &emsp; 远程仓库名 &emsp;:远程分支 </p>
+</blockquote>
+<p>也就是第四个参数的本地分支名为空,直接写成<code>:net</code>就表示要删除远程仓库为<code>net</code>的分支。</p>
+<h2 id="5-4更新最新代码——git-pull"><a href="#5-4更新最新代码——git-pull" class="headerlink" title="5.4更新最新代码——git pull"></a>5.4更新最新代码——git pull</h2><p><code>git pull</code>与<code>git push</code>刚好相反，是将远程仓库的代码合并到本地项目。一般我们在使用<code>git push</code>之前，好的习惯是先使用<code>git pull</code>来更新远程仓库的最新代码然后来进行与本地代码的合并。然后再提交代码到远程仓库。如果使用<code>git pull</code>更新本地代码时，遇到了冲突，则需要在本地解决冲突后，才能提交代码。<img src="/uploads/img/AndroidAdvanceDevelop/4/92.png" alt="img"></p>
+<h2 id="5-5-Gitignore忽略文件"><a href="#5-5-Gitignore忽略文件" class="headerlink" title="5.5 Gitignore忽略文件"></a>5.5 Gitignore忽略文件</h2><p>一般我们在使用<code>git</code>来进行版本控制时，会有一些文件是不需要进行控制的，如：生成的<code>APK</code>文件、本地的配置文件等等。<code>git</code>提供了一个<code>gitignore</code>的配置文件来让用户将不需要进行版本控制的文件添加到配置中。这样，<code>git</code>就不会对文件配置列表中的文件进行版本控制。在使用<code>git</code>管理的<code>Android</code>项目中，一般有这样子的一个文件。<img src="/uploads/img/AndroidAdvanceDevelop/4/93.png" alt="img">打开里面的配置如下：<br><img src="/uploads/img/AndroidAdvanceDevelop/4/94.png" alt="img">这里对apk、ap_、dex结尾的文件进行了过滤。</p>
+<h2 id="5-6-Fork-Pull-request-多人协作模式"><a href="#5-6-Fork-Pull-request-多人协作模式" class="headerlink" title="5.6 Fork + Pull request 多人协作模式"></a>5.6 Fork + Pull request 多人协作模式</h2><p>&emsp;&emsp;对于软件开发者来说，提升自己技术最好的途径就是阅读、学习别人的优秀源代码。阅读或者参与开源项目是提升自我的一条重要途径。这就要求我们要通过一种协作的方式来参与到开源项目当中。不仅仅是参与开源，如果公司使用<code>git</code>进行代码托管，也需要这种协作机制。在<code>github</code>上常用的协作方式就是<code>fork + pull</code>的方式来进行的。首先对要参与的开源项目进行<code>fork</code>。<img src="/uploads/img/AndroidAdvanceDevelop/4/95.png" alt="img"><code>fork</code>操作相当于把原项目的代码<code>copy</code>了一份到自己的仓库下。派生的代码都有一个指向原项目的链接。<img src="/uploads/img/AndroidAdvanceDevelop/4/96.png" alt="img">派生项目没有自己的缺陷跟踪系统，而需要使用项目创建者中的缺陷追踪系统。<code>fork</code>项目后，使用<code>git clone</code>将代码cp到本地。然后进行项目的修改。然后先将本地修改后的代码提交到<code>github</code>派生项目中，最后再通过向项目创建者发送<code>Pull request</code>将自己的代码请求更新到主仓库。<img src="/uploads/img/AndroidAdvanceDevelop/4/97.png" alt="img">，主仓库管理者如果合并了派生项目中的请求，那么派生项目中的代码就会被更新到主仓库中。否则派生项目的代码不会影响主仓库的代码。<br>这样一来，主仓库的代码不会被随意的更改，所有的改变都必须由主仓库管理者审核;另一方面，派生项目也可以在自己的项目内任意修改代码，而不会影响到主仓库。这样一来，项目就可以接收来自外界的代码，使项目越来越强大、健壮。<br><strong>总结</strong><br><code>Fork + Pull</code>模式有如下几步：  </p>
+<blockquote>
+<ol>
+<li><code>Fork</code>主仓库得到派生项目。  </li>
+<li>通过<code>Git Clone</code>或者<code>Git pull</code>将派生项目的代码下拉到本地。  </li>
+<li>本地修改代码实现功能。  </li>
+<li>通过<code>git add</code>和<code>git commit</code>命令提交代码到本地。  </li>
+<li>通过<code>git remote</code>配置主仓库为本地项目的远程仓库。  </li>
+<li>通过<code>git pull</code>命令从主仓库对应的分支更新代码，如有冲突则解决冲突。  </li>
+<li>将本地项目代码提交到派生项目中去。  </li>
+<li>向主仓库发送<code>pull request</code>请求。  </li>
+<li>主仓库管理员合并<code>pull request</code>。  </li>
+<li>到此完成一轮协作。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/23/Android开发进阶——性能优化读后笔记/" rel="next" title="Android开发进阶——性能优化读后笔记">
+                <i class="fa fa-chevron-left"></i> Android开发进阶——性能优化读后笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/26/Android开发进阶——Git版本控制/"
+           data-title="Android开发进阶——Git版本控制读后笔记" data-url="http://yoursite.com/2016/04/26/Android开发进阶——Git版本控制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/img/a21.jpg"
+               alt="allen wong" />
+          <p class="site-author-name" itemprop="name">allen wong</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/allen218" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/allen-wang-74-17" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> zhihu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Git起源"><span class="nav-text">1.Git起源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Git基本原理"><span class="nav-text">2.Git基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-直接记录快照，而非差异比较"><span class="nav-text">2.1.直接记录快照，而非差异比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2近乎所有操作都在本地执行"><span class="nav-text">2.2近乎所有操作都在本地执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3时刻保持数据完整性"><span class="nav-text">2.3时刻保持数据完整性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4多数操作仅添加文件"><span class="nav-text">2.4多数操作仅添加文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5文件的3种状态"><span class="nav-text">2.5文件的3种状态  </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Git的基本配置"><span class="nav-text">3.Git的基本配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Git基本命令"><span class="nav-text">4.Git基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Git-init（初始化"><span class="nav-text">4.1 Git init（初始化)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Git-Status（查看当前状态）"><span class="nav-text">4.2 Git Status（查看当前状态）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Git-Add（添加文件到追踪列表）"><span class="nav-text">4.3 Git Add（添加文件到追踪列表）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-Git-commited（提交）"><span class="nav-text">4.4 Git commited（提交）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Git-log-查看历史提交记录"><span class="nav-text">4.5 Git log(查看历史提交记录)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-Git-clone-下载项目"><span class="nav-text">4.6 Git clone(下载项目)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7-Git-branch（不同分支）"><span class="nav-text">4.7 Git branch（不同分支）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-Git-Checkout（切换分支）"><span class="nav-text">4.8 Git Checkout（切换分支）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-9-Git-merge（合并分支）"><span class="nav-text">4.9 Git merge（合并分支）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-10-解决冲突"><span class="nav-text">4.10 解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-11-Git-tag-为版本打标签"><span class="nav-text">4.11 Git tag(为版本打标签)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-12-Git-help（帮助文档）"><span class="nav-text">4.12 Git help（帮助文档）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-项目协作——github"><span class="nav-text">5.项目协作——github</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-SSH-key配置"><span class="nav-text">5.1 SSH key配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2项目托管——git-remote"><span class="nav-text">5.2项目托管——git remote  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3项目推送到远程仓库——git-push"><span class="nav-text">5.3项目推送到远程仓库——git push</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4更新最新代码——git-pull"><span class="nav-text">5.4更新最新代码——git pull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-Gitignore忽略文件"><span class="nav-text">5.5 Gitignore忽略文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-Fork-Pull-request-多人协作模式"><span class="nav-text">5.6 Fork + Pull request 多人协作模式</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">allen wong</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"allen218"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+
+</body>
+</html>
