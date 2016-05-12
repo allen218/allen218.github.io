@@ -1,0 +1,1341 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发进阶——面向对象六大原则读后笔记">
+<meta property="og:url" content="http://yoursite.com/2016/05/07/Android开发进阶——面向对象六大原则/index.html">
+<meta property="og:site_name" content="Allen'Notes">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/1.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/7.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/8.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/9.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/10.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/11.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/12.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/13.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/14.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/15.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/16.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/18.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/19.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/20.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/21.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/22.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/23.png">
+<meta property="og:updated_time" content="2016-05-12T14:03:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发进阶——面向对象六大原则读后笔记">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/5/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android开发进阶——面向对象六大原则读后笔记 | Allen'Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Allen'Notes</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android开发进阶——面向对象六大原则读后笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-07T17:37:29+08:00" content="2016-05-07">
+              2016-05-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/07/Android开发进阶——面向对象六大原则/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/07/Android开发进阶——面向对象六大原则/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/5/1.jpg" alt="图1"><br><a id="more"></a></p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>&emsp;&emsp;很多时候我们可以会有这样子的感受，自己代码的接口设计混乱、代码耦合比较严重、一个类处理的事情太多、代码扩展性差、代码的维护工作量大、代码维护容易引发新的问题等等。其实出现这样子的问题主要是缺乏一些指导性的原则，或者是知道这些指导原则却没有实战项目中体会到这种原则带来的优势，以致于在项目开发中没有得到足够的重视。<br>&emsp;&emsp;今天我们就来讨论一下面向对象六大原则，以及其优点，希望能让大家有个清晰的认识，以便日后能写出优秀的代码。</p>
+<h1 id="1-单一职责原则"><a href="#1-单一职责原则" class="headerlink" title="1.单一职责原则"></a>1.单一职责原则</h1><p>&emsp;&emsp;单一职责原则英文名称为<code>Single Responsibility Principle</code>，简称<code>SRP</code>.简单的说就是一个接口，一个类或者一个方法只做一件事情。但这里有个问题就是单一职责的定义并没有一个清晰的界定，也取决于开发者的看待问题的角度、开发者的经验等等。试想一下如果你遵守了此原则，那么你的接口、类或者方法就划分得很细，每个接口、类或者方法只有比较单一的职责，这不就是高内聚、低耦合么！此乃软件工程开发的高境界。  </p>
+<blockquote>
+<p><code>SRP</code>单一职责原则的定义是：应该有且仅有一个原因引起类的变更。  </p>
+</blockquote>
+<p>我们使用一个打电话的例子来说明一下。我们打电话一般会有4个过程发生：拨号、通话、回应、挂机。那我们写一个接口，其类图如图：<br><img src="/uploads/img/AndroidAdvanceDevelop/5/2.png" alt="图1">我们再来看看其接口的代码定义： </p>
+<pre><code>public interface Iphone {
+    //拨通电话
+    public void dial(String phoneNumber);
+    //通话
+    public void chat(Object o);
+    //挂断电话
+    public void hangup();
+}
+</code></pre><p>大家觉得这样子的接口定义有问题吗？是否觉得自己平时也是这么做的呢？是的，这个接口接近于完美，但只是接近完美。单一职责原则要求一个接口或者类只有一个原因引起变化，也就是一个接口或类只有一个职责。它就负责一件事情，看看上面的接口只负责一件事情吗？是只有一个原因引起变化吗？好像不是。。<br>&emsp;&emsp;<code>IPhone</code>这个接口可不是只有一个职责，它包含两个职责：一个是协议管理，另一个是数据传送。拨通电话和挂断电话属于协议管理，而通话属于数据传送。这样我们就发现<code>IPhone</code>接口包含两个职责，而且这两个职责不相互影响。那就考虑将其拆分成两个接口，其类图如下所示：<img src="/uploads/img/AndroidAdvanceDevelop/5/3.png" alt="图1">上面这个类图看起来有些复杂，它完全满足单一职责原则，每一接口的职责分明，但这里有一个问题，就是一个<code>phone</code>类要将两个接口的实现类组合，而组合是强耦合关系，两个类都有共同的生命周期，这样的强耦合关系还不如直接实现一个接口来得好，而且还增加了类的复杂性，多增加了两个类。经过这样的思考后，我们把类图更改一下：<img src="/uploads/img/AndroidAdvanceDevelop/5/4.png" alt="图1">这样的实现是完美的，一个类实现两个接口。但有人会问这一个类不是完成了两个职责？大家不要忘了我们是面向接口编程，我们对外暴露的接口，而从接口上来看我们是满足单一职责的。而且要真正实现类的单一职责，那样子就需要使用组合模式了，这会引起类间耦合过重、类的数量增加等问题，额外的增加程序的复杂度。<br><strong>单一职责有什么好处呢？</strong>  </p>
+<blockquote>
+<ol>
+<li>类的复杂性降低了，实现某个职责都有清晰明确的定义。  </li>
+<li>可读性提高了，复杂性降低，可读性自然降低了。  </li>
+<li>可维护性提高，可读性提高了，自然会更好维护。  </li>
+<li>变更引起的风险降低了，程度的变化是必不可少的，但如果单一职责黄划分得好的话，一个接口修改只会影响其实现类的变化，而不会影响其它接口。这对系统的扩展性、可维护性有很大的帮助。  </li>
+</ol>
+</blockquote>
+<p>这里有个问题需要说明一下，就是说<code>职责</code>这个东西，是很难区分的，像上面的我们把电话的功能都写在了一个接口上，也是没有问题的，实际大多数情况下我们也是这样设计的，因为我们在实际开发中需要考虑很多方面的因素，以及收益成本率。但是单从<code>学究</code>的层面上，这样的设计是有问题的，因为两个可能引起接口变化的因素，被放到了一个接口里，这为以后的变化带来了风险。这里的风险指的就是如果一个变化带来的结果是调用者不管是调用协议管理部分，还是数据传递部分，都需要变更，而分为两个接口后，只对各自的实现才需要变更。<br><strong>注意</strong><br>单一职责原则提出了一个编写程序的标准，用<code>职责</code>和<code>变化原因</code>来衡量接口或类的设计是否优良，但是<code>职责</code>和<code>变化原因</code>都是不可度量的因项目而异，因环境而异。<br>对于接口，我们在设计的时候尽量做到单一职责，但对于类我们就需要进行多方考虑了，如果生搬硬套单一职责只会引起类的剧增，增加系统的复杂性，本来是一个类可以实现的，却非要使用两个类分别实现接口，然后再通过组合方式耦合在一起，这样子做是得不偿失的。<br><strong>单一职责在方法的应用</strong><br>单一职责适用于接口、类，同样的，它也适用于方法。一个方法尽量只做一件事情。比如说我们需要修改用户名、密码、联系方式。我们不要把这三者都写到修改用户信息一个方法中去。类图为：<img src="/uploads/img/AndroidAdvanceDevelop/5/5.png" alt="图1">这里我们定义了一个<code>changedUser</code>的方法，根据传递的类型不同，把可变参数<code>changeOptions</code>修改到<code>userBO</code>这个业务对象上去，然后再调用持久层的方法保存到数据库。这样做使得这个方法做了太多的事情，完全没有遵从单一职责的原则。正确的做法为：  <img src="/uploads/img/AndroidAdvanceDevelop/5/6.png" alt="图1">通过单一职责的改造，每个方法只完成一件事情，只有一个原因会引起该方法的变化。职责非常清晰明确，不仅开发简单，而且日后的维护也更加容易。</p>
+<h1 id="2-里氏替换原则"><a href="#2-里氏替换原则" class="headerlink" title="2.里氏替换原则"></a>2.里氏替换原则</h1><p>&emsp;&emsp;面向对象的三大特点：继承、多态、封装。而里氏替换原则就是依赖于继承和多态这两大特性的。里氏替换原则简单点说就是只要父类能出现的地方子类就可以出现，而且替换为子类也不会产生任何错误或者异常，使用者可能根本就不知道是父类或者子类，但是反过来是不行的，也就是有子类出现的地方，父类未必就能适应。<br>&emsp;&emsp;我们一般在系统设计时，经常会定义接口或者抽象类，然后来实现相应编码。调用者则直接传入接口或者抽象类，其实这里就是使用到了里氏替换的原则。我们在网络请求类中接收一个处理网络请求的工具类，这个工具类由两种实现方式。我们先来看一下类图： <img src="/uploads/img/AndroidAdvanceDevelop/5/7.png" alt="图1">这里的<code>RequestQueue</code>依赖于<code>HttpStack</code>接口，而<code>HttpStack</code>有两个实现，也就是说这里任意使用一个实现都可以传入到<code>RequestQueue</code>中去，然后完成网络请求的功能。这里我们来看一看伪代码.<img src="/uploads/img/AndroidAdvanceDevelop/5/8.png" alt="图1">这个是执行网络请求的类，依赖于<code>HttpStack</code>。<br><img src="/uploads/img/AndroidAdvanceDevelop/5/9.png" alt="图1">这个是创建<code>HttpStack</code>接口的实现类，根据不同的<code>API</code>版本创建不同的实现类。<br>我们再来以一个<code>CS</code>例子来说明一下这个原则吧。以下是相应的类图：<img src="/uploads/img/AndroidAdvanceDevelop/5/10.png" alt="图1">枪的主要职责是射击，如何射击各个具体的子类中定义。士兵类中定义了一个方法<code>killEnemy</code>，使用枪来杀敌人，但具体使用什么枪，这个要让调用者来决定。<code>AbstractGun</code>类的代码为：</p>
+<pre><code>public abstract class AbstractGun {
+    //使用枪来杀敌
+    public abstract void shoot();
+}
+</code></pre><p>相应的子类的代码为:</p>
+<pre><code>public class HangGun extends AbstractGun {
+       @Override
+    public void shoot() {
+        System.out.println(&quot;使用手枪来杀敌人...&quot;);
+    }
+}
+
+public class RifleGun extends AbstractGun {
+    @Override
+    public void shoot() {
+        System.out.println(&quot;使用步枪来杀敌人...&quot;);
+    }
+}
+
+public class MathineGun extends AbstractGun {
+    @Override
+    public void shoot() {
+        System.out.println(&quot;使用机枪来杀敌人...&quot;);
+    }
+}
+</code></pre><p>有了枪支之后，还需要有使用枪支的士兵：</p>
+<pre><code>public class Solider {
+    AbstractGun mGun;
+
+    public void setGun(AbstractGun gun) {
+        this.mGun = gun;
+    }
+
+    /**
+     * 杀敌
+     */
+    public void killEnemy() {
+        System.out.println(&quot;士兵开始杀敌...&quot;);
+        mGun.shoot();
+    }
+}
+</code></pre><p>这里的士兵开始杀敌，但是使用什么枪需要通过<code>setGun()</code>来确认。最后就是我们的场景类<code>client</code>的代码了：</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        Solider sanmao = new Solider();
+        sanmao.setGun(new HangGun());//为三毛指定的枪是手枪
+        sanmao.killEnemy();
+    }
+}
+</code></pre><p>运行的结果为：<br>“士兵开始杀敌…”<br>“使用手枪来杀敌人…”<br>这里我们为士兵三毛指定的是手枪。我们也可以为三毛指定机枪，只需将<code>setGun(new HangGun())</code>改成<code>setGun(new MathineGun())</code>即可，在编写士兵类时根本来需要知道使用的具体是什么枪（子类），只要是枪就可以了(父类)。<br><strong>注意</strong>  </p>
+<blockquote>
+<p>在类中调用其它类时，务必使用父类或者接口，如果不能使用父类或接口，则说明这个类的设计已违反LSP(里氏替换)原则了。  </p>
+</blockquote>
+<p><strong>里氏替换原则的优点</strong>  </p>
+<blockquote>
+<ol>
+<li>代码共享，减少创建类的工程量，每个子类都拥有父类的方法和属性。  </li>
+<li>提高代码的重用性。  </li>
+<li>提高代码的可扩展性。我们可以使用很低的成本增加一个新的实现，而调用者全然不知。    </li>
+<li>提高产品或项目的开放性。  </li>
+</ol>
+</blockquote>
+<p>这里的开放性，我们以上面网络请求的例子来说明一下。上面我们使用了两个工具类来完成<code>Http</code>网络请求的操作，但是如果我们这时需要使用<code>okHttp</code>这个工具类来实现网络请求呢？我们只需要使用<code>okHttp</code>来实现我们的<code>HttpStack</code>。在创建<code>RequestQueue</code>时，将其对象传入即可，而<code>RequestQueue</code>是不知道我们到底传的是哪个工具类的，事实上也不需要知道。这样子我们非常方便的就进行了扩展。<br><strong>里氏替换原则的缺点</strong>  </p>
+<blockquote>
+<ol>
+<li>继承是侵入性的，只要继承，就必须拥有父类的方法和属性。  </li>
+<li>降低代码的灵活性，子类必须拥有父类的属性和方法，让子类的自由世界多了一份约束。  </li>
+<li>增加了耦合性，当父类的常量、变量和方法被修改时，必须要考虑子类的修改，如果在缺乏规范的环境下，这种修改势必会带来灾难，我们可能需要重构大面积的代码。  </li>
+</ol>
+</blockquote>
+<h1 id="3-依赖倒置原则"><a href="#3-依赖倒置原则" class="headerlink" title="3.依赖倒置原则"></a>3.依赖倒置原则</h1><p>&emsp;&emsp;依赖倒置原则的几个关键点为： </p>
+<blockquote>
+<ol>
+<li>高层模块不能依赖于低层模块，两者都应该依赖抽象。  </li>
+<li>抽象不应该依赖细节。  </li>
+<li>细节应该依赖抽象。  </li>
+</ol>
+</blockquote>
+<p>这里需要怎么理解呢？高层模块和低层模块容易理解，每一个逻辑的实现都是由原子逻辑组成的，不可分割的原子逻辑就是低层模块。原子逻辑再组装的就称为高层模块。那什么是抽象呢？抽象在<code>Java</code>中表示为接口或者抽象类，它的特点是不可被实例化。什么又是细节呢？细节就是实现或者继承抽象类的子类，它们可以被实例化。依赖倒置原则在<code>Java</code>的体现为：</p>
+<blockquote>
+<ol>
+<li>模块间的依赖通过抽象发生，实现类不直接发生依赖关系，其依赖关系依赖于接口或抽象类产生。  </li>
+<li>接口或抽象类不能依赖于实现类。  </li>
+<li>实现类依赖接口或抽象类。  </li>
+</ol>
+</blockquote>
+<p>依赖倒置原则可以通过一名话来定义：</p>
+<blockquote>
+<p>面向接口编程(OOD)  </p>
+</blockquote>
+<p>在<code>里氏替换原则</code>中的第一个例子，我们的<code>RequestQueue</code>依赖中请求工具类使用的是接口，而不是具体的实现类，这就是典型的依赖倒置原则的体现。如果我们依赖具体的<code>HttpUrlConnection</code>类，那么<code>HttpClient</code>就无法传入，除非<code>HttpClient</code>继承自<code>HttpUrlConnection</code>类，但这显然不符合继承的特征，因为它们两者属于<code>兄弟</code>关系。<br><strong>依赖倒置原则的优点</strong><br>&emsp;&emsp;采用依赖倒置原则可以减少类间的耦合性，提高系统的稳定性，降低并行开发引起的风险，提高代码的可读性和可维护性。  </p>
+<p>这里我们通过反证法来证明不使用依赖倒置原则也可以减少类间的耦合性，提高系统的稳定性，降低并行开发引起的风险，提高代码的可读性和可维护性。<br>我们以一个会开车的司机为例来说明一下”不使用依赖倒置原则也可以减少类间的耦合性，提高系统稳定性”？先上类图： <img src="/uploads/img/AndroidAdvanceDevelop/5/11.png" alt="图1"><br>奔驰车提供一个<code>run</code>方法来开动奔驰车，代码如下：</p>
+<pre><code>public class Benz {
+    public void run() {
+        System.out.println(&quot;奔驰车开动了...&quot;);
+    }
+}
+</code></pre><p>有了车，我们就需要司机来开动这辆车，司机使用<code>drive()</code>方法来调用奔驰车的<code>run()</code>方法开动奔驰车,代码如下：</p>
+<pre><code>public class Driver {
+    //司机的主要职责是驾驶汽车
+    public void drive(Benz benz) {
+        benz.run();
+    }
+}
+</code></pre><p>有车，有司机后，我们就在场景类<code>client</code>创建相应的对象，让司机把车开动起来，代码如下:</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        Driver sanmao = new Driver();
+        sanmao.drive(new Benz());
+    }
+}
+</code></pre><p>通过上面的代码，完成了司机开动奔驰车的场景，到目前为此，是完全没有问题的。但是需求是一直在变化的，这时，奔驰车出故障了，送去维修了，这时需要司机来开宝马车。</p>
+<pre><code>public class Baoma {
+    public void run() {
+        System.out.println(&quot;宝马车开动起来了...&quot;);
+    }
+}
+</code></pre><p>那么问题来了，司机不会开宝马车。什么情况？拿一<code>C</code>照的同学只会开奔驰车，不会开宝马车？？在现在生活中都是什么车都会开的，而程序是对现实世界的抽象，我们的设计出现了问题，把司机和奔驰车耦合在一起了。我们不可能再为宝马车再单独创建一个司机类来开宝马车吧。这样子，系统的稳定性太低了。而且被依赖者的变更居然需要依赖者来承担修改的成本，这个是很不合理的。所以，这里证明了“不使用依赖倒置原则可以减少系统的耦合性，增加系统的稳定性”是不成立的。<br><strong>注意</strong><br>设计是否具备稳定性，只要适当的“松松土”，观察“设计的蓝图”是否还可以茁壮成长就可以得出结论。稳定性较高的设计，在周围环境频繁变化的时候，依然不需要被改变。  </p>
+<p>接下来我们再说证明一下”不使用依赖倒置原则可以减少并行开发的风险”。<br>什么是并行开发的风险？并行开发的风险最主要是风险扩散，本来只是一段程序的错误或异常，而导致一个功能，一个模块，甚至到最后毁坏一个项目。为什么并行开发有这样子的风险呢？一个团队10个人，甲开发汽车模块，乙开发司机模块…如果甲还没有开发完汽车模块，那么乙就没法完全地编写代码，缺少汽车类，乙的功能模块根本无法编译通过，在这种不使用依赖倒置原则进行开发的环境中，所有的开发工作都是<code>单线程</code>开发。很明显不符合并行开发的要求。  </p>
+<blockquote>
+<p>根据以上证明：如果不使用依赖倒置原则，就会增加对象之间的耦合性，降低系统的稳定性，增加并行开发引起的风险，降低代码的可读性和可维护性。  </p>
+</blockquote>
+<p>接下来我们引入<code>依赖倒置原则</code>来对其进行改造。类图如下：<img src="/uploads/img/AndroidAdvanceDevelop/5/12.png" alt="图1">建立了两个接口，<code>IDriver</code>和<code>ICar</code>，司机接口和汽车接口。司机的主要职责是开车，所以必然实现<code>driver()</code>方法，代码如下：  </p>
+<pre><code>public interface IDriver {
+    void driver(ICar car);
+}
+</code></pre><p>接口只是一种规范，也就是一个抽象的东西，具体的实现由其实现类来完成，我们再来看看其实现类，代码如下：</p>
+<pre><code>public class Driver implements IDriver {
+    //这里通过依赖其抽象来脱离具体的细节
+    @Override
+    public void driver(ICar car) {
+        car.run();
+    }
+}
+</code></pre><p>这里使用依赖倒置原则依赖其接口，隔离了具体的实现细节。我们再来看看<code>ICar</code>和其两个实现类的代码：</p>
+<pre><code>public interface ICar {
+    //通过此方法开动汽车
+    void run();
+}
+
+public class Benz implements ICar{
+    @Override
+    public void run() {
+        System.out.println(&quot;奔驰车开动了...&quot;);
+    }
+}
+
+public class BMW implements ICar {
+    @Override
+    public void run() {
+        System.out.println(&quot;宝马车开动起来了...&quot;);
+    }
+}
+</code></pre><p>高层模块不能依赖于低层模块，而就当依赖其抽象，这里也就是接口。而我们的<code>Client</code>属于高层模块，因为其是多个逻辑的组合而非原子逻辑。下面是其代码实现：</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        IDriver sanmao = new Driver();
+        ICar benz = new Benz();
+        sanmao.driver(car);
+    }
+}
+</code></pre><p><code>Client</code>是高层业务逻辑，它对低层模块的依赖都建立在抽象上,<code>sanmao</code>的表面类型为<code>IDriver</code>，<code>benz</code>的表面类型为<code>ICar</code>.也许你要问，在这个高层模块中也调用到了低层模块，比如：<code>new Driver()</code>和<code>new Benz()</code>等，确实如此，<code>sanmao</code>的表面类型是<code>IDriver</code>，是一个接口，是抽象的，非实例化的，在其后的操作中，<code>sanmao</code>都是以其<code>IDriver</code>类型进行操作，屏幕了细节对抽象的影响。<br>在新增加低层模块时，只修改了业务场景类，也就是高层模块，对其他低层模块如<code>Driver</code>类不需要做任何的修改，业务就可以运行，把<code>变更</code>引起的风险扩散降到最低。</p>
+<p><strong>注意</strong>  </p>
+<blockquote>
+<p>在<code>Java</code>中，只要定义了变量，就必然要定义其类型，一个变量有两种类型：表面类型和实际类型。表面类型就是定义的时候赋予的类型，实现类型就是对象的类型。在上面<code>sanmao</code>这个对象中，表示类型是<code>IDriver</code>，而实际类型为<code>Driver</code>.  </p>
+</blockquote>
+<p>其实依赖倒置问题说白了就是解决依赖的问题，我们常见的依赖主要有三种方式：  </p>
+<blockquote>
+<ol>
+<li>构造函数依赖  </li>
+<li>方法依赖  </li>
+<li>接口声明依赖  </li>
+</ol>
+</blockquote>
+<p><strong>1.构造函数依赖</strong><br>在类中通过构造函数声明被依赖对象，这种方式被称为构造函数注入。我们通过此种依赖方式，将<code>IDriver</code>和<code>Driver</code>来进行改造，代码如下：</p>
+<pre><code>public interface IDriver {
+    void driver();
+}
+
+public class Driver implements IDriver {
+
+    private ICar mCar;
+
+    //通过注入依赖对象
+    public Driver(ICar car) {
+        mCar = car;
+    }
+
+    @Override
+    public void driver() {
+        mCar.run();
+    }
+}
+</code></pre><p><strong>2.方法依赖注入</strong><br>在类中通过<code>Setter</code>方法来声明被依赖对象，这种方法被称为方法注入。同样的我们还是将<code>IDriver</code>和<code>Driver</code>来进行改造，这里<code>IDriver</code>接口一样，就不贴了，代码如下：</p>
+<pre><code>public class Driver implements IDriver {
+
+    private ICar mCar;
+
+    @Override
+    public void driver() {
+        if (mCar != null)
+            mCar.run();
+    }
+
+    public void setCar(ICar car) {
+        this.mCar = car;
+    }
+}
+</code></pre><p><strong>3.接口声明依赖</strong><br>这种方式就和上面的例子是一样的了。</p>
+<pre><code>public interface IDriver {
+    void driver(ICar car);
+}
+</code></pre><p><strong>最佳实践</strong><br>&emsp;&emsp;依赖倒置原则的本质就是通过抽象(接口或者抽象类)使各个类或者模块实现彼此独立，互不影响，实现模块间的松耦合。我们在项目中可以遵照以下几个规则：</p>
+<blockquote>
+<ol>
+<li>每个类尽量都有接口或抽象类，或者两者都具备。  </li>
+<li>变量的表面类型尽量是接口或者是抽象类。  </li>
+<li>任何类都不应该从具体类派生  </li>
+<li>尽量不要覆写基类非抽象方法  </li>
+<li>结合里氏替换原则使用  </li>
+</ol>
+</blockquote>
+<h1 id="4-接口隔离原则"><a href="#4-接口隔离原则" class="headerlink" title="4.接口隔离原则"></a>4.接口隔离原则</h1><p>&emsp;&emsp;接口隔离原则指的就是客户端不就依赖它不需要的接口;一个类对另一个类的依赖应该建立在最小的接口上。根据接口隔离原则，当一个接口太大时，我们需要将它分割成一些更细小的接口，使用该接口的客户端仅需知道与之相关的方法即可。<br>这里我们可以把这两个定义概括为一句话：建立单一接口，不要建立臃肿庞大的接口。再通俗点讲：接口尽量细化，同时接口中的方法尽量少。看到这里大家可能会把<code>接口隔离原则</code>与<code>单一职责原则</code>进行比较，觉得这两个不是一样的么？其实不然，两个原则的关注的角度是不一样的.<code>单一职责</code>注重的是职责，这是业务逻辑的划分，而接口隔离原则要求接口的方法尽量少。<br>比如：一个接口的职责可能有10个方法，也就是说10个方法都是为了完成同一个职责，并且提供给多个模块访问，各个模块按照相应的约束进行访问，按照<code>单一职责原则</code>来说是被允许的，但是执照<code>接口隔离原则</code>来说是不被允许的，因为<code>接口隔离原则</code>要求<code>尽量使用多个专门的接口</code>。专门的接口？什么意思呢？这里所说的意思是为每个模块提供单独的接口，也就是有几个模块需要使用，就对应的提供单独的相应接口，而不是建立一个臃肿庞大的接口，让所有模块来访问。<br>我们以星探和美女的例子来说明一下吧。大家都知道星探的工作任务之一就是发现美女，而一般我们对美女的定义必须具备：面貌、身材和气质。只是每个人对这三种条件的排列顺序不同罢了。我们用类图的形式来说明一下星探找美女的过程。<img src="/uploads/img/AndroidAdvanceDevelop/5/13.png" alt="图1">定义了一个<code>IPettyGirl</code>声明美女应该有的特征，然后定义一个抽象类<code>AbstractSearcher</code>，其作用是发现美女并将其信息显示。我们来看一下<code>IPettyGirl</code>接口的代码吧：</p>
+<pre><code>public interface IPettyGirl {
+    void goodLooking();  //好的面貌
+    void niceFigure();   //好的身材
+    void goodTemperament();  //好的气质
+}
+</code></pre><p>再来看看<code>IPettyGirl</code>的实现类：代码如下：</p>
+<pre><code>public class PettyGirl implements IPettyGirl {
+    private String mName;
+
+    public PettyGirl(String name) {
+        mName = name;
+    }
+
+    @Override
+    public void goodLooking() {
+        System.out.println(mName+&quot;,--脸蛋很漂亮...&quot;);
+    }
+
+    @Override
+    public void niceFigure() {
+        System.out.println(mName+&quot;,--身材好...&quot;);
+
+    }
+
+    @Override
+    public void goodTemperament() {
+        System.out.println(mName+&quot;,--有气质...&quot;);
+
+    }
+}
+</code></pre><p>通过上面三个方法，我们就把美女的标准定义下来了。接下来看看星探抽象类<code>AbstractSearcher</code>的代码：</p>
+<pre><code>public abstract class AstractSearcher {
+    protected IPettyGirl mPettyGirl;
+
+    public AstractSearcher(IPettyGirl girl) {
+        this.mPettyGirl = girl;
+    }
+
+    //找到美女,将美女信息列出来
+    public abstract void show();
+
+}
+</code></pre><p>实现类<code>Searcher</code>的代码：</p>
+<pre><code>public class Searcher extends AstractSearcher {
+    public Searcher(IPettyGirl girl) {
+        super(girl);
+    }
+
+    @Override
+    public void show() {
+        System.out.println(&quot;美女&quot; + super.mPettyGirl + &quot;的信息如下:&quot;);
+        super.mPettyGirl.goodLooking();
+        super.mPettyGirl.niceFigure();
+        super.mPettyGirl.goodTemperament();
+    }
+}
+</code></pre><p>星探和美女都有了，最后需要使用场景类<code>Client</code>来将两者串起来。代码如下：</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        IPettyGirl pettyGirl = new PettyGirl(&quot;小雪&quot;);
+        AstractSearcher searcher = new Searcher(pettyGirl);
+        searcher.show();
+    }
+}
+</code></pre><p>执行的结果如下：<br>美女小雪的信息如下：<br>小雪,–脸蛋很漂亮…<br>小雪,–身材好…<br>小雪,–有气质…<br>到这里星探找美女的程序开发完毕，运行也没问题。但这里我们来讨论一下这里的接口设计是否存在问题，是否可以对接口进行优化，答案是可以的。因为美女这类事物是可能通过时间和人的改变而发生发生变化的，比如，当出现一个脸蛋一般、身材一般但是却很有气质的女孩出现时，我相信大多数人都会把这样子的女孩称为美女，大家的审美提升了，就出现了气质型美女，但是我们的接口里定义了美女必须是三者都具备，按照这个标准，气质型美女就不能算美女了，那怎么办？重新扩展一个美女实现类，只实现<code>greatTemperament()</code>方法，其他两个方法空置，什么都不写，不是可以么？答案是不行的，星探<code>AbstractSearcher</code>依赖的是<code>IPettyGirl</code>接口，它是依赖三个方法来判断是不是美女的，而你现在只实现了一个方法，其它两个方法留空，除非再修改星探方法判断美女的规则，不然，上面的打印少了两条，星探是没办法进行判断的。<br>分析到这里，我们发现<code>IPettyGirl</code>接口的设计存在缺陷，接口的设计庞大了，容纳了一些可变的因素，根据<code>接口隔离原则</code>,星探<code>AbstractSearcher</code>依赖的应该是具有部分特质的美女接口，而我们把所有特质都封装到了一个接口。好了，问题找到了，我们要把接口进行拆分，将其分为两部分，其类图如下：<img src="/uploads/img/AndroidAdvanceDevelop/5/14.png" alt="图1">这里我们把<code>IPettyGirl</code>接口拆分为两个接口，一种是外形的美女<code>IGoodGirl</code>，这类美女脸蛋和身材极棒，但是没有审美素质，比如不讲文明;另外一种是气质美的美女<code>IGreatTemperamentGirl</code>，谈吐和修养都非常高。通过这样的拆分，灵活性提高了，可维护性增加了，不管以后是要气质美女还是外形美女都可以通过<code>PettyGirl</code>来进行定义。两种美女的接口定义为：</p>
+<pre><code>//外形美女
+public interface IGoodGirl {
+    void goodLooking();
+    void niceFigure();
+}
+//气质美女
+public interface IGreatTemperamentGirl {
+    void greatTemperament();
+}
+</code></pre><p>这两个接口的实现类<code>PettyGirl</code>的代码为: </p>
+<pre><code>public class PettyGirl implements         IGreatTemperamentGirl, IGoodGirl {
+    private String mName;
+
+    public PettyGirl(String name) {
+        mName = name;
+    }
+
+    @Override
+    public void goodLooking() {
+        System.out.println(mName + &quot;,--脸蛋很漂亮...&quot;);
+    }
+
+    @Override
+    public void niceFigure() {
+        System.out.println(mName + &quot;,--身材好...&quot;);
+
+    }
+
+    @Override
+    public void greatTemperament() {
+        System.out.println(mName + &quot;,--有气质...&quot;);
+
+    }
+}
+</code></pre><p>这里得说明一下，接口的稳定是相对的，如果你哪天又觉得需要把<code>脸蛋</code>和<code>身材</code>分成两个接口，这里的<code>IGoodGirl</code>接口还是需要更改的，但是设计是有限度的，不能无限度的考虑未来的变化情况，否则就会陷入设计泥潭而无法自拨。  </p>
+<h2 id="接口隔离原则的四层含义："><a href="#接口隔离原则的四层含义：" class="headerlink" title="接口隔离原则的四层含义："></a>接口隔离原则的四层含义：</h2><p><strong>1. 接口要尽量小</strong><br>&emsp;&emsp;这是接口隔离原则的核心，不出现臃肿庞大的接口，但是<code>小</code>也是有限度的，首先就是不能违反单一职责原则，这里所说的意思是：<code>单一职责</code>已经是最小的业务单位了，再拆分下去，业务逻辑就会出现问题。那么是拆还是不拆呢？根据接口隔离原则拆分接口时，首先必须满足单一职责原则。<br><strong>2.接口要高内聚</strong><br>什么是高内聚呢？高内聚就是提高接口、类、模块的处理能力，减少对外的交互。要求在接口中尽量少公布<code>public</code>方法，接口对外的承诺，越少对开发越有利，变更的风险也就越少，同时也有利于降低成本。<br><strong>3.定制服务</strong><br>定制服务就是针对单个个体提供优良的服务。我们在做系统设计时也需要考虑对系统之间或者模块之间的接口采用定制服务，定制服务有一个要求：只提供访问者需要的方法。<br>比如我们开发了一个图书管理系统，其中有一个接口供管理员查询书籍。类图：<img src="/uploads/img/AndroidAdvanceDevelop/5/15.png" alt="图1">在接口里我们定义了多个方法，如按作者、按标题、按出版社、及复杂搜索等方式。这里我们根据了权限的不同，有些接口是没有返回的。突然有一天，服务器的性能下降，然后继续跟踪下去，发现很大部分的查询都是从公网发起的，根据分析后发现：提供给公网的查询接口和内部管理人员使用的接口是一样的，那么问题来了，这里有一个<code>searchByComplex</code>是只提供给内部管理人员查询全部书籍用的，虽说，根据权限的不同，外部人员访问了 此接口也是返回为空的，但是这个接口其实是有运行的，只是最后做了屏蔽而已。根据这个情况，我们来重新设计一下接口，为普通用户和管理员专门定制接口。这里我们将上面的接口分为了两个，分别为<code>ISimpleSearcher</code>和<code>IComplexSearcher</code>两个接口，下面是相应的类图：<img src="/uploads/img/AndroidAdvanceDevelop/5/16.png" alt="图1">提供给管理人员的实现类同时实现了<code>ISimpleSearcher</code>和<code>IComplexSearcher</code>两个接口，而只将<code>ISimpleSearcher</code>提供给外网，用作简单的查询，以减少可能引起的风险。<br><strong>4.接口的设计是有限度的</strong><br>接口的设计粒度越小，系统越灵活，这是不争是事实，但灵活的同时也带来了复杂度的增加，开发难度的增加，这并不是我们想看到的，这里的接口设计应该有一个<code>度</code>,但这个<code>度</code>也没有明确的界定，需要根据开发者的开发环境，经验等来作判断。</p>
+<h2 id="接口隔离原则最佳实践"><a href="#接口隔离原则最佳实践" class="headerlink" title="接口隔离原则最佳实践"></a>接口隔离原则最佳实践</h2><blockquote>
+<ol>
+<li>一个接口只服务于一个子模块或者业务逻辑  </li>
+<li>通过业务逻辑压缩接口中的<code>public</code>方法，接口时常去回顾，尽量要让接口中暴露的方法都是必须暴露的，而不是<code>肥嘟嘟</code>的一大堆方法  </li>
+<li>已经被污染了的接口，尽量去修改，若变更的风险较大，则使用适配器模式去转化处理。  </li>
+<li>了解环境，拒绝盲从。根据具体的产品，具体的环境适时的使用相应的原则，万不可按步就搬。  </li>
+<li>以满足<code>单一职责原则</code>为前提条件。</li>
+</ol>
+</blockquote>
+<h1 id="5-迪米特原则"><a href="#5-迪米特原则" class="headerlink" title="5.迪米特原则"></a>5.迪米特原则</h1><p>迪米特原则也称为<code>最少知道原则</code>，虽然名字不同，但是描述的是同一个规则，用一句话来说明：一个对象应该对其他对象有最少的了解。通俗地讲，一个类应该对与自己需要耦合或者调用的类知道得最少，你(被耦合或被调用的类)的内部有多复杂，那是你的事，我就只需要知道你提供的<code>public</code>方法，我就调用这么多，其它的我一律不管。</p>
+<h2 id="5-1-迪米特原则的要求"><a href="#5-1-迪米特原则的要求" class="headerlink" title="5.1 迪米特原则的要求"></a>5.1 迪米特原则的要求</h2><p><strong>1.只和朋友交流</strong><br>迪米特原则的英文解析是：Only talk to your immedate friends（只和你直接的朋友通信）。什么叫直接的朋友呢？每个对象都会与其它对象有耦合关系，这种耦合关系就称为<code>朋友关系</code>。这种关系的类型有：组合、聚合、依赖等。<br>举个例子吧：一群学生在操场上体育课，开始点名，老师命令体育委员清点一下班上女生的个数。我们使用类图来模拟一下：<img src="/uploads/img/AndroidAdvanceDevelop/5/18.png" alt="图1"><code>Teacher</code>类的<code>commond</code>方法负责发送命令给体育委员，命令他清点女生。实现代码如下：</p>
+<pre><code>public class Teacher {
+    public void commond(GroupLeader groupLeader) {
+        //这里初始化女生
+        List&lt;Girl&gt; mGrils = new ArrayList&lt;&gt;();
+        for (int x = 0; x &lt; 20; x++) {
+            mGrils.add(new Girl());
+        }
+
+        groupLeader.countGirls(mGrils);
+    }
+}
+</code></pre><p>老师类只有一个方法，这个方法里先初始化女生，然后命令体育委员去清点女生。接下来是体育委员类：</p>
+<pre><code>public class GroupLeader {
+    public void countGirls(List&lt;Girl&gt; mGrils) {
+        System.out.println(&quot;班上的女生人数    为:&quot;+mGrils.size());
+    }
+}
+</code></pre><p>老师和体育委员类都要依赖于女生类，而女生类不需要做任何的事情，所以直接创建一个空类：</p>
+<pre><code>public class Girl {
+}
+</code></pre><p>示例中所有的角色已经定义完毕，接下来就需要场景类<code>client</code>来跑跑跑了。</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        Teacher teacher = new Teacher();
+        teacher.commond(new GroupLeader());
+    }
+}
+</code></pre><p>运行的结果如下所示：<br>班上的女生人数    为:20  </p>
+<p>接下来我们来考虑一个这个程序有什么问题，首先确定<code>Teacher</code>有几个朋友，它仅有一个朋友，<code>groupLeader</code>。为什么<code>Girl</code>不是它的朋友呢？朋友类的定义是通过注入添加的依赖才是朋友类，而出现在方法内部的类不属于朋友类。而这里的<code>Girl</code>是在<code>Commond()</code>方法内部，所以不属于朋友类。那么问题来了，既然不是朋友类，怎么能进行交流呢？迪米特原则告诉我们一个类只能和朋友类进行交流。这样就破坏了<code>Teacher</code>的健壮性。方法是类的一个行为，类竟然不知道自己的行为与其他类产生依赖关系，这是不被允许的，严重违反了迪米特原则。</p>
+<p>问题发现了，那我们来修改一下吧。先来看类图的修改：<img src="/uploads/img/AndroidAdvanceDevelop/5/19.png" alt="图1">在类中去掉<code>Teacher</code>对<code>Girl</code>的依赖关系，修改后的<code>Teacher</code>类代码如下：</p>
+<pre><code>public class Teacher {
+    public void commond(GroupLeader groupLeader) {
+        groupLeader.countGirls();
+    }
+}
+</code></pre><p>这里只和它的朋友类交流，下面的<code>GroupLeader</code>类：</p>
+<pre><code>public class GroupLeader {
+    private List&lt;Girl&gt; mGirls;
+
+    GroupLeader(List&lt;Girl&gt; listGirls) {
+        mGirls = listGirls;
+    }    
+
+    public void countGirls() {
+        System.out.println(&quot;班上的女生人数为:&quot; + mGirls.size());
+    }
+}
+</code></pre><p>在<code>GroupLeader</code>类中通过构造方法传递了依赖关系，也就是<code>GroupLeader</code>的朋友类为<code>Girl</code>类。最后来看看场景类的修改：</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        Teacher teacher = new Teacher();
+        List&lt;Girl&gt; mGrils = new ArrayList&lt;&gt;();
+        for (int x = 0; x &lt; 20; x++) {
+            mGrils.add(new Girl());
+        }
+        teacher.commond(new GroupLeader(mGrils));
+    }
+}
+</code></pre><p>运行的结果如下：<br>班上的女生人数为:20  </p>
+<p>对程序进行简单的修改，将对女生的初始化放到了场景类，同时在<code>GroupLeader</code>中增加了对<code>Girl</code>的注入，避开了<code>Teacher</code>类对陌生类<code>Girl</code>类的访问，降低了系统的耦合性，提高了系统的健壮性。<br><strong>注意</strong><br>一个类只和朋友交流，类与类间的关系是建立在类间的，而不是方法间，因此一个方法尽量不引入一个类中不存在的对象。<br><strong>2.朋友间也是有距离的</strong><br>这里所说的是再好的朋友也要保持距离，不能无话不说，无所不知。对朋友关系描述最贴切的故事是：两只刺猬取暖，太远取不到暖，太近会刺伤对方。我们在安装软件的时候经常需要第一步做什么，第二步执行什么，第三步输入什么…这里我们拿安装软件的例子来说明一下朋友间也是有距离的。首先上类图：<img src="/uploads/img/AndroidAdvanceDevelop/5/20.png" alt="图1">我们来看一下<code>Wizard</code>的代码实现：</p>
+<pre><code>public class Wizard {
+    private Random mRandom = new Random(System.currentTimeMillis());
+
+    public int first() {
+        System.out.println(&quot;第一个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+
+    public int second() {
+        System.out.println(&quot;第二个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+
+    public int third() {
+        System.out.println(&quot;第三个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+}
+</code></pre><p>在<code>Wizard</code>中有三个方法，每个方法都完成相应的业务逻辑，我们这里以随机数返回值来说明代替业务执行后的返回结果。我们再来看看软件安装类的代码实现：</p>
+<pre><code>public class InstallSoftware {
+
+    public void installWizard(Wizard wizard) {
+        int first = wizard.first();
+        if (first &gt; 50) {
+            int second = wizard.second();
+            if (second &gt; 50) {
+                int third = wizard.third();
+                if (third &gt; 50)
+                    wizard.first();
+            }
+        }
+    }
+}
+</code></pre><p>相应的类定义完毕后，我们使用场景类来跑一跑：</p>
+<pre><code>public class Client {
+    public static void main(String args) {
+        InstallSoftware installSoftware = new InstallSoftware();
+        installSoftware.installWizard(new Wizard());
+    }
+}
+</code></pre><p>程序的实现非常简单，但是大家思考一下有没有发现什么问题呢？<code>InstallSoftware</code>和<code>Wizard</code>的关系太密切了,<code>Wizard</code>暴露太多的方法给<code>InstallSoftware</code>,两个类牢牢的耦合在一起了。试想一下，我们把<code>Wizard</code>中<code>first</code>里的返回值类型为<code>boolean</code>，就需要修改<code>InstallSoftware</code>，从而将修改的风险扩散了。还是那句老话，被依赖的类修改了，需要依赖者来承担修改的变化，谁干啊！知道问题之后，我们来对设计进行重构一下。类图如下：<img src="/uploads/img/AndroidAdvanceDevelop/5/21.png" alt="图1">这里我们将<code>Wizard</code>中增加一个<code>installWizard()</code>将安装过程封装了，然后修改了三个方法的访问权限为<code>private</code>。修改后的代码为：</p>
+<pre><code>public class Wizard {
+    private Random mRandom = new Random(System.currentTimeMillis());
+
+    private int first() {
+        System.out.println(&quot;第一个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+
+    private int second() {
+        System.out.println(&quot;第二个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+
+    private int third() {
+        System.out.println(&quot;第三个方法执行了...&quot;);
+        return mRandom.nextInt(100);
+    }
+
+    public void installWizard() {
+        //将在InstallSoftware中的业务逻辑移过来了
+        int first = first();
+        if (first &gt; 50) {
+            int second = second();
+            if (second &gt; 50) {
+                int third = third();
+                if (third &gt; 50)
+                    first();
+            }
+        }
+    }
+}
+</code></pre><p>将三个安装步骤的访问权限设置为<code>private</code>，将<code>InstallSoftware</code>中的<code>installWizard()</code>方法过来了。通过重构后，<code>Wizard</code>类对外暴露的方法只有一个<code>installWizard()</code>,此时，即使<code>first()</code>的返回值改变了，也是会影响<code>Wizard</code>类，这显示了类的高内聚特性。  <code>InstallSoftware</code>类的代码如下：</p>
+<pre><code>public class InstallSoftware {
+
+    public void installWizard(Wizard wizard) {
+        wizard.installWizard();
+    }
+}
+</code></pre><p>场景类没有发生任何变化，还是和之前的一样。通过上面的重构，类间的耦合变弱了，由变更所导致的风险变小了。<br>一个类的<code>public</code>方法或属性越多，变更时带来的风险就越大，在开发时要尽量对使用<code>public</code>修辞的变量多思考，除非是非公开不可，不然，要尽量减少<code>public</code>的使用。<br><strong>注意</strong><br>迪米特原则要求类<code>羞涩</code>一点，尽量不要对外公布太多的<code>public</code>方法和非表态<code>public</code>变量。  </p>
+<p><strong>3.是自已的就是自己的</strong><br>在实际开发中经常会遇到一些方法，放在这个本类里可以，放在其他类也没问题，那应该怎样去权衡呢？有一个原则：如果一个方法放在本类中，既不增加类间的关系，又没有产生负面影响，那就放在本类里。  </p>
+<p><strong>迪米特原则最佳实践</strong><br>迪米特原则的核心观念就是类间的解耦，类间的复用率才可以提高。但是过分的使用该原则，可以会多出大量的中转或者跳转类，增加系统的复杂性，同时也为维护带来了难度。所以，在使用迪米特原则时，既要做到结构清晰，又要做到类的高内聚，低耦合。  在实际项目中，需要适度考虑这个原则，别为了套用原则而做项目。原则只是作为参考，使用前需要反复权衡利弊，切勿为了使用而使用。一定是为了解决相关问题才去使用。  </p>
+<h1 id="6-开闭原则"><a href="#6-开闭原则" class="headerlink" title="6.开闭原则"></a>6.开闭原则</h1><p>&emsp;&emsp;开闭原则是<code>Java</code>中最基础的设计原则。遵从该原则，会使你的系统稳定而灵活。我们先来看看开闭原则主要说的是什么吧！</p>
+<blockquote>
+<p>开闭原则主要说的是一个类、模块和函数应该对修改关闭，对扩展开放。  </p>
+</blockquote>
+<p>这里说的意思就是：软件实体应该通过扩展来拥抱变化，而不是直接的修改。软件的实体主要包括以下几部分：  </p>
+<blockquote>
+<ol>
+<li>项目或者软件产品中按照一定的逻辑规则划分的模块。  </li>
+<li>抽象和类。  </li>
+<li>方法。  </li>
+</ol>
+</blockquote>
+<p>一个项目最不会变的就是变化，所以我们要在设计系统时，适当的考虑到将来可能的变化，以提高项目的稳定性和灵活性。开闭原则告诉我们：尽量使用扩展的方式来完成变化，而不是通过修改已有代码。接下来我们通过一个书店卖书的例子来说明一下开闭原则吧，先上类图：<img src="/uploads/img/AndroidAdvanceDevelop/5/22.png" alt="图1">IBook有三个属性，分别是书名、价格、作者;<code>NovelBook</code>是一个具体的实现类，<code>BookStore</code>是书店。下面是相应的代码：</p>
+<pre><code>//接口类
+public interface IBook {
+    String getName();
+
+    int getPrice();
+
+    String getAuthor();
+}
+
+public class NovelBook implements IBook {
+    private String name;
+    private int Price;
+    private String author;
+
+    public NovelBook(String name, int price, String author) {
+        this.name = name;
+        this.Price = price;
+        this.author = author;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.Price;
+    }
+
+    @Override
+    public String getAuthor() {
+        return this.author;
+    }
+}
+</code></pre><p>接下来就是书店类，这里需要造一些数据出来，这里有一个问题需要说明一下，我们把价格定义为int型其实是没有问题的，因为在非金融类项目中，一般取2位精度，通常的设计是在运算过程中扩大100倍，在需要展示时再缩小100倍，减少精度带来的误差。</p>
+<pre><code>public class BookStore {
+    public static final List&lt;IBook&gt; mBookList = new ArrayList&lt;&gt;();
+
+    static {
+        mBookList.add(new NovelBook(&quot;编程之美&quot;, 5500, &quot;a君&quot;));
+        mBookList.add(new NovelBook(&quot;设计模式&quot;, 7560, &quot;b君&quot;));
+        mBookList.add(new NovelBook(&quot;开发进阶&quot;, 4650, &quot;c君&quot;));
+        mBookList.add(new NovelBook(&quot;研磨设计&quot;, 3400, &quot;d君&quot;));
+    }
+
+    public static void main(String[] args) {
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(2);
+        System.out.println(&quot;--------下面展示的是书店卖出去的书籍---------&quot;);
+        for (IBook book : mBookList) {
+            System.out.println(&quot;当前书名为:&quot; + book.getName() + &quot;;价格为:&quot; + format.format(book.getPrice()) + &quot;;作者为:&quot; + book.getAuthor());
+        }
+    }
+}
+</code></pre><p>运行结果如下:<br>——–下面展示的是书店卖出去的书籍———<br>当前书名为:编程之美;价格为55;作者为a君<br>当前书名为:设计模式;价格为75.6;作者为b君<br>当前书名为:开发进阶;价格为46.5;作者为c君<br>当前书名为:研磨设计;价格为34;作者为d君   </p>
+<p>好了，项目功能已经开发完成了，书籍正常销售出去，书店也盈利了。但随着互联网的兴起，网上大打价格战，线下自然也受到了牵连，为了能够生存下来，书店对书籍开始打折销售。所有40元以上的书9折销售，其它的一律8折。对于已经上线的项目，这就是一个变化的需求。那面对这种需求，我们大致有三种方式来实现：<br><strong>1.修改接口</strong><br>在接口中添加一个<code>getOffPrice()</code>打折的方法，让子类去实现。这样一来，接口需要被修改，实现类也需要被修改，还有依赖者也需要被修改。而接口作为一种规则，一种规范，是不应该经常发生变化的，所以，该方案否定。<br><strong>2.修改实现类</strong><br>第二种实现方式就是直接在实现类对<code>getPrice()</code>方法加条件。的确，这种方式可以比较好的解决这个问题。但这里有一个问题，就是如果这样修改之后，书籍的原来价格不见了，买书的人看不到原价而只能看到打折价，这样子会因为信息不对称而出现问题。所以，这个方案也不是最优的方法。<br><strong>3.通过扩展实现变化</strong><br>要怎么来进行扩展呢？我们创建一个新的类<code>OffNovelBook</code>，覆盖<code>getPrice()</code>方法，高层次模块改变其静态代码块中的依赖对象为<code>OffNovelBook</code>，这样修改也少，风险也小。我们来看下修改后的类图：<br><img src="/uploads/img/AndroidAdvanceDevelop/5/23.png" alt="图1">这里的<code>OffNovelBook</code>继承了<code>NovelBook</code>，并覆盖了<code>getPrice()</code>方法，不修改原有代码，而是做了扩展。<code>OffNovelBook</code>的代码如下：</p>
+<pre><code>public class OffNovelBook extends NovelBook {
+    public OffNovelBook(String name, int price, String author) {
+        super(name, price, author);
+    }
+
+    @Override
+    public int getPrice() {
+        int selfPrice = super.getPrice();
+        int offPrice = 0;
+        if (selfPrice &gt; 40) {
+            offPrice = selfPrice * 90 / 100;
+        } else {
+            offPrice = selfPrice * 80 / 100;
+        }
+        //返回打折后的价格
+        return offPrice;
+    }
+}
+</code></pre><p>通过子类覆写了一个<code>getPrice()</code>方法，完成了新增的业务。<code>BookStore</code>作为高层模块依赖于子类<code>OffNovelBook</code>，所以代码中的相关依赖要改成<code>OffNovelBook</code>。修改代码如下：</p>
+<pre><code>public class BookStore {
+    public static final List&lt;IBook&gt; mBookList = new ArrayList&lt;&gt;();
+
+    static {
+        mBookList.add(new OffNovelBook(&quot;编程之美&quot;, 100, &quot;a君&quot;));
+        mBookList.add(new OffNovelBook(&quot;设计模式&quot;, 200, &quot;b君&quot;));
+        mBookList.add(new OffNovelBook(&quot;开发进阶&quot;, 120, &quot;c君&quot;));
+        mBookList.add(new OffNovelBook(&quot;研磨设计&quot;, 110, &quot;d君&quot;));
+    }
+
+    public static void main(String[] args) {
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(2);
+        System.out.println(&quot;--------下面展示的是书店卖出去的书籍---------&quot;);
+        for (IBook book : mBookList) {
+            System.out.println(&quot;当前书名为:&quot; + book.getName() + &quot;;价格为:&quot; + book.getPrice() + &quot;;作者为:&quot; + book.getAuthor());
+        }
+    }
+}
+</code></pre><p>这里的结果和上面运行的一样。<br>这里可能大家有个疑问？就是你的业务逻辑还是修改了，你修改了<code>static</code>静态模块区域所依赖的对象。这部分确实个性了，该部分属于高层次的模块，在业务需求变更的前提下，高层模块是需要作出相应的改变已适应变化的，只是这个修改要尽量少，避免扩散变化的风险。<br><strong>注意</strong><br>开闭原则对扩展开放，对修改关闭，并不意味着不做任何的修改，低层模块的变更，必然要高层模块进行耦合，也就是进行相应的修改，不然，就是一个孤立的代码片段。</p>
+<p><strong>项目变化的三种类型</strong></p>
+<p><ul></ul></p>
+<p><li>逻辑的变化<br>&emsp;&emsp;只变化逻辑，而不涉及其它模块。比如：一个方法里的算法是a<em>b+c,这里变化后算法变成a</em>b*c,像这样的一类变化，我们可以直接在原有类里进行修改。  </li></p>
+<p><li>子模块变化<br>&emsp;&emsp;由于变化，低层模块通过扩展来实现了变化，而依赖低层模块的高层模块由于耦合关系也需要跟着变化，上面的书的例子就说明了这个问题。  </li></p>
+<p><li>可见视图变化<br>&emsp;&emsp;可见视图的变化也就是界面的变化，这种变化也是可以通过扩展来实现变化，但取决于原有设计的灵活性。<br><br>一个项目的路径是这样子的，开发、重构、测试、面世、运维，其中重构就是对原有的设计和代码进行修改，运维尽量减少去对代码进行直接的修改，保持代码的干净和稳定。  </li></p>
+<p><strong>为什么要使用开闭原则呢？</strong> </p>
+<p><li>开闭原则对测试的影响<br>&emsp;&emsp;在书店的例子中，增加了一个打折的需求，如果我们直接在<code>getPrice()</code>方法里去进行修改来完成逻辑的变化，那就要修改测试类。如果是一个复杂的逻辑，其中写了很多的测试方法，直接进行修改的话，你的测试类就会被修改得面目全非。一般而言，我们一个类对应一个测试类，然后测试类中有很多的测试方法，想想在很多的测试方法中来进行修改是一件多么痛苦的事情。  </li></p>
+<p><li>开闭原则可以提高复用性<br>&emsp;&emsp;在面向对象设计中，所有的逻辑都是由原子逻辑组成的，而不是一个类独立实现一个业务逻辑。只有这样的代码才能进行复用。粒度越小，可复用的可能性就越大。为什么要进行复用呢？避免同一段代码在项目的多个地方重复出现，如果其中逻辑需要修改，就需要重复修改多处的代码，而且很容易遗漏。所以在开发时，尽量将逻辑的粒度缩小，直到一个逻辑不可再分为止。  </li></p>
+<p><li>开闭原则可以提高可维护性<br>&emsp;&emsp;一个软件投产后，维护人员除了做日常的数据维护，还需要对程序进行扩展，维护人员乐意的做事情是对代码进行扩展，而不是修改。甭管原有的代码写得是多么优秀或者糟糕，让维护人员去读懂一段代码，并进行修改是一件非常痛苦的事情。  </li></p>
+<p><li>面向对象开发的要求<br>&emsp;&emsp;万物皆对象，有运动就有变化，有变化变要策略去应对，怎么快速应对？这就需要在设计之初考虑充分考虑到未来可能的变化，然后留</li></p>
+<p><strong>怎么使用开闭原则呢？</strong><br>&emsp;&emsp;开闭原则是一个非常虚的原则，前面5个原则可以说是开闭原则的具体解释。但它并不局限于上面5个原则，它就像一个口号一样。那我们怎样把这个口号应用到工作中呢？  </p>
+<p><li>抽象约束<br>&emsp;&emsp;抽象是对现实事物的描述，它没有具体的实现。也就表示它有很多种可能性，可以跟随需求而变化。因些，通常使用接口或者抽象类来约束一组可能的变化，并且能够实现对扩展开放。其包含三种含义：其一，使用接口或抽象类进行边界限定，不允许出现接口或抽象类中不存在的<code>public</code>方法;其二，参数类型，引用对象尽量使用接口或抽象类;其三，接口的稳定性，接口一旦暴露出去就不能修改，所以对需要暴露的接口持谨慎态度。</li></p>
+<p><li>元数据控制模块行为<br>&emsp;&emsp;尽量使用元数据来控制程序的行为，减少重复开发。什么元数据呢？简单点说就是配置参数，参数可以从文件中获得，也可以从数据库中获得。</li></p>
+<p><li>制定项目章程<br>&emsp;&emsp;也就是在一个团队中建立开发章程，并要求所有人员去遵守约定。</li></p>
+<p><li>封装变化<br>&emsp;&emsp;对变化的封装有两重含义：第一，将相同的变化封装到一个接口或者抽象类中;第二，将不同的变化封装到不同的接口或抽象类中，不应该有两个不同的变化出现在同一个接口或抽象类中。  </li></p>
+<p>好了，到这里面向对象的六大原则就讲完了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/26/Android开发进阶——Git版本控制/" rel="next" title="Android开发进阶——Git版本控制读后笔记">
+                <i class="fa fa-chevron-left"></i> Android开发进阶——Git版本控制读后笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/07/Android开发进阶——面向对象六大原则/"
+           data-title="Android开发进阶——面向对象六大原则读后笔记" data-url="http://yoursite.com/2016/05/07/Android开发进阶——面向对象六大原则/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/img/a21.jpg"
+               alt="allen wong" />
+          <p class="site-author-name" itemprop="name">allen wong</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/allen218" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/allen-wang-74-17" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> zhihu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-单一职责原则"><span class="nav-text">1.单一职责原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-里氏替换原则"><span class="nav-text">2.里氏替换原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-依赖倒置原则"><span class="nav-text">3.依赖倒置原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-接口隔离原则"><span class="nav-text">4.接口隔离原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口隔离原则的四层含义："><span class="nav-text">接口隔离原则的四层含义：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口隔离原则最佳实践"><span class="nav-text">接口隔离原则最佳实践</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-迪米特原则"><span class="nav-text">5.迪米特原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-迪米特原则的要求"><span class="nav-text">5.1 迪米特原则的要求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-开闭原则"><span class="nav-text">6.开闭原则</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">allen wong</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"allen218"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+
+</body>
+</html>
