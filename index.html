@@ -214,6 +214,160 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/14/Meterial-Design控件库全览-不断更新中/" itemprop="url">
+                  Meterial Design控件库全览(不断更新中)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-14T10:57:11+08:00" content="2016-05-14">
+              2016-05-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/14/Meterial-Design控件库全览-不断更新中/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/Meterial-Design控件库全览-不断更新中/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>&emsp;&emsp;我相信开发<code>Android</code>的同学们应该对<code>Material Design</code>设计非常熟悉了吧，它是<code>Google</code>在<code>Android 5.0</code>后推出的全新设计语言，我个人是非常喜欢<code>Material Design</code>的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些<code>material design</code>的控件及相应的用法，并加以示例说明，让大家学会使用这些控件，并当控件应用于实际项目中，提高用户的交互体验。我会在以后的日子里发现新的<code>material design</code>控件后，不断更新此文章。在项目使用<code>material design</code>控件前，需要先导入<code>support:design</code>项目依赖包。如：<code>compile &#39;com.android.support:design:23.4.0&#39;</code></p>
+<h1 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h1><p>&emsp;&emsp;<code>Snackbar</code>提供了对操作轻量级的反馈，它在屏幕的下方展示短暂消息提示。它出现在屏幕的最上方，也就是所有控件的上方(除dialog,popupWindow外)，而且同一时间只能显示一个<code>Snackbar</code>.<br>它的功能类似于<code>Toast</code>，不同的是，<code>snackbar</code>可以放按钮，通过按钮来进行交互。<code>Snackbar</code>同时还支持滑动消失，就像通知栏一样。</p>
+<h2 id="1-1-Snackbar使用规则"><a href="#1-1-Snackbar使用规则" class="headerlink" title="1.1 Snackbar使用规则"></a>1.1 Snackbar使用规则</h2><p><strong>1. 简短的文字信息</strong><br>作为提示信息时，<code>Snackbar</code>最好只包含一行文字，而且不可以包含图标。<img src="/uploads/img/AndroidAdvanceDevelop/6/1.png" alt="图1"><br><strong>2. 短暂的显示</strong><br><code>Snackbar</code>在设置的时间后会自动消失，它不应该被设置显示时间过长，如果需要通过<code>Snackbar</code>进行其它操作时，最好不要把<code>Snackbar</code>作为唯一的入口，同时它显示在所有其它控件的上方(除了dialog和popupwindow)。<br><strong>3. 0-1个Action</strong><br><code>Snackbar</code>只能包含一个<code>Action</code>，两个或者以上的需要使用<code>Dialog</code>来实现。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/2.png" alt="图1"> </p>
+<pre><code>Snackbar.make(mRootLayout, &quot;提示信息&quot;, Snackbar.LENGTH_LONG)
+                .setAction(&quot;UNDO&quot;, v1 -&gt; {
+                      //TODO
+                })
+                .show();
+</code></pre><p><strong>4.不要挡住floating action button</strong><br>这里所说的就是在使用<code>floating action button</code>时，如果项目里要使用<code>Snackbar</code>时，需要让<code>floating action button</code>使用<code>CoordinatorLayout</code>来作为根布局。</p>
+<h2 id="1-2-改变文字的显示颜色"><a href="#1-2-改变文字的显示颜色" class="headerlink" title="1.2 改变文字的显示颜色"></a>1.2 改变文字的显示颜色</h2><p><code>Snackbar</code>可以改变两个部分文字的颜色，一个是正常提示文字的颜色，还有一个是<code>ActionText</code>文字的颜色。我们通过代码来给大家展示一下。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/3.png" alt="图1"> </p>
+<pre><code>mSnackbarColor.setOnClickListener(o -&gt; {
+            Snackbar snackbar = Snackbar.make(mRootLayout, &quot;提示信息&quot;, Snackbar.LENGTH_SHORT)
+                    .setAction(&quot;TODO&quot;, O1 -&gt; {
+                        Toast.makeText(this, &quot;我是一个toast&quot;, Toast.LENGTH_SHORT).show();
+                    });
+            snackbar.setActionTextColor(Color.GRAY);
+            View view = snackbar.getView();
+            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.BLUE);
+            snackbar.show();
+        });
+</code></pre><h1 id="2-TextInputLayout"><a href="#2-TextInputLayout" class="headerlink" title="2. TextInputLayout"></a>2. TextInputLayout</h1><p>一个包裹<code>EditText</code>的<code>ViewGroup</code>，可以将<code>EditText</code>里的<code>hint</code>属性值当作一个标签动态的显示到<code>EditText</code>的左上角。用动画的形式来完成相应的交互，体验好。我们还可以为<code>TextInputLayout</code>设置错误信息，如果输入不符合条件，让其在<code>EditText</code>显示该错误信息。一般情况下，每个<code>TextInputLayout</code>包含一个<code>EditText</code>,多个<code>EditText</code>需要多个<code>TextInputLayout</code>进行包裹。</p>
+<p><strong>TextInputLayout使用的布局基本格式如下</strong>  </p>
+<pre><code>&lt;android.support.design.widget.TextInputLayout
+      android:id=&quot;@+id/email_input_layout&quot;
+      android:layout_width=&quot;match_parent&quot;
+      android:layout_height=&quot;wrap_content&quot;
+      android:layout_below=&quot;@+id/pass_input_layout&quot;
+      android:layout_marginLeft=&quot;10dp&quot;
+      android:layout_marginRight=&quot;10dp&quot;&gt;
+
+      &lt;EditText
+          android:layout_width=&quot;match_parent&quot;
+          android:layout_height=&quot;wrap_content&quot;
+          android:hint=&quot;@string/email&quot; /&gt;
+  &lt;/android.support.design.widget.TextInputLayout&gt;
+</code></pre><p>这里我们使用<code>TextInputLayout</code>来包裹<code>EditText</code>，然后给<code>EditText</code>设置<code>hint</code>属性值就可以完成<code>hint</code>值变标题栏的动画了。如果还需要添加错误信息提示的话，这时，我们还需要在代码里通过<code>setError()</code>或者<code>setErrorEnabled()</code>来进行错误信息的显示与隐藏的。</p>
+<pre><code>/**
+ * 验证用户名是否合法
+ *
+ * @return
+ */
+private boolean validateUsername() {
+    if (TextUtils.isEmpty(mUsername.getText().toString().trim())) {
+         mUsernameLayout.setError(getString(R.string.username_not_null));
+        mUsername.requestFocus();
+    } else {
+            mUsernameLayout.setErrorEnabled(false);
+    }
+    return true;
+}
+</code></pre><p> 这里当用户名不符合条件时，使用<code>setError()</code>来设置错误提示信息，当用户名符合要求时，使用<code>setErrorEnabled()</code>来收起错误提示信息。这里还有一个小细节，就是当提示错误信息后，需要让当前<code>EditText</code>获取焦点，让用户不用再手动多点击一次输入框，而直接进行输入。</p>
+<h1 id="3-TabLayout"><a href="#3-TabLayout" class="headerlink" title="3.TabLayout"></a>3.TabLayout</h1><p><code>TabLayout</code>是一个非常好用的通过配合<code>Viewpager</code>来实现<code>Tab</code>切换的官方原生实现。在5.0之前，我们通常实现这种效果需要依赖第三方的库。它支持两种滑动切换方式。一种是：<code>Fixed</code>，也就是所有的<code>Tab</code>都在当前屏幕中显示，每个<code>Tab</code>平均分配宽度。这种实现方式在当<code>Tab</code>比较多，一屏显示不下的情况下，每个<code>Tab</code>只能显示一丁点的空间，也就是不能完全显示，体验差。而另外一种实现是：<code>Scrollable</code>，在一屏能完全显示的情况下，和<code>Fixed</code>是一样的效果，但当一屏显示不下时，它的策略是只显示部分的<code>Tab</code>，通过滑动来显示其它没有显示的<code>Tab</code>。而且如果两边都有<code>Tab</code>没有显示时，它会始终停止在中间位置。<br>我们来看一下<code>TabLayout</code>的在布局文件里的配置：</p>
+<pre><code>&lt;android.support.design.widget.TabLayout xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:id=&quot;@+id/tab&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    app:tabMode=&quot;scrollable&quot;&gt;
+&lt;/android.support.design.widget.TabLayout&gt;
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/07/Android开发进阶——面向对象六大原则/" itemprop="url">
                   Android开发进阶——面向对象六大原则读后笔记
                 </a>
@@ -1075,104 +1229,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" itemprop="url">
-                  Retrofit+RxJava简单封装-让网络请求变得如此简单
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-17T15:18:23+08:00" content="2016-03-17">
-              2016-03-17
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/4/46.png" alt="img1"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1219,7 +1275,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
