@@ -63,14 +63,16 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/14/Meterial-Design控件库全览-不断更新中/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description" content="前提&amp;emsp;&amp;emsp;我相信开发Android的同学们应该对Material Design设计非常熟悉了吧，它是Google在Android 5.0后推出的全新设计语言，我个人是非常喜欢Material Design的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些material design的控件及相应的用法，并加以示例说明，">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/1.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/3.png">
-<meta property="og:updated_time" content="2016-05-15T02:55:15.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/4.png">
+<meta property="og:updated_time" content="2016-05-15T03:14:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Meterial Design控件库全览(不断更新中)">
 <meta name="twitter:description" content="前提&amp;emsp;&amp;emsp;我相信开发Android的同学们应该对Material Design设计非常熟悉了吧，它是Google在Android 5.0后推出的全新设计语言，我个人是非常喜欢Material Design的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些material design的控件及相应的用法，并加以示例说明，">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/1.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif">
 
 
 
@@ -257,7 +259,7 @@
 
       
         <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>&emsp;&emsp;我相信开发<code>Android</code>的同学们应该对<code>Material Design</code>设计非常熟悉了吧，它是<code>Google</code>在<code>Android 5.0</code>后推出的全新设计语言，我个人是非常喜欢<code>Material Design</code>的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些<code>material design</code>的控件及相应的用法，并加以示例说明，让大家学会使用这些控件，并当控件应用于实际项目中，提高用户的交互体验。我会在以后的日子里发现新的<code>material design</code>控件后，不断更新此文章。在项目使用<code>material design</code>控件前，需要先导入<code>support:design</code>项目依赖包。如：<code>compile &#39;com.android.support:design:23.4.0&#39;</code></p>
-<h1 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h1><p>&emsp;&emsp;<code>Snackbar</code>提供了对操作轻量级的反馈，它在屏幕的下方展示短暂消息提示。它出现在屏幕的最上方，也就是所有控件的上方(除dialog,popupWindow外)，而且同一时间只能显示一个<code>Snackbar</code>.<br>它的功能类似于<code>Toast</code>，不同的是，<code>snackbar</code>可以放按钮，通过按钮来进行交互。<code>Snackbar</code>同时还支持滑动消失，就像通知栏一样。</p>
+<h1 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif" alt="图1"><br>&emsp;&emsp;<code>Snackbar</code>提供了对操作轻量级的反馈，它在屏幕的下方展示短暂消息提示。它出现在屏幕的最上方，也就是所有控件的上方(除dialog,popupWindow外)，而且同一时间只能显示一个<code>Snackbar</code>.<br>它的功能类似于<code>Toast</code>，不同的是，<code>snackbar</code>可以放按钮，通过按钮来进行交互。<code>Snackbar</code>同时还支持滑动消失，就像通知栏一样。</p>
 <h2 id="1-1-Snackbar使用规则"><a href="#1-1-Snackbar使用规则" class="headerlink" title="1.1 Snackbar使用规则"></a>1.1 Snackbar使用规则</h2><p><strong>1. 简短的文字信息</strong><br>作为提示信息时，<code>Snackbar</code>最好只包含一行文字，而且不可以包含图标。<img src="/uploads/img/AndroidAdvanceDevelop/6/1.png" alt="图1"><br><strong>2. 短暂的显示</strong><br><code>Snackbar</code>在设置的时间后会自动消失，它不应该被设置显示时间过长，如果需要通过<code>Snackbar</code>进行其它操作时，最好不要把<code>Snackbar</code>作为唯一的入口，同时它显示在所有其它控件的上方(除了dialog和popupwindow)。<br><strong>3. 0-1个Action</strong><br><code>Snackbar</code>只能包含一个<code>Action</code>，两个或者以上的需要使用<code>Dialog</code>来实现。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/2.png" alt="图1"> </p>
 <pre><code>Snackbar.make(mRootLayout, &quot;提示信息&quot;, Snackbar.LENGTH_LONG)
                 .setAction(&quot;UNDO&quot;, v1 -&gt; {
@@ -315,7 +317,8 @@ private boolean validateUsername() {
     android:layout_height=&quot;wrap_content&quot;
     app:tabMode=&quot;scrollable&quot;&gt;
 &lt;/android.support.design.widget.TabLayout&gt;
-</code></pre>
+</code></pre><h2 id="3-1-Fixed-TabLayout"><a href="#3-1-Fixed-TabLayout" class="headerlink" title="3.1 Fixed TabLayout"></a>3.1 Fixed TabLayout</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/6/4.png" alt="图1"> </p>
+
       
     </div>
 
@@ -464,7 +467,7 @@ private boolean validateUsername() {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Snackbar"><span class="nav-text">1.Snackbar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Snackbar使用规则"><span class="nav-text">1.1 Snackbar使用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-改变文字的显示颜色"><span class="nav-text">1.2 改变文字的显示颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-TextInputLayout"><span class="nav-text">2. TextInputLayout</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-TabLayout"><span class="nav-text">3.TabLayout</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Snackbar"><span class="nav-text">1.Snackbar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Snackbar使用规则"><span class="nav-text">1.1 Snackbar使用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-改变文字的显示颜色"><span class="nav-text">1.2 改变文字的显示颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-TextInputLayout"><span class="nav-text">2. TextInputLayout</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-TabLayout"><span class="nav-text">3.TabLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Fixed-TabLayout"><span class="nav-text">3.1 Fixed TabLayout</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
