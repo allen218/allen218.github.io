@@ -57,22 +57,45 @@
 
 
 
-<meta name="description" content="前提&amp;emsp;&amp;emsp;我相信开发Android的同学们应该对Material Design设计非常熟悉了吧，它是Google在Android 5.0后推出的全新设计语言，我个人是非常喜欢Material Design的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些material design的控件及相应的用法，并加以示例说明，">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Meterial Design控件库全览(不断更新中)">
 <meta property="og:url" content="http://yoursite.com/2016/05/14/Meterial-Design控件库全览-不断更新中/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="前提&amp;emsp;&amp;emsp;我相信开发Android的同学们应该对Material Design设计非常熟悉了吧，它是Google在Android 5.0后推出的全新设计语言，我个人是非常喜欢Material Design的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些material design的控件及相应的用法，并加以示例说明，">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/18.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/snackbar.gif">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/1.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/textInputLayout.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/tablayout.gif">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/4.png">
-<meta property="og:updated_time" content="2016-05-15T03:14:14.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/7.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/8.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/9.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/navigationview.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/cardView.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/11.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/toolbarScroll.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/12.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/13.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/14.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/15.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/16.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/17.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_Pin.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/collpasingLayout_parallax.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_scroll_enterAlways.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_enterAlwaysCollapsed.gif">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_exitUntilCollapsed.gif">
+<meta property="og:updated_time" content="2016-05-22T15:33:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Meterial Design控件库全览(不断更新中)">
-<meta name="twitter:description" content="前提&amp;emsp;&amp;emsp;我相信开发Android的同学们应该对Material Design设计非常熟悉了吧，它是Google在Android 5.0后推出的全新设计语言，我个人是非常喜欢Material Design的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些material design的控件及相应的用法，并加以示例说明，">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/18.png">
 
 
 
@@ -258,8 +281,9 @@
       
 
       
-        <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>&emsp;&emsp;我相信开发<code>Android</code>的同学们应该对<code>Material Design</code>设计非常熟悉了吧，它是<code>Google</code>在<code>Android 5.0</code>后推出的全新设计语言，我个人是非常喜欢<code>Material Design</code>的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些<code>material design</code>的控件及相应的用法，并加以示例说明，让大家学会使用这些控件，并当控件应用于实际项目中，提高用户的交互体验。我会在以后的日子里发现新的<code>material design</code>控件后，不断更新此文章。在项目使用<code>material design</code>控件前，需要先导入<code>support:design</code>项目依赖包。如：<code>compile &#39;com.android.support:design:23.4.0&#39;</code></p>
-<h1 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/snackbarSimple.gif" alt="图1"><br>&emsp;&emsp;<code>Snackbar</code>提供了对操作轻量级的反馈，它在屏幕的下方展示短暂消息提示。它出现在屏幕的最上方，也就是所有控件的上方(除dialog,popupWindow外)，而且同一时间只能显示一个<code>Snackbar</code>.<br>它的功能类似于<code>Toast</code>，不同的是，<code>snackbar</code>可以放按钮，通过按钮来进行交互。<code>Snackbar</code>同时还支持滑动消失，就像通知栏一样。</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/6/18.png" alt="图1"><br><a id="more"></a> </p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>&emsp;&emsp;我相信开发<code>Android</code>的同学们应该对<code>Material Design</code>设计非常熟悉了吧，它是<code>Google</code>在<code>Android 5.0</code>后推出的全新设计语言，我个人是非常喜欢<code>Material Design</code>的设计的，整个交互非常轻量、舒服，提高了用户在交互上的效率和愉悦感，操作起来不会有疲劳感。本篇文章主要是收集一些<code>material design</code>的控件及相应的用法，并加以示例说明，让大家学会使用这些控件，并当控件应用于实际项目中，提高用户的交互体验。我会在以后的日子里发现新的<code>material design</code>控件后，不断更新此文章。在项目使用<code>material design</code>控件前，需要先导入<code>support:design</code>项目依赖包。如：<code>compile &#39;com.android.support:design:23.4.0&#39;</code></p>
+<h1 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/snackbar.gif" alt="图1"><br>&emsp;&emsp;<code>Snackbar</code>提供了对操作轻量级的反馈，它在屏幕的下方展示短暂消息提示。它出现在屏幕的最上方，也就是所有控件的上方(除dialog,popupWindow外)，而且同一时间只能显示一个<code>Snackbar</code>.<br>它的功能类似于<code>Toast</code>，不同的是，<code>snackbar</code>可以放按钮，通过按钮来进行交互。<code>Snackbar</code>同时还支持滑动消失，就像通知栏一样。</p>
 <h2 id="1-1-Snackbar使用规则"><a href="#1-1-Snackbar使用规则" class="headerlink" title="1.1 Snackbar使用规则"></a>1.1 Snackbar使用规则</h2><p><strong>1. 简短的文字信息</strong><br>作为提示信息时，<code>Snackbar</code>最好只包含一行文字，而且不可以包含图标。<img src="/uploads/img/AndroidAdvanceDevelop/6/1.png" alt="图1"><br><strong>2. 短暂的显示</strong><br><code>Snackbar</code>在设置的时间后会自动消失，它不应该被设置显示时间过长，如果需要通过<code>Snackbar</code>进行其它操作时，最好不要把<code>Snackbar</code>作为唯一的入口，同时它显示在所有其它控件的上方(除了dialog和popupwindow)。<br><strong>3. 0-1个Action</strong><br><code>Snackbar</code>只能包含一个<code>Action</code>，两个或者以上的需要使用<code>Dialog</code>来实现。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/2.png" alt="图1"> </p>
 <pre><code>Snackbar.make(mRootLayout, &quot;提示信息&quot;, Snackbar.LENGTH_LONG)
                 .setAction(&quot;UNDO&quot;, v1 -&gt; {
@@ -279,7 +303,8 @@
             textView.setTextColor(Color.BLUE);
             snackbar.show();
         });
-</code></pre><h1 id="2-TextInputLayout"><a href="#2-TextInputLayout" class="headerlink" title="2. TextInputLayout"></a>2. TextInputLayout</h1><p>一个包裹<code>EditText</code>的<code>ViewGroup</code>，可以将<code>EditText</code>里的<code>hint</code>属性值当作一个标签动态的显示到<code>EditText</code>的左上角。用动画的形式来完成相应的交互，体验好。我们还可以为<code>TextInputLayout</code>设置错误信息，如果输入不符合条件，让其在<code>EditText</code>显示该错误信息。一般情况下，每个<code>TextInputLayout</code>包含一个<code>EditText</code>,多个<code>EditText</code>需要多个<code>TextInputLayout</code>进行包裹。</p>
+</code></pre><p><strong>Snackbar例子完整源码地址</strong><br><a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestSnackbar" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestSnackbar</a></p>
+<h1 id="2-TextInputLayout"><a href="#2-TextInputLayout" class="headerlink" title="2. TextInputLayout"></a>2. TextInputLayout</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/textInputLayout.gif" alt="图1"><br>一个包裹<code>EditText</code>的<code>ViewGroup</code>，可以将<code>EditText</code>里的<code>hint</code>属性值当作一个标签动态的显示到<code>EditText</code>的左上角。用动画的形式来完成相应的交互，体验好。我们还可以为<code>TextInputLayout</code>设置错误信息，如果输入不符合条件，让其在<code>EditText</code>显示该错误信息。一般情况下，每个<code>TextInputLayout</code>包含一个<code>EditText</code>,多个<code>EditText</code>需要多个<code>TextInputLayout</code>进行包裹。</p>
 <p><strong>TextInputLayout使用的布局基本格式如下</strong>  </p>
 <pre><code>&lt;android.support.design.widget.TextInputLayout
       android:id=&quot;@+id/email_input_layout&quot;
@@ -310,15 +335,435 @@ private boolean validateUsername() {
     return true;
 }
 </code></pre><p> 这里当用户名不符合条件时，使用<code>setError()</code>来设置错误提示信息，当用户名符合要求时，使用<code>setErrorEnabled()</code>来收起错误提示信息。这里还有一个小细节，就是当提示错误信息后，需要让当前<code>EditText</code>获取焦点，让用户不用再手动多点击一次输入框，而直接进行输入。</p>
-<h1 id="3-TabLayout"><a href="#3-TabLayout" class="headerlink" title="3.TabLayout"></a>3.TabLayout</h1><p><code>TabLayout</code>是一个非常好用的通过配合<code>Viewpager</code>来实现<code>Tab</code>切换的官方原生实现。在5.0之前，我们通常实现这种效果需要依赖第三方的库。它支持两种滑动切换方式。一种是：<code>Fixed</code>，也就是所有的<code>Tab</code>都在当前屏幕中显示，每个<code>Tab</code>平均分配宽度。这种实现方式在当<code>Tab</code>比较多，一屏显示不下的情况下，每个<code>Tab</code>只能显示一丁点的空间，也就是不能完全显示，体验差。而另外一种实现是：<code>Scrollable</code>，在一屏能完全显示的情况下，和<code>Fixed</code>是一样的效果，但当一屏显示不下时，它的策略是只显示部分的<code>Tab</code>，通过滑动来显示其它没有显示的<code>Tab</code>。而且如果两边都有<code>Tab</code>没有显示时，它会始终停止在中间位置。<br>我们来看一下<code>TabLayout</code>的在布局文件里的配置：</p>
+<p> <strong>TestInputLayout完整源码地址</strong><br> <a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestTextInputLayout" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestTextInputLayout</a></p>
+<h1 id="3-TabLayout"><a href="#3-TabLayout" class="headerlink" title="3.TabLayout"></a>3.TabLayout</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/tablayout.gif" alt="图1"><br><code>TabLayout</code>是一个非常好用的通过配合<code>Viewpager</code>来实现<code>Tab</code>切换的官方原生实现。在5.0之前，我们通常实现这种效果需要依赖第三方的库。它支持两种滑动切换方式。一种是：<code>Fixed</code>，也就是所有的<code>Tab</code>都在当前屏幕中显示，每个<code>Tab</code>平均分配宽度。这种实现方式在当<code>Tab</code>比较多，一屏显示不下的情况下，每个<code>Tab</code>只能显示一丁点的空间，也就是不能完全显示，体验差。而另外一种实现是：<code>Scrollable</code>，在一屏能完全显示的情况下，和<code>Fixed</code>是一样的效果，但当一屏显示不下时，它的策略是只显示部分的<code>Tab</code>，通过滑动来显示其它没有显示的<code>Tab</code>。而且如果两边都有<code>Tab</code>没有显示时，它会始终停止在中间位置。<br>我们来看一下<code>TabLayout</code>的在布局文件里的配置：</p>
 <pre><code>&lt;android.support.design.widget.TabLayout xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
     android:id=&quot;@+id/tab&quot;
     android:layout_width=&quot;match_parent&quot;
     android:layout_height=&quot;wrap_content&quot;
     app:tabMode=&quot;scrollable&quot;&gt;
 &lt;/android.support.design.widget.TabLayout&gt;
-</code></pre><h2 id="3-1-Fixed-TabLayout"><a href="#3-1-Fixed-TabLayout" class="headerlink" title="3.1 Fixed TabLayout"></a>3.1 Fixed TabLayout</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/6/4.png" alt="图1"> </p>
+</code></pre><h2 id="3-1-Fixed-TabLayout"><a href="#3-1-Fixed-TabLayout" class="headerlink" title="3.1 Fixed TabLayout"></a>3.1 Fixed TabLayout</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/6/4.png" alt="图1"><br>这个是通过<code>app:tabMode=&quot;fixed&quot;</code>来进行设置的，当然这是默认的配置，也就是不配置也可以实现。</p>
+<h2 id="3-2-设置TabLayout居中显示"><a href="#3-2-设置TabLayout居中显示" class="headerlink" title="3.2 设置TabLayout居中显示"></a>3.2 设置<code>TabLayout</code>居中显示</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/6/5.png" alt="图1"> 这里我们需要通过<code>app:tabGravity=&quot;center&quot;</code>来进行设置，才会有上面的效果，使用<code>app:tabGravity=&quot;fill&quot;</code>也就是铺满。</p>
+<p>3.3 带图标文字的TabLayout实现<br><img src="/uploads/img/AndroidAdvanceDevelop/6/6.png" alt="图1">这里需要使用的核心代码是：</p>
+<pre><code>    /**
+     * 给每个tab设置图标
+     */
+    private void setTabLayoutIcon() {
+        mTabLayout.getTabAt(0).setIcon(R.drawable.a1);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.a2);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.a2);
+}
+</code></pre><p>这里有个问题就是默认的图标和文字不是显示在同一行，而是图标在上，文字在下，是这样子的。<img src="/uploads/img/AndroidAdvanceDevelop/6/7.png" alt="图1"><br>如果需要做成图片和文字在同一行，下面提供一种实现方式。首先先上tab的布局：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:gravity=&quot;center&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
 
+    &lt;ImageView
+        android:id=&quot;@+id/icon&quot;
+        android:layout_width=&quot;20dp&quot;
+        android:layout_height=&quot;20dp&quot;
+        android:layout_centerVertical=&quot;true&quot; /&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/title&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_centerVertical=&quot;true&quot;
+        android:layout_toRightOf=&quot;@+id/icon&quot;
+        android:text=&quot;标题&quot; /&gt;
+
+&lt;/RelativeLayout&gt;
+</code></pre><p>然后在<code>Adapter</code>里来增加获取<code>tab</code>中<code>view</code>的方法。</p>
+<pre><code> /**
+ * 处理文字带图标的tab显示
+ *
+ * @param position
+ * @return
+ */
+public View getPagerView(int position) {
+    View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pager_title_image, null);
+    ButterKnife.bind(this, view);
+
+    mIcon.setImageDrawable(mDrawables.get(position));
+    mTv.setText(mTitles.get(position));
+    return view;
+}
+</code></pre><p>再通过下面方式把<code>TabView</code>设置到<code>Tab</code>上。</p>
+<pre><code>/**
+ * 给每个tab设置图标
+ */
+private void setTabLayoutIcon() {
+    for (int x = 0; x &lt; mTabLayout.getTabCount(); x++) {
+        TabLayout.Tab tab = mTabLayout.getTabAt(x);
+        tab.setCustomView(adapter.getPagerView(x));
+    }
+}
+</code></pre><p> 实现后的效果如图：<img src="/uploads/img/AndroidAdvanceDevelop/6/8.png" alt="图1"></p>
+<h2 id="3-4-只带图标的TabLayout"><a href="#3-4-只带图标的TabLayout" class="headerlink" title="3.4 只带图标的TabLayout"></a>3.4 只带图标的TabLayout</h2><p>在实现图标文字的基础上进行修改，也就是将<code>Adapter</code>里获取标题文字的方法注释：</p>
+<pre><code>   /* @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles.get(position);
+    }
+*/
+</code></pre><p>然后，在设置<code>TabLayout</code>方法中通过设置每个<code>Tab</code>的<code>Icon</code>来完成设置。</p>
+<pre><code>    /**
+ * 给每个tab设置图标
+ */
+private void setTabLayoutIcon() {
+    /*for (int x = 0; x &lt; mTabLayout.getTabCount(); x++) {
+        TabLayout.Tab tab = mTabLayout.getTabAt(x);
+        tab.setCustomView(adapter.getPagerView(x));
+    }*/
+    mTabLayout.getTabAt(0).setIcon(R.drawable.a1);
+    mTabLayout.getTabAt(1).setIcon(R.drawable.a1);
+    mTabLayout.getTabAt(2).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(3).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(4).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(5).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(6).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(7).setIcon(R.drawable.a2);
+    mTabLayout.getTabAt(8).setIcon(R.drawable.a2);
+}
+</code></pre><p>这样就完成了一个只有图标的<code>TabLayout</code>的显示。</p>
+<p><strong>TabLayout完整源码例子</strong><br><a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TextTabLayout" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TextTabLayout</a></p>
+<h1 id="4-Floating-Action-Button"><a href="#4-Floating-Action-Button" class="headerlink" title="4.Floating Action Button"></a>4.Floating Action Button</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/9.png" alt="图1"></p>
+<p><code>Floating Action Button</code>是一个悬浮的操作按钮，可以当作一个快捷导航来使用，或者是一些最常用的功能可以通过此按钮来进行展示。它一般悬浮在窗口的最上层且一般设置在右下角的位置方便操作。<br><code>Floating Action Button</code>在布局中的设置如下：  </p>
+<pre><code>&lt;android.support.design.widget.FloatingActionButton xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_gravity=&quot;bottom|right&quot;
+    android:layout_marginBottom=&quot;10dp&quot;
+    android:layout_marginRight=&quot;10dp&quot;
+    android:src=&quot;@android:drawable/ic_dialog_email&quot;
+    app:fabSize=&quot;mini&quot; /&gt;
+</code></pre><p>这里我们需要使用两个属性：</p>
+<blockquote>
+<ol>
+<li>layout_gravity:通过这个属性将<code>floating action button</code>设置到相应的位置，上面代码我们设置的是右下角。  </li>
+<li>app:fabSize:这个是设置图标的大小，默认为正常大小，还有一个属性值是<code>mini</code>，也就是小一号。  </li>
+<li>app:backgroundTint:改变图标背景的颜色。</li>
+</ol>
+</blockquote>
+<p><strong>Floating Action Button完整源码地址</strong><br><a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestFloatingActionButton" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestFloatingActionButton</a></p>
+<h1 id="5-NavigationView"><a href="#5-NavigationView" class="headerlink" title="5.NavigationView"></a>5.NavigationView</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/navigationview.gif" alt="图1"><br><code>NavigationView</code>是<code>Android</code>左滑菜单内部实现，这里面分为两部分，一部分是头部，通过<code>app:headerLayout</code>在布局文件来进行添加，另一部分就是菜单列表，通过<code>app:menu</code>在布局文件里进行设置。<br>这里我们先来看看头部的xml布局：  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;192dp&quot;
+    android:background=&quot;@drawable/a4&quot;
+    android:orientation=&quot;vertical&quot;&gt;
+
+&lt;de.hdodenhof.circleimageview.CircleImageView xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:id=&quot;@+id/header_icon&quot;
+    android:layout_width=&quot;50dp&quot;
+    android:layout_height=&quot;50dp&quot;
+    android:layout_alignParentBottom=&quot;true&quot;
+    android:layout_marginBottom=&quot;30dp&quot;
+    android:layout_marginLeft=&quot;10dp&quot;
+    android:src=&quot;@drawable/a5&quot;
+    app:civ_border_color=&quot;@color/colorPrimaryDark&quot;
+    app:civ_border_width=&quot;2dp&quot; /&gt;
+
+&lt;TextView
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_alignParentBottom=&quot;true&quot;
+    android:layout_marginLeft=&quot;10dp&quot;
+    android:text=&quot;allen&quot;
+    android:textColor=&quot;#ffffff&quot;
+    android:textSize=&quot;20dp&quot; /&gt;
+&lt;/RelativeLayout&gt;
+</code></pre><p>接下来再看看菜单列表的menu菜单布局：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+
+&lt;group android:checkableBehavior=&quot;single&quot;&gt;
+    &lt;item
+        android:id=&quot;@+id/main&quot;
+        android:icon=&quot;@drawable/a6&quot;
+        android:title=&quot;首页&quot; /&gt;
+
+    &lt;item
+        android:id=&quot;@+id/share&quot;
+        android:icon=&quot;@drawable/a7&quot;
+        android:title=&quot;分享&quot; /&gt;
+
+    &lt;item
+        android:id=&quot;@+id/news&quot;
+        android:icon=&quot;@drawable/a8&quot;
+        android:title=&quot;新闻&quot; /&gt;
+
+    &lt;item
+        android:id=&quot;@+id/active&quot;
+        android:icon=&quot;@drawable/a9&quot;
+        android:title=&quot;活动&quot; /&gt;
+
+    &lt;item android:title=&quot;other&quot;&gt;
+        &lt;menu&gt;
+            &lt;item
+                android:id=&quot;@+id/buy&quot;
+                android:icon=&quot;@drawable/a10&quot;
+                android:title=&quot;导购&quot; /&gt;
+            &lt;item
+                android:id=&quot;@+id/other&quot;
+                android:icon=&quot;@drawable/a6&quot;
+                android:title=&quot;其它&quot; /&gt;
+        &lt;/menu&gt;
+    &lt;/item&gt;
+&lt;/group&gt;
+&lt;/menu&gt;    
+</code></pre><p>最后就是navigationView的布局了。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+</code></pre><android.support.v4.widget.drawerlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:background="#ffffff" tools:context="com.example.mac.testnativationview.MainActivity">
+
+<pre><code>&lt;android.support.design.widget.AppBarLayout
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&gt;
+
+    &lt;android.support.v7.widget.Toolbar
+        android:id=&quot;@+id/toolbar&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;&gt;&lt;/android.support.v7.widget.Toolbar&gt;
+&lt;/android.support.design.widget.AppBarLayout&gt;
+    &lt;!--内容布局--&gt;
+&lt;include layout=&quot;@layout/content_layout&quot; /&gt;
+
+&lt;android.support.design.widget.NavigationView xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:id=&quot;@+id/navigation_view&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:layout_gravity=&quot;start&quot;
+    app:headerLayout=&quot;@layout/navigation_header_view_layout&quot;
+    app:itemIconTint=&quot;@color/colorPrimaryDark&quot;
+    app:menu=&quot;@menu/navigation_menu&quot;&gt;&lt;/android.support.design.widget.NavigationView&gt;
+&lt;/android.support.v4.widget.DrawerLayout&gt;
+</code></pre><p>这里有几个属性需要说明一下。</p>
+<blockquote>
+<ol>
+<li><code>layout_gravity</code>：首先这个属性是一定要设置的，而且属性值为<code>start</code>。否则导航菜单不能正常显示。  </li>
+<li><code>app:headerLayout</code>:指定导航菜单的头部布局  </li>
+<li><code>app:menu</code>:这里指定的是对应的菜单列表。  </li>
+<li><code>app:itemIconTint</code>:这个属性可以将所有图标的颜色改成统一风格的颜色。  </li>
+</ol>
+</blockquote>
+<p>到这里就可以正常显示导航菜单及里面的内容了。下面我们来说一下导航菜单中菜单列表（menu列表）的点击事件处理：  </p>
+<pre><code>mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.main:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了首页&quot;);
+                    break;
+
+                case R.id.share:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了分享&quot;);
+
+                    break;
+
+                case R.id.news:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了新闻&quot;);
+
+                    break;
+
+                case R.id.active:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了活动&quot;);
+
+                    break;
+
+                case R.id.buy:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了导购&quot;);
+
+                    break;
+
+                case R.id.other:
+                    mRoot.closeDrawers();
+                    showSnackbar(&quot;点击了其它&quot;);
+
+                    break;
+
+            }
+            return false;
+        }
+    });
+</code></pre><p>这里通过<code>setNavigationItemSelectedListener()</code>函数来处理对应的点击事件。<br>到这里<code>NavigationView</code>基本的使用方法就讲完了。</p>
+<p><strong>NavigationView例子完整源码地址</strong><br><a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestNativationView" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestNativationView</a>  </p>
+<h1 id="6-CardView"><a href="#6-CardView" class="headerlink" title="6.CardView"></a>6.CardView</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/cardView.gif" alt="图1"><br><img src="/uploads/img/AndroidAdvanceDevelop/6/11.png" alt="图1"><br><code>CardView</code>称为卡片式布局，它是一个<code>ViewGroup</code>，被包裹的内容会以卡片式风格来进行展示。一般我们会和<code>RecyclerView</code>一起来使用，作为<code>item</code>的根布局。要在项目中使用<code>CardView</code>，需要先导入依赖包：  </p>
+<blockquote>
+<p> compile ‘com.android.support:cardview-v7:23.4.0’  </p>
+</blockquote>
+<p>依赖包的版本可能会有区别，是sdk版本有关。<br>首先我们来看一下<code>CardView</code>的xml布局：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;match_parent&quot;&gt;
+/&gt;
+
+&lt;android.support.v7.widget.CardView xmlns:card_view=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:layout_margin=&quot;5dp&quot;
+    card_view:cardCornerRadius=&quot;3dp&quot;
+    card_view:cardElevation=&quot;2dp&quot;&gt;
+
+    &lt;RelativeLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;&gt;
+
+        &lt;de.hdodenhof.circleimageview.CircleImageView
+            android:id=&quot;@+id/header_iv&quot;
+            android:layout_width=&quot;50dp&quot;
+            android:layout_height=&quot;50dp&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:layout_marginTop=&quot;10dp&quot;
+            android:src=&quot;@drawable/a5&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:layout_marginTop=&quot;13dp&quot;
+            android:layout_toRightOf=&quot;@+id/header_iv&quot;
+            android:text=&quot;姓名&quot;
+            android:textSize=&quot;20dp&quot; /&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_below=&quot;@+id/name&quot;
+            android:layout_marginLeft=&quot;10dp&quot;
+            android:layout_marginTop=&quot;5dp&quot;
+            android:layout_toRightOf=&quot;@+id/header_iv&quot;
+            android:text=&quot;邮箱:allen@xxx.com&quot;
+            android:textSize=&quot;15dp&quot; /&gt;
+    &lt;/RelativeLayout&gt;
+
+&lt;/android.support.v7.widget.CardView&gt;
+&lt;/RelativeLayout&gt;
+</code></pre><p>本来<code>CardView</code>在这里应该当作根布局来使用的，可以当作根布局后，会有问题，根布局的<code>cardView</code>读不到，所以要再包裹一层。这种情况在<code>item</code>布局中比较常见。这里关于<code>cardView</code>常用的几个属性说明一下：</p>
+<blockquote>
+<ol>
+<li><code>card_view:cardCornerRadius</code>:表示设置圆角的弧度大小。  </li>
+<li><code>layout_margin</code>:一般会设置该值来进行隔开每个<code>item</code>，显示出卡片的效果。  </li>
+<li><code>card_view:cardElevation</code>:设置z轴的高度，让其有悬空的效果。<br>接下来再来看看<code>MainActivity</code>的布局：</li>
+</ol>
+</blockquote>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;match_parent&quot;
+tools:context=&quot;com.example.mac.testcardview.MainActivity&quot;&gt;
+
+&lt;android.support.v7.widget.RecyclerView
+    android:id=&quot;@+id/rv_list&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:visibility=&quot;gone&quot;&gt;&lt;/android.support.v7.widget.RecyclerView&gt;
+&lt;/RelativeLayout&gt;
+</code></pre><p>这里<code>RecyclerView</code>需要先设置隐藏，否则，如果没有数据时，点击会崩溃。</p>
+<p><strong>CardView例子完整源码地址</strong><br><a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestCardView" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestCardView</a></p>
+<h1 id="7-Toolbar"><a href="#7-Toolbar" class="headerlink" title="7.Toolbar"></a>7.Toolbar</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/6/toolbarScroll.gif" alt="图1">   </p>
+<p><code>Toolbar</code>是<code>Android5.0</code>之后推出的一个全新的导航控件，主要用来替换原来的<code>ActionBar</code>来配置<code>CoordinatorLayout</code>或者<code>CollapsingToolbarLayout</code>来实现一些联动的操作，加强用户的体验。<br>先来说说常规的和<code>ActionBar</code>相同的地方。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/12.png" alt="图1"></p>
+<pre><code>mToolbar.setLogo(R.drawable.aa12);  //设置logo
+    mToolbar.setTitle(&quot;      测试Toolbar&quot;);  //这里是标题
+    mToolbar.setSubtitle(&quot;github&quot;);  //这里是副标题  这个没有效果
+    //这个设置需要在设置title后
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setDisplayShowHomeEnabled(true);
+    mToolbar.setNavigationIcon(R.drawable.aa17);  //设置导航图标
+    //设置menu菜单的点击事件
+    mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            String msg = &quot;&quot;;
+            switch (menuItem.getItemId()) {
+                case R.id.action_edit:
+                    msg += &quot;Click edit&quot;;
+                    break;
+                case R.id.action_share:
+                    msg += &quot;Click share&quot;;
+                    break;
+                case R.id.action_settings:
+                    msg += &quot;Click setting&quot;;
+                    break;
+            }
+
+            if (!msg.equals(&quot;&quot;)) {
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+    });
+</code></pre><p>这里我们通过onCreateOptionsMenu()方法来加载<code>Menu</code>图标信息。</p>
+<pre><code>    @Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+}
+</code></pre><p><strong>注意</strong><br>使用<code>Toolbar</code>时，相应的<code>Actiivty</code>需要将<code>theme</code>设置为<code>Theme.AppCompat</code>类型的，而且需要添加<code>windowActionBar</code>为false,和<code>windowNoTitle</code>为true。具体配置见下面代码：  </p>
+<pre><code>    &lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;
+    &lt;!-- Customize your theme here. --&gt;
+    &lt;item name=&quot;colorPrimary&quot;&gt;@android:color/white&lt;/item&gt;  //toolbar背影颜色
+    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@android:color/white&lt;/item&gt;  //通知栏颜色 
+    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;  //设置像checkbox等选中后的颜色,具体看下图
+    &lt;item name=&quot;windowActionBar&quot;&gt;false&lt;/item&gt;  //关闭actionbar
+    &lt;item name=&quot;windowNoTitle&quot;&gt;true&lt;/item&gt;  //不显示标题
+    &lt;item name=&quot;android:textColorPrimary&quot;&gt;@android:color/black&lt;/item&gt;  //toolbar文字颜色,不包括menu菜单颜色
+&lt;/style&gt;
+</code></pre><p>我们<code>Activity</code>设置的主题就是上面的配置。<img src="/uploads/img/AndroidAdvanceDevelop/6/13.png" alt="图1"> 关于上面主题里相应颜色所对应的区域不是很清楚的话，可以看下图，非常清晰的说明了相应颜色的对应关系。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/14.png" alt="图1">   </p>
+<h2 id="7-1-Toolbar结合CoordinatorLayout"><a href="#7-1-Toolbar结合CoordinatorLayout" class="headerlink" title="7.1 Toolbar结合CoordinatorLayout"></a>7.1 Toolbar结合CoordinatorLayout</h2><p><code>CoordinatorLayout</code>让我们根据滚动事件来调整子View的布局，比如在滚动内容时，隐藏toolbar.<br>我们主要是通过<code>app:layout_scrollFlags=&quot;&quot;</code>对<code>toolbar</code>来设置滚动的类型，然后，通过<code>app:layout_behavior</code>来设置对控件的事件监听，也就是当设置了<code>app:layout_behavior</code>的控件，滑动时，就会触发<code>Toolbar</code>的滚动事件，(这里也可以不用设置<code>app:layout_behavior</code>，只要有滚动事件发生，就可以进行联动，但此时的页面显示可能会有问题,所以，如果需要联动和页面的显示不出现问题，需要对滑动的控件设置<code>app:layout_behavior</code>)但具体是什么形式的滚动，由<code>app:layout_scrollFlags</code>里配置的参数来决定。当然这一切一切的前提，就是需要使用<code>CoordinatorLayout</code>这个新的<code>ViewGroup</code>进行包裹。其实滚动效果的实现，也是由此<code>Layout</code>内部实现的。下面我们来说说几种滚动的类型吧，也就是通过<code>app:layout_ScrollFlags</code>配置的滚动类型。<br><strong>1. scroll | enterAlways属性</strong><br>实现快速返回的效果，当向上滑动时，会先滑动到隐藏<code>Toolbar</code>，然后再滑动其它可滑动控件；当向下滑动时，会先滑动到显示<code>Toolbar</code>，然后再滑动其它可滑动控件。<img src="/uploads/img/AndroidAdvanceDevelop/6/15.gif" alt="图1">   </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;android.support.design.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+    &lt;android.support.design.widget.AppBarLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;&gt;
+
+        &lt;android.support.v7.widget.Toolbar
+            android:id=&quot;@+id/toolbar&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            app:layout_scrollFlags=&quot;scroll|enterAlways&quot;&gt;&lt;/android.support.v7.widget.Toolbar&gt;
+
+        &lt;android.support.design.widget.TabLayout
+            android:id=&quot;@+id/tab_layout&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            app:tabMode=&quot;fixed&quot;&gt;&lt;/android.support.design.widget.TabLayout&gt;
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+
+    &lt;android.support.v4.view.ViewPager
+        android:id=&quot;@+id/vp_pager&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;&lt;/android.support.v4.view.ViewPager&gt;
+    &lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre><p><strong>2.scroll | enterAlwaysCollapsed属性</strong><br>这个和上面类似，不同的是，当向下拉时，本身控件先响应，比如<code>RecyclerView</code>，当本身控件滚动到顶部后，再引起<code>Toolbar</code>的滚动；当<code>Toolbar</code>显示时，此时向上拉，是先<code>Toolbar</code>响应，党滚动完成后，再本身控件响应。<img src="/uploads/img/AndroidAdvanceDevelop/6/16.gif" alt="图1"> 它的布局文件和上面是一样的，只是属性改变了一下。</p>
+<pre><code>app:layout_scrollFlags=&quot;scroll|enterAlwaysCollapsed&quot; 
+</code></pre><p><strong>3.scroll | exitUntilCollapsed属性</strong><br>这个属性默认是没有反应的，需要配合<code>minHeight</code>来进行使用，这里说的是我们<code>Toolbar</code>有一个默认高度，然后设置一个最小高度，如果默认高度大于最小高度，那么，在向上滑动隐藏<code>toolbar</code>的时候，<code>Toolbar</code>会留出最小高度部分，不作隐藏。<img src="/uploads/img/AndroidAdvanceDevelop/6/17.gif" alt="图1">这里的布局文件与上面也基本相同，我贴出不同部分的代码：</p>
+<pre><code>&lt;android.support.v7.widget.Toolbar
+        android:id=&quot;@+id/toolbar&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;80dp&quot;
+        android:minHeight=&quot;30dp&quot;
+        app:layout_scrollFlags=&quot;scroll|exitUntilCollapsed&quot;
+        app:titleMarginTop=&quot;50dp&quot;&gt;&lt;/android.support.v7.widget.Toolbar&gt;
+</code></pre><h2 id="7-2-Toolbar结合CollapsingoolbarLayout"><a href="#7-2-Toolbar结合CollapsingoolbarLayout" class="headerlink" title="7.2 Toolbar结合CollapsingoolbarLayout"></a>7.2 Toolbar结合CollapsingoolbarLayout</h2><p>当我们使用<code>CollapsingToolbarLayout</code>来包裹<code>Toolbar</code>时，<code>layout_collapseMode</code>属性必须设置。这两个属性是会对<code>Toolbar</code>来进行设置的。这个属性有两种属性值。<br>一个是<code>pin</code>,当<code>CollapsingToolbarLayout</code>完全收缩后，<code>Toolbar</code>还会保留在屏幕上。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_Pin.gif" alt="图1"><br>另一个是<code>parallax</code>,当<code>CollpasingToolbarLayout</code>在收缩的时候，<code>Toolbar</code>也跟着向上滚动，也就是<code>Toolbar</code>不会固定在屏幕上，而是会被隐藏。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/collpasingLayout_parallax.gif" alt="图1"></p>
+<p>除了给<code>Toolbar</code>设置<code>app_collapseMode</code>属性外，还需要给<code>CollapsingToolbarLayout</code>设置<code>app:layout_scrollFlags</code>属性。这个属性有三个属性值，和上面<code>CoordinatorLayout</code>结合<code>Toolbar</code>的属性是一样的。<br><strong>1. scroll | enterAlways属性</strong><br><code>Toolbar</code>会被隐藏，当向下滚动时，优化滚动Toolbar和<code>CollapsingToolbarLayout</code>部分。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_scroll_enterAlways.gif" alt="图1"><br><strong>2. scroll|enterAlwaysCollapsed属性</strong><br><code>Toolbar</code>会被隐藏，当向下滚动时，优化滚动自身控件部分，比如<code>RecyclerView</code>。<img src="/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_enterAlwaysCollapsed.gif" alt="图1"><br><strong>3. scroll|exitUntilCollapsed属性</strong><br>这个属性设置后，向上滚动时，<code>Toolbar</code>部分会被隐藏，只会留下一个<code>title</code>部分显示在顶部，不会被隐藏。<img src="/uploads/img/AndroidAdvanceDevelop/6/collapsingLayout_exitUntilCollapsed.gif" alt="图1"></p>
+<p>此<code>Toolbar</code>部分源码地址：<a href="https://github.com/allen218/MaterialDesignExamples/tree/master/TestToolBar" target="_blank" rel="external">https://github.com/allen218/MaterialDesignExamples/tree/master/TestToolBar</a></p>
+</android.support.v4.widget.drawerlayout>
       
     </div>
 
@@ -467,7 +912,7 @@ private boolean validateUsername() {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Snackbar"><span class="nav-text">1.Snackbar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Snackbar使用规则"><span class="nav-text">1.1 Snackbar使用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-改变文字的显示颜色"><span class="nav-text">1.2 改变文字的显示颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-TextInputLayout"><span class="nav-text">2. TextInputLayout</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-TabLayout"><span class="nav-text">3.TabLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Fixed-TabLayout"><span class="nav-text">3.1 Fixed TabLayout</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Snackbar"><span class="nav-text">1.Snackbar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Snackbar使用规则"><span class="nav-text">1.1 Snackbar使用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-改变文字的显示颜色"><span class="nav-text">1.2 改变文字的显示颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-TextInputLayout"><span class="nav-text">2. TextInputLayout</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-TabLayout"><span class="nav-text">3.TabLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Fixed-TabLayout"><span class="nav-text">3.1 Fixed TabLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-设置TabLayout居中显示"><span class="nav-text">3.2 设置TabLayout居中显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-只带图标的TabLayout"><span class="nav-text">3.4 只带图标的TabLayout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Floating-Action-Button"><span class="nav-text">4.Floating Action Button</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-NavigationView"><span class="nav-text">5.NavigationView</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-CardView"><span class="nav-text">6.CardView</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Toolbar"><span class="nav-text">7.Toolbar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Toolbar结合CoordinatorLayout"><span class="nav-text">7.1 Toolbar结合CoordinatorLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Toolbar结合CollapsingoolbarLayout"><span class="nav-text">7.2 Toolbar结合CollapsingoolbarLayout</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
