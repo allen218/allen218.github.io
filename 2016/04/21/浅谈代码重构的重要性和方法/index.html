@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/27.png">
-<meta property="og:updated_time" content="2016-04-24T08:14:59.000Z">
+<meta property="og:updated_time" content="2016-05-28T07:23:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈代码重构的重要性和方法">
 <meta name="twitter:description">
@@ -255,8 +255,8 @@
 
       
         <p><img src="/uploads/img/AndroidAdvanceDevelop/4/27.png" alt="img1"><br><a id="more"></a></p>
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>随着开发进度的放慢，程序的主体功能已大致完成，在需求渐渐少下来的时候，我们就需要有计划的对原有的一些代码进行整理，使其结构清晰，更容易被人所阅读，也更容易来进行修改，添加新功能。当然，我个人是不赞成特意分配一些时间来进行重构，也就是把重构当作一个单独的事情区分出来进行特别的处理。我认为当我们在新功能的添加过程中就应该嗅出代码里的<code>坏味道</code>，然后，对代码进行小规模重构，使其能够很顺利的添加新的功能，同时不引入新的问题。但由于历史原因，前期开发也许没有足够的时间，没有详细的设计，以及没有严格的规范要求等等，都使得我们需要在后面的时候里对前期的代码进行重构。目前我的处境正是如此。</p>
-<h1 id="为什么要进行重构？"><a href="#为什么要进行重构？" class="headerlink" title="为什么要进行重构？"></a>为什么要进行重构？</h1><p>我们的整个开发流程首先是要先对程序进行总体的设计，此时的设计是一种根据经验的推测性设计，让程序系统按照既定的想法进行程序的开发;而事情住住不会按照我们预想的那样顺利的进行，或者说不能完全按照我们先前的设计顺利的进行。此时，就需要我们运用<code>重构</code>来修正我们设计上的偏差，让其更加适应需求的变化，保证程序的质量。<br>这里借用《改善既有代码》一书里的说明。</p>
+<h1 id="1-前提"><a href="#1-前提" class="headerlink" title="1.前提"></a>1.前提</h1><p>随着开发进度的放慢，程序的主体功能已大致完成，在需求渐渐少下来的时候，我们就需要有计划的对原有的一些代码进行整理，使其结构清晰，更容易被人所阅读，也更容易来进行修改，添加新功能。当然，我个人是不赞成特意分配一些时间来进行重构，也就是把重构当作一个单独的事情区分出来进行特别的处理。我认为当我们在新功能的添加过程中就应该嗅出代码里的<code>坏味道</code>，然后，对代码进行小规模重构，使其能够很顺利的添加新的功能，同时不引入新的问题。但由于历史原因，前期开发也许没有足够的时间，没有详细的设计，以及没有严格的规范要求等等，都使得我们需要在后面的时候里对前期的代码进行重构。目前我的处境正是如此。</p>
+<h1 id="2-为什么要进行重构？"><a href="#2-为什么要进行重构？" class="headerlink" title="2.为什么要进行重构？"></a>2.为什么要进行重构？</h1><p>我们的整个开发流程首先是要先对程序进行总体的设计，此时的设计是一种根据经验的推测性设计，让程序系统按照既定的想法进行程序的开发;而事情住住不会按照我们预想的那样顺利的进行，或者说不能完全按照我们先前的设计顺利的进行。此时，就需要我们运用<code>重构</code>来修正我们设计上的偏差，让其更加适应需求的变化，保证程序的质量。<br>这里借用《改善既有代码》一书里的说明。</p>
 <blockquote>
 <p>1.难以阅读的程序，难以修改<br>2.逻辑重复的程序，难以修改<br>3.添加新行为时需要修改已有代码时，难以修改<br>4.带复杂条件逻辑的程序，难以修改  </p>
 </blockquote>
@@ -265,7 +265,723 @@
 <p>1.容易阅读<br>2.所有逻辑都只在唯一的地点指定<br>3.新的改动不会危及现有行为<br>4.尽可能简单表达条件逻辑  </p>
 </blockquote>
 <p>好吧，让我们开始重构吧！</p>
-<h1 id="重构的难点"><a href="#重构的难点" class="headerlink" title="重构的难点"></a>重构的难点</h1><h1 id="重构的原则"><a href="#重构的原则" class="headerlink" title="重构的原则"></a>重构的原则</h1><h1 id="哪些场景需要用到重构"><a href="#哪些场景需要用到重构" class="headerlink" title="哪些场景需要用到重构"></a>哪些场景需要用到重构</h1><h2 id="1-Duplicated-Code-重复代码"><a href="#1-Duplicated-Code-重复代码" class="headerlink" title="1.Duplicated Code(重复代码)"></a>1.Duplicated Code(重复代码)</h2><h2 id="2-Long-Method-过长函数"><a href="#2-Long-Method-过长函数" class="headerlink" title="2.Long Method(过长函数)"></a>2.Long Method(过长函数)</h2><h2 id="3-Large-Class-过大的类"><a href="#3-Large-Class-过大的类" class="headerlink" title="3.Large Class(过大的类)"></a>3.Large Class(过大的类)</h2><h1 id="常用的重构方法"><a href="#常用的重构方法" class="headerlink" title="常用的重构方法"></a>常用的重构方法</h1>
+<h1 id="3-重构的难点"><a href="#3-重构的难点" class="headerlink" title="3.重构的难点"></a>3.重构的难点</h1><h1 id="4-重构的原则"><a href="#4-重构的原则" class="headerlink" title="4.重构的原则"></a>4.重构的原则</h1><h1 id="5-哪些场景需要用到重构"><a href="#5-哪些场景需要用到重构" class="headerlink" title="5.哪些场景需要用到重构"></a>5.哪些场景需要用到重构</h1><h2 id="1-Duplicated-Code-重复代码"><a href="#1-Duplicated-Code-重复代码" class="headerlink" title="1.Duplicated Code(重复代码)"></a>1.Duplicated Code(重复代码)</h2><h2 id="2-Long-Method-过长函数"><a href="#2-Long-Method-过长函数" class="headerlink" title="2.Long Method(过长函数)"></a>2.Long Method(过长函数)</h2><h2 id="3-Large-Class-过大的类"><a href="#3-Large-Class-过大的类" class="headerlink" title="3.Large Class(过大的类)"></a>3.Large Class(过大的类)</h2><h1 id="6-常用的重构方法"><a href="#6-常用的重构方法" class="headerlink" title="6.常用的重构方法"></a>6.常用的重构方法</h1><h2 id="6-1-提取子函数"><a href="#6-1-提取子函数" class="headerlink" title="6.1 提取子函数"></a>6.1 提取子函数</h2><p>提取子函数说的是将一个大的函数通过单一职责原则，将其分为多个功能单一的子函数，提取子函数又需要我们给每个函数取名，良好的函数命令可以起到文档的作用，通过函数名就能大概了解到该函数是做什么的，这样子做会使代码更加清晰，便于阅读和维护。<br>那么一个函数多长才需要提取子函数呢？其实提取子函数与函数的长度没有太直接的关系，主要是看其完成的具体功能。如果功能不够单一，这个时候就需要提取相应的功能以子函数的形式进行调用了。但有一个不成文的规则吧，就是如果一个函数中的代码超过20行，这个函数就很有可能不只做了一件事情，这是根据个人经验而定的。如果你的代码需要在代码体内使用注释来说明其作用的话，这可能就是一个需要提取子函数的信号了，因为一个函数只完成一个功能嘛。<br>提取子函数的方法对于编译工具来说，是非常简单的事情，只需要使用快捷键，然后给子函数取一个名字就可以完成提取子函数的重构。这里我们以打印数据库所有学生信息来说明一下，提取子函数的方法。这个函数先要从数据库获取学生信息，然后，对学生信息进行升序排序，最后将学生信息打印。  </p>
+<pre><code>public void printStuduntsInfo() {
+    List&lt;StudentInfo&gt; mStudents = new ArrayList&lt;&gt;();
+    //模拟从数据库读取学生信息
+    for (int x = 0; x &lt; 50; x++) {
+        mStudents.add(new StudentInfo(new Random().nextInt(200), &quot;User-&quot; + x));
+    }
+
+    //给学生信息按升序排序
+    Collections.sort(mStudents, new Comparator&lt;StudentInfo&gt;() {
+        @Override
+        public int compare(StudentInfo lhs, StudentInfo rhs) {
+            return lhs.getId() - rhs.getId();
+        }
+    });
+
+    //打印学生信息
+    for (StudentInfo studentInfo : mStudents) {
+        System.out.println(&quot;学号:&quot; + studentInfo.getId() + &quot;,学生姓名:&quot; + studentInfo.getName());
+    }
+}
+</code></pre><p> 从上面的函数我们可能看出，该函数做的事情比较多，职责不单一，而且每一部分的功能都有通过注释来说明其作用，我们上面说过，如果在一个函数里需要其使用注释来说明其功能，这时可能是一个函数里做了多件事情了。那我们来对上面的函数使用提取子函数来对其进行重构。</p>
+<pre><code> public void printStuduntsInfo() {
+   List&lt;StudentInfo&gt; mStudents = new ArrayList&lt;&gt;();
+
+    getStudentInfoFromDB(mStudents);
+
+    StudentInfoSort(mStudents);
+
+    printStudentInfo(mStudents);
+
+}
+</code></pre><p>上面是提取子函数后的函数的代码块，非常的清晰；我们通过相应的函数名就能知道其所做的事情，便于阅读；如果我们需要对哪一部分的功能进行修改，只需要找到相应的子函数完成修改即可，不会影响到其它代码，大大降低的修改的成本。</p>
+<h2 id="6-2-上移函数到父类"><a href="#6-2-上移函数到父类" class="headerlink" title="6.2 上移函数到父类"></a>6.2 上移函数到父类</h2><p><code>Java</code>面向对象的三大基本特征之一的继承，通过是我们进行代码复用，设计代码的重要手段。而继承如果处理不当也是容易产生重复代码的地方，特别是在对项目类族不是特别熟悉的时候。比如子类A实现了一个方法，而这个方法其实父类里面已经有了实现;或者子类B需要实现某个功能，而子类A里已经有其实现了等等都会造成代码重复，而代码重复的后果就是当逻辑发生变化，而只改了一个地方，另外的地方没有修改，而造成bug。<br>上移函数的使用场景就是多个子类如果实现了相同的功能，那么就需要考虑将其上移到父类中，让所有子类共用同一个函数，减少代码的重复率、出错率。<br>上移函数的操作一般是比较简单的，我们需要在父类创建一个函数，然后将子类的功能复制到父类，然后，让子类调用父类的方法。如果每个子类的实现有些许差别，我们可以通过简单修改函数的参数列表以及实现，如果有差异较大的子类，可以让其覆写方法，来完成自己的实现。  </p>
+<pre><code>    public abstract class Vehicle {
+
+    public void start() {
+        System.out.println(&quot;启动&quot;);
+    }
+
+    public void stop() {
+        System.out.println(&quot;停止&quot;);
+
+    }
+
+    public void speedUp() {
+        System.out.println(&quot;加速&quot;);
+
+    }
+
+    public void speedDown() {
+        System.out.println(&quot;减速&quot;);
+
+    }
+
+    public void openDoor() {
+        System.out.println(&quot;开车门&quot;);
+
+    }
+
+    public void closeDoor() {
+
+        System.out.println(&quot;关车门&quot;);
+    }
+}
+</code></pre><p>我们新建一个奥迪车的具体实现类，该类继承自<code>Vehicle</code>类，但是,在<code>Vehicle</code>并没有转弯的功能，车怎么能没有转弯功能呢，所以，我们在<code>Audi</code>类中添加了相应的功能。</p>
+<pre><code>    public class Audi extends Vehicle {
+
+    public void turn() {
+        System.out.println(&quot;转弯&quot;);
+    }
+}
+</code></pre><p>随着业务的发展，我们需要住车的类族中添加宝马车类，我们在使用宝马车类继承<code>Vehicle</code>抽象类。在<code>BMW</code>里添加了转转弯的功能，代码如下：</p>
+<pre><code>    public class BMW extends Vehicle {
+
+    public void turn() {
+        System.out.println(&quot;转弯&quot;);
+    }
+}
+</code></pre><p>这里我们可以看出<code>BMW</code>和<code>Audi</code>的实现是一样的，都实现了转弯的功能。当你一段重复的代码写上两遍的时候，我们就应该警觉了，是否将其放到父类中？我们通过上移函数至父类的重构手法，将<code>turn()</code>方法移到父类中，让其子类调用同一个方法。合并后的代码为：</p>
+<pre><code>    public abstract class Vehicle {
+
+    public void turn() {
+        System.out.println(&quot;转弯&quot;);
+    }
+
+}
+    public class Audi extends Vehicle {
+    //其它功能函数
+}
+    public class BMW extends Vehicle {
+    //其它功能函数
+}
+</code></pre><p>很多时候上移函数的操作可能不是那么容易发现，这需要对代码的类级结构清晰；同时，多个人开发功能相似的功能时，也容易产生代码重复的情况，导致重复代码越来越多，当然也不是所有的公用函数都需要上移至父类中，有时候我们需要在父类与子类中增加一个中间类，来满足少部分子类的特有需求。因为继承是一种侵略性质代码设计方式，如果选择了继承，就不管你是否需要父类中的某些方法，而一律给予子类。如果某一个子类继承的一个父类，并得到了许多用来到的方法，这时，我们需要考虑这些方法是否需要放在父类，或者我们需不需要继承这个父类。如果说它们的关系可以用什么是什么这样子的关系来表述的，我们就需要考虑将父类中的一些不是那么通用的方法，通过再创建一个中间抽象类，将这些不那么通用的方法移到中间类中，让需要的类去继承这个中间类，而不需要的，直接继承父类。这种实现方法就是我们接下来要说的下移函数到子类。</p>
+<h2 id="6-3-下移函数到子类"><a href="#6-3-下移函数到子类" class="headerlink" title="6.3 下移函数到子类"></a>6.3 下移函数到子类</h2><p>在面向对象的类族体系结构当中，除了同一段代码在多个子类中都有重复的实现外，还有一种情况，是父类中有子类不需要的函数，导致子类被强行拥有了自己并不需要的函数，这也是一种耦合。这种情况恰恰与我们上移函数至父类相反，我们需要将不是所有子类共用的方法移到父类的下一个类型层次，让其继承父类，然后让那些需要使用这些不是通用功能的子类来继承它。<br>我们还是以上面的<code>vehicle</code>为例，上面的例子中在父类有一个开门、关门的两个操作，而由于业务需要，我们添加了自行车类，而自行车类是没有开门、关门的操作的。这时我们需要使用下移函数至子类的重构手法，将开门和关门的操作定义到中间类中，让需要的子类去继承。具体操作为：</p>
+<p><strong>1.定义中间类</strong><br>我们定义一个中间类<code>Car</code>，将开门、关门的动作移至该类，然后让该类继承至<code>Vehicle</code>类，专门让汽车类去继承它。  </p>
+<pre><code>    public abstract class Car extends Vehicle {
+    public void openDoor() {
+        System.out.println(&quot;开车门&quot;);
+
+    }
+
+    public void closeDoor() {
+
+        System.out.println(&quot;关车门&quot;);
+    }
+}
+</code></pre><p><strong>2.让具体汽车类继承Car类</strong>  </p>
+<pre><code>    public class Audi extends Car {
+    //其它功能函数
+}
+</code></pre><p><strong>3.让不是汽车类继承Vehicle类</strong>  </p>
+<pre><code>    public class bike extends Vehicle {
+    //其它功能函数
+}
+</code></pre><p>通过下移函数至子类，将并不是通用的功能移到了合适的层次，让相应的子类去选择合适的父类继承。配合上移函数到父类的重构手法，可以减少大量的重复代码和避免父类与子类过度的耦合关系。  </p>
+<h2 id="6-4-封装固定的业务逻辑"><a href="#6-4-封装固定的业务逻辑" class="headerlink" title="6.4 封装固定的业务逻辑"></a>6.4 封装固定的业务逻辑</h2><p>这里主要说的是当我们有一个固定的业务逻辑需要被多次调用时，避免代码重复和可维护性，我们需要使用封装将业务逻辑整理到一起，固定执行。比如，上面<code>Car</code>的例子，我们模拟智能汽车来实现加速的效果。我们需要打开车门，启动汽车，加速这三个步骤。比如，我们分别使用<code>BMW</code>和<code>Audi</code>来实现加速效果：</p>
+<pre><code>BMW bmw = new BMW();
+    bmw.openDoor();
+    bmw.start();
+    bmw.speedUp();
+
+Audi audi=new Audi();
+    audi.openDoor();
+    audi.start();
+    audi.speedUp();
+</code></pre><p> 上面我们分别实现了两台车的加速过程，但是我们能很明显的发现，它们的调用逻辑，调用顺序是完全相同的，除了具体的类不同之外。这样子就导致了代码的重复，如果有多台车，那么我们需要写多次同样的代码，这将是一个灾难。此时我们就应该使用封装固定的业务逻辑的重构手法来对重复代码进行重构。<br> 我们需要再定义一个智能汽车的类，继承自<code>Car</code>类，然后提供加速的业务逻辑封装后的方法<code>autoSpeedUp()</code>.具体代码如下：</p>
+<pre><code>  public abstract class SmartCar extends Car {
+    public void autoSpeedUp(int speed) {
+        this.openDoor();
+        this.start();
+        this.speedUp();
+        System.out.println(&quot;当前加速为&quot; + speed);
+    }
+}
+</code></pre><p>如果是智能汽车类的话，我们直接继承至<code>SmartCar</code>类，如果我们需要更改父类中的实现方式，我们子类可以通过覆写父类的相应方法来完成自己的不同实现。这里的<code>autoSpeedUp()</code>方法实际上是用到了<code>模板方法</code>的设计模式来对固定的业务逻辑进行封装。通过这种封装我们可以提高代码的维护性，减少代码的重复率。</p>
+<h2 id="6-5使用泛型去除重复的逻辑"><a href="#6-5使用泛型去除重复的逻辑" class="headerlink" title="6.5使用泛型去除重复的逻辑"></a>6.5使用泛型去除重复的逻辑</h2><p>当我们不了解泛型时，如果要对多种数据类型作相同的逻辑的操作，这时我们会创建很多重复的代码只是操作的数据类型不一样而已，这样子对我们编程人员来说，简直就是灾难。每使用一个新的数据类型，都是复制一份同样的代码，改一下操作的类型，这样子存在很大的问题，如果一处逻辑需要改动，那么就需要多个地方一起改动，而这种改动又很容易漏改，直到运行时才发现问题。<br>如果我们碰到这样子的代码，那么我们就需要考虑使用泛型来减少重复代码，复用逻辑了。我们使用一个例子分别实现不带泛型和使用泛型的实现来对比使用泛型的代码减少、逻辑复用。首先我们分别使用Int和String来实现一个简单的<code>List</code>的操作，分别实现<code>get()</code>、<code>add()</code>、<code>size()</code>三个方法。<br><strong>IntArrayList的实现</strong></p>
+<pre><code>    public class IntArrayList {
+    private int[] dataList;
+
+    public IntArrayList(int size) {
+        dataList = new int[size];
+    }
+
+    public int get(int pos) {
+        if (dataList.length &gt; pos) {
+            return dataList[pos];
+        }
+        return -1;
+    }
+
+    public void add(int pos, int data) {
+        dataList[pos] = data;
+    }
+
+    public int size() {
+        return dataList.length;
+    }
+}
+
+    public class StringArrayList {
+    private String[] dataList;
+
+    public StringArrayList(int size) {
+        dataList = new String[size];
+    }
+
+    public String get(int pos) {
+        if (dataList.length &gt; pos) {
+               return dataList[pos];
+        }
+        return &quot;&quot;;
+    }
+
+    public void add(int pos, String data) {
+        dataList[pos] = data;
+    }
+
+    public int size() {
+        return dataList.length;
+    }
+}
+</code></pre><p>上面的两种实现可以看出，除了操作的类型不一样，逻辑是完全一样的，这时我们通过使用泛型来改变一下实现方式。<br><strong>使用泛型实现</strong>  </p>
+<pre><code>    public class SimpleArrayList&lt;T&gt; {
+    private T[] dataList;
+
+    public SimpleArrayList(int size) {
+        dataList = (T[]) new Object[size];
+    }
+
+    public T get(int pos) {
+        return dataList[pos];
+    }
+
+    public void add(int pos, T data) {
+        dataList[pos] = data;
+    }
+
+    public int size() {
+        return dataList.length;
+    }
+}
+</code></pre><p> 使用泛型，我们将具体的数据类型使用<code>T</code>来代替，当运行时会被赋值为具体的类型；在创建数组时，我们并不知道创建什么类型的数组，而又不能直接new T[]来创建，因为创建的对象必须都是具体的对象。而所有的类型都是继承自Object，所以这里使用new Object[]来创建数组，然后再强转成<code>T[]</code>类型。最后在add时，我们添加的是<code>T</code>类型的数据，具体由用户来指定。这样一来我们就不需要再重复创建相应逻辑的代码，达到复用代码的目的，一份代码大大降低的修改的复杂度。<br> 我们再来看看相应的使用吧，我们分别使用上面三种方法来实现数据的添加和获取。  </p>
+<pre><code> //使用InArrayList类
+IntArrayList intArrayList=new IntArrayList(5);
+intArrayList.add(0,2);
+intArrayList.add(1,25);
+System.out.println(intArrayList.get(1));
+
+//使用StringArrayList类
+StringArrayList stringArrayList=new StringArrayList(5);
+stringArrayList.add(0,&quot;hello&quot;);
+stringArrayList.add(1,&quot;world&quot;);
+System.out.println(stringArrayList.get(0));
+
+//使用SimpleArrayList来实现上面两种类型的操作
+SimpleArrayList&lt;Integer&gt; intArrayList1=new SimpleArrayList&lt;&gt;(5);
+intArrayList.add(0,2);
+intArrayList.add(1,25);
+System.out.println(intArrayList1.get(1));
+
+SimpleArrayList&lt;String&gt; stringArrayList1=new SimpleArrayList&lt;&gt;(5);
+stringArrayList1.add(0,&quot;hello&quot;);
+stringArrayList1.add(1,&quot;world&quot;);
+System.out.println(stringArrayList1.get(0)); 
+</code></pre><h2 id="6-6-使用对象避免过多的参数"><a href="#6-6-使用对象避免过多的参数" class="headerlink" title="6.6 使用对象避免过多的参数"></a>6.6 使用对象避免过多的参数</h2><p>当我们的项目变得复杂，会出现越来越多的函数需要带有多个参数的情况，你总能看到特定的一组参数总是一起被传递，可能有好几个函数使用了这组特定的参数，它们可能都在一个类里，也有可能各有其主。如果出现这种情况，我们就需要使用一个对象来对这些参数进行一层封装，然后通过传递此对象而不是一组参数来完成数据的传递。比如，最常见的就是第三方分享操作了。<br>例如，我们需要创建一个分享到微信朋友圈的功能，我们需要传递标题，内容，图片，原文链接和原文作者这五个参数。  </p>
+<pre><code> /**
+ * 分享到微信朋友圈
+ * @param title     标题
+ * @param content   内容 
+ * @param imgUrl    图片url
+ * @param targetUrl  原文链接
+ * @param creator    原文作者
+ */
+public void shareToWXFriend(String title,String content,String imgUrl,String targetUrl,String creator) {
+    //完成分享到朋友圈的逻辑
+}
+</code></pre><p>上面我们使用了五个参数，下面我们来调用这个方法：</p>
+<pre><code>shareToWXFriend(&quot;重构手法&quot;,&quot;常用的重构手法介绍和使用&quot;,&quot;http://url.com&quot;,&quot;http://targetUrl.com&quot;,&quot;xxxx&quot;);
+</code></pre><p>当我们看到这一连串的参数时，你可能也不太清楚哪个参数具体代表什么意思了，而且当你不需要传递某个参数时，你还需要手动的将其设置为<code>null</code>。我们可以将上面的五个参数封装到一个对象里：  </p>
+<pre><code>    /**
+    * 分享信息类
+    */
+    public class ShareInfo {
+    public String title;
+    public String content;
+    public String imgUrl;
+    public String targetUrl;
+    public String creator;
+}
+</code></pre><p>我们通过ShareInfo对象来替换上面的五个参数： </p>
+<pre><code> public void shareToWXFriend(ShareInfo shareInfo) {
+    //完成分享到朋友圈的逻辑
+}
+</code></pre><p> 此时我们就可以通过传递对象的方式来代替传递一大堆不是很清楚什么意思的参数来简化调用逻辑了，当我们在创建对象时，我们可以通过其字段名来获得当前参数的意思，而且不需要被传递的数据，也不再需要手动设置为<code>null</code>了，最重要的是整个方法看起来更加简洁，便于理解和维护。</p>
+<h2 id="6-7-转移函数"><a href="#6-7-转移函数" class="headerlink" title="6.7 转移函数"></a>6.7 转移函数</h2><p>有时候我们的类中包含了太多的函数，或者一个类与另一个类有太多的函数调用，导致类之间的过度耦合。此时，我们需要考虑是否需要对函数来做一次整理，让合适的函数放到合适的类中，松散耦合。<br>然而转移函数的难易程度跟项目的复杂程度有关，如果在一个比较复杂的项目中进行转移函数，其实是并没有那么容易的。我们要转移一个函数，而这个函数里调用了其它函数，有可能其它函数又调用了相应的函数或者字段。对于这种内部耦合性较强的函数，我们在转移时，要么将内部类中先将函数解耦，解决一些不需要的函数之间的调用，如果是必须的调用关系，我们就需要考虑是否要将多个函数和字段整体转移，有时候转移整个函数链比只转移一个函数要简单得多，当然前提是这些函数链都应该被转移到另一个类型中去。<br>将一个函数转移到另一个新的类型中，一般要对函数根据新的类型进行重新命名，因为在新的类型中，同样的函数可能有不同的解释。同时，在移到的过程中，我们可以保留原函数，通过代理的方式，让其兼容老的调用；如果没有相应的调用就可以直接删除原函数。<br>接下来我们以一个简单的例子来说明，转移函数的一些应用吧。我们以班级和学生为例，班级类有一个添加学生的方法，然后学生类就是一个存储学生信息的类，里面包含了一个是否是某个班级的判断。  </p>
+<pre><code>    //学生类
+public class Student {
+    private String name;
+    private int id;
+
+    public Student(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+}
+    /**
+ * 是否是当前班级的判断
+ * @param aClass
+ * @return
+ */
+public boolean isBelongTo(AClass aClass) {
+    for (Student student : aClass.getClassStudent()) {
+        if (student.id == this.id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//班级类
+public class AClass {
+    private List&lt;Student&gt; mStudents = new ArrayList&lt;&gt;();
+
+    public void add(Student student) {
+        mStudents.add(student);
+    }
+
+    public List&lt;Student&gt; getClassStudent() {
+        return mStudents;
+    }
+}
+</code></pre><p>这里我们在学生类里面创建了一个当前学生是否属于某个班级判断，这个方法主体是操作班级类里的信息，而只是调用了student的一个字段，所以我们需要把合适的函数移到合适的类中。  </p>
+<pre><code>    public class AClass {
+    private List&lt;Student&gt; mStudents = new ArrayList&lt;&gt;();
+
+    public void add(Student student) {
+        mStudents.add(student);
+        isContain(student);
+    }
+
+    public List&lt;Student&gt; getClassStudent() {
+        return mStudents;
+    }
+
+    /**
+     * 是否是当前班级的判断
+     *
+     * @param student
+     * @return
+     */
+    public boolean isContain(Student student) {
+        for (Student stu : getClassStudent()) {
+            if (stu.getId() == student.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+</code></pre><p> 我们在<code>AClass</code>类里添加了一个<code>isContain()</code>的方法，来判断当前班级是否包含该学生。然后将Student类中的<code>isBelongTo()</code>方法设置为代理函数，在内部调用班级类的<code>isContain()</code>方法。然后将学生类中的<code>isBelongTo()</code>方法通过<code>@Deprecated</code>声明其已过时，尽量让其它类不要调用此函数。</p>
+<pre><code>     //学生类
+public class Student {
+    private String name;
+    private int id;
+
+    public Student(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    /**
+     * 是否是当前班级的判断
+     *
+     * @param aClass
+     * @return
+     */
+    @Deprecated
+    public boolean isBelongTo(AClass aClass) {
+        return aClass.isContain(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+}
+</code></pre><p>到这里，这个班级里是否包含某个函数已经转移完毕。我们来实际调用一下这两个类。 </p>
+<pre><code>Student stu1 = new Student(&quot;zhangshan&quot;, 1);
+Student stu2 = new Student(&quot;lisi&quot;, 2);
+Student stu3 = new Student(&quot;wangwu&quot;, 3);
+
+AClass aClass = new AClass();
+aClass.add(stu1);
+aClass.add(stu2);
+aClass.add(stu3);
+
+System.out.println(&quot;学生:&quot; + stu1 + &quot;是否属于该班级:&quot; + aClass.isContain(stu1));
+System.out.println(&quot;学生:&quot; + stu3 + &quot;是否属于该班级:&quot; + aClass.isContain(stu2));
+System.out.println(&quot;学生:&quot; + stu2 + &quot;是否属于该班级:&quot; + aClass.isContain(stu3));  
+</code></pre><p> 通过转移函数的重构手法，可以让类与类之间松散耦合，简化类之间的关系，易于理解。但通常在实际项目中来进行函数转移时，并不是一件容易的事情，我们需要做好版本控制，当我们在转移函数过程中，如果被丝一般的耦合所困扰，没有思路的时候，我们可以回滚代码，整理思路，重新出发。  </p>
+<h2 id="6-8-将状态码转换为状态模式"><a href="#6-8-将状态码转换为状态模式" class="headerlink" title="6.8 将状态码转换为状态模式"></a>6.8 将状态码转换为状态模式</h2><p>当你需要根据某种状态来执行不同行为的时候，这时，你可以考虑使用状态设计模式来进行设计或者重构。一般来说，像多个<code>if-else</code>或者<code>switch</code>可能就是我们需要寻找的目标并做出相应改变的地方。<br>比较典型的手法就是将<code>if-else</code>通过转换成多态来解决问题的手法。如果我们使用条件式时，当新增加一种类型，我们需要查找并更新所有条件式。而如果使用多态，我们只需要增加一个新类型的子类，在子类里包装相应的行为，然后在合适的时机注入到该对象即可。用户不需要了解子类的实现情况，只需要在特定的状态下进行相应的调用就可以了，这样做，减少了系统间的相互依赖程序，同时，使系统变得更加的简单，易于理解，使升级变得容易。<br>例如，我们还是拿汽车的例子来说明该重构手法。汽车有停止、启动、加速这三种状态，它具备下面这些规则：</p>
+<blockquote>
+<ol>
+<li>停止时才可以启动   </li>
+<li>启动时才可以停止、加速  </li>
+<li>加速时可以停止  </li>
+</ol>
+</blockquote>
+<p>而在车子停止时不能加速，车子在启动时不能再次启动，车子在加速时也不能启动。总之，在对应的状态下只能做该状态下能做的事情。示例代码如下：  </p>
+<pre><code>public abstract class Vehicle {
+    public final int STOP_STATUS = 0;  //停止状态
+    public final int START_STATUS = 1;  //启动状态
+    public final int DRIVING_STATUS = 2;  //加速状态
+
+    private int currentStatus = STOP_STATUS;  //初始状态
+
+    public void setStatus(int status) {
+        this.currentStatus = status;
+    }
+
+    public void start() {
+        if (currentStatus == START_STATUS) {
+            System.out.println(&quot;启动&quot;);
+        }
+    }
+
+    public void stop() {
+        switch (currentStatus) {
+            case START_STATUS:
+            case DRIVING_STATUS:
+                System.out.println(&quot;停止&quot;);
+                break;
+        }
+
+    }
+
+    public void speedUp() {
+        if (currentStatus != STOP_STATUS) {
+            System.out.println(&quot;加速&quot;);
+        }
+    }
+}
+</code></pre><p>上面的代码我们定义了一个<code>vehicle</code>类，然后分别在<code>start()</code>、<code>speedup()</code>、<code>stop()</code>这三个函数中进行了相应的判断，为了满足相应状态执行相应的行为，我们在相应函数里做了大量充斥着<code>if-else</code>、<code>switch</code>的操作。让代码变得非常复杂，如果需要新增加一个状态，那么需要在每一种状态里修改相应的判断逻辑，随着状态的增多，这将是一个灾难，难以维护。但这里我们是根据某种状态来完成相应的行为，也很容易让人联想到状态模式，状态模式能够很好地将这类根据条件判断来修改行为的丑陋代码消除。我们来通过状态模式来对代码进行修改。<br>我们先来看看创建的状态类： </p>
+<pre><code>public abstract class VehicleState {
+    public boolean start() {
+        return false;
+    }
+
+    public boolean stop() {
+        return false;
+
+    }
+
+    public boolean speedup() {
+        return false;
+    }
+}
+</code></pre><p>我们将所有会根据状态执行的行为函数都写到了状态类中，这是让其子类选择去覆写符合自己状态行为的具体实现。我们再来看看具体状态行为的实现。  </p>
+<pre><code>public class DrivingState extends VehicleState {
+    @Override
+    public boolean speedup() {
+        System.out.println(&quot;加速&quot;);
+        return true;
+    }
+
+    @Override
+    public boolean stop() {
+        System.out.println(&quot;停止&quot;);
+        return true;
+    }
+}
+public class StopState extends VehicleState {
+    @Override
+    public boolean stop() {
+        System.out.println(&quot;停止&quot;);
+        return true;
+    }
+}
+public class StartState extends VehicleState {
+    @Override
+    public boolean start() {
+        System.out.println(&quot;启动&quot;);
+        return true;
+    }
+     @Override
+    public boolean speedup() {
+        System.out.println(&quot;加速&quot;);
+        return true;
+    }
+}
+</code></pre><p>有了相应的状态的实现后，我们需要在<code>Vehicle</code>类中应用该状态类。<code>vehicle</code>的代码修改如下：<br>    public abstract class Vehicle {<br>        private VehicleState currentStatus;  //当前状态</p>
+<pre><code>    public void setStatus(VehicleState status) {
+        this.currentStatus = status;
+    }
+
+    public void start() {
+        if (currentStatus.start()) {
+            //这里说明 如果当前开启状态确实被执行了,而不是调用了父类的空方法,此时才会更改状态
+            currentStatus = new StartState();
+        }
+    }
+
+    public void stop() {
+        if (currentStatus.stop()) {
+            currentStatus = new StopState();
+        }
+
+    }
+
+    public void speedUp() {
+        if (currentStatus.speedup()) {
+            currentStatus = new DrivingState();
+        }
+    }
+}
+</code></pre><p>这里我们在相应的方法中都做了一个判断，主要是为了解决这样子的一个问题，比如说，我们此时传入的状态是<code>stopState</code>,而此时我们调用了<code>speedUp()</code>函数，因为<code>stopState</code>中是没有此函数的，于是，执行了父类的空函数，然后将状态改成了<code>DrivingState</code>，而这里其实真正的stop函数根本没有执行，所以是不应该改变其状态为<code>DrivingState</code>的。所以，这里的判断就是为了规避这样子的一种情况的发生。<br>这样子通过将条件式改成了多态来实现，大大减轻了新增状态的工作量，结构清晰，便于扩展，这是非常理想的一种状态。所以，如果大家在重构时看到因为状态的改变而需要修改相应的执行行为时，果断改用状态模式吧。  </p>
+<h2 id="6-9-什么也不做的对象——nullObject模式"><a href="#6-9-什么也不做的对象——nullObject模式" class="headerlink" title="6.9 什么也不做的对象——nullObject模式"></a>6.9 什么也不做的对象——nullObject模式</h2><p>在开发过程中，我们经常会调用某个对象的某个方法，在调用时，先对其对象进行是否为空的判断，如果需要多次调用，就需要进行多次的判空操作，如果一不小心让了判断，可以会引发<code>NullPointException</code>异常。为了避免这种情况，我们可以使用<code>NullObject</code>模式来规避这种情况的发生。<br>我们现在用一个简单的新闻客户端的例子来说明一下。这个新闻客户端里有一个统计分析的模块，在多处地方我们都需要调用这个分析模块来记录一些数据，也就是获得对象，调用其方法来发送一些消息。 </p>
+<pre><code>public interface StatisticsAPI {
+    void send(String newMessage);
+}
+//配置类
+public class Config {
+    StatisticsAPI mStatisticAPI;
+
+    public void setmStatisticAPI(StatisticsAPI api) {
+        this.mStatisticAPI = api;
+    }
+
+    public StatisticsAPI getStatisticAPI() {
+        return mStatisticAPI;
+    }
+}
+</code></pre><p>这时有一个问题，就是我们在调用<code>getStatisticAPI()</code>来获取<code>StatisticsAPI</code>时，这个对象不一定已经被注入，也就是有可能获取值为<code>null</code>。我们来看看客户端调用分析模块的代码：</p>
+<pre><code>public class NewsApp {
+    Config mConfig;
+
+    public NewsApp(Config config) {
+        this.mConfig = config;
+    }
+
+    public void userClick() {
+        if (mConfig.getStatisticAPI() != null) {
+            mConfig.getStatisticAPI().send(&quot;user click&quot;);
+        }
+    }
+
+    public void userReadNews() {
+        if (mConfig.getStatisticAPI() != null) {
+            mConfig.getStatisticAPI().send(&quot;user read news&quot;);
+        }
+    }
+}
+</code></pre><p>在客户端我们通过构造函数注入Config配置类，然后，通过配置类去调用统计模块的API,而这里获取统计数据对象的方法有可能会为空，所以，我们每次都对其进行了是否为空的判断。当我们调用的次数越多，判断为空的工作量也随之增加，这并不是我们想看到的，下面我们使用<code>NullObject模式</code>来对上面代码改造一下。</p>
+<pre><code>//空对象
+public class NullStatisticsAPI implements StatisticsAPI {
+    @Override
+    public void send(String newMessage) {
+        System.out.println(&quot;什么也没有做,只是避免判空而已&quot;);
+    }
+}
+
+    //配置类
+public class Config {
+    StatisticsAPI mStatisticAPI;
+
+    //不会被改变的null对象
+    public static final NullStatisticsAPI nullStatisticsAPI = new NullStatisticsAPI();
+
+    public void setmStatisticAPI(StatisticsAPI api) {
+        this.mStatisticAPI = api;
+    }
+
+    public StatisticsAPI getStatisticAPI() {
+        return mStatisticAPI == null ? nullStatisticsAPI : mStatisticAPI;
+    }
+}
+</code></pre><p>这里的配置类有两点改变，一是我们在其内创建了一个静态不可变的<code>null</code>对象，然后，在<code>getStatisticAPI()</code>方法中，如果其为空就返回<code>NullStatisticAPI</code>空对象来防止其返回空的情况。有效防止为空所引发的一些问题。接下来我们再看看改造后的新闻客户端的调用情况。</p>
+<pre><code>public class NewsApp {
+    Config mConfig;
+
+    public NewsApp(Config config) {
+        this.mConfig = config;
+    }
+
+    public void userClick() {
+            mConfig.getStatisticAPI().send(&quot;user click&quot;);
+    }
+
+    public void userReadNews() {
+            mConfig.getStatisticAPI().send(&quot;user read news&quot;);
+    }
+}
+</code></pre><p>这里我们直接去掉了统计对象为空的判断。这样一来我们就减少了很多判空的操作，我们来测试一下我们的<code>NullObject</code>的作用吧。</p>
+<pre><code>Config config = new Config();
+config.setmStatisticAPI(new TestStatisticAPI());
+NewsApp newsApp = new NewsApp(config);
+newsApp.userClick();
+newsApp.userReadNews();
+
+config.setmStatisticAPI(null);
+newsApp.userClick();
+newsApp.userReadNews();
+</code></pre><p> 其打印的结果如下：<br> user click<br> user read news<br> 什么也没有做,只是避免判空而已<br> 什么也没有做,只是避免判空而已<br> 从打印结果中我们可以看到，<code>NullObject</code>已经生效了，我们已经成功的规避了为<code>null</code>的情况。为了安全起见，<code>NullObject</code>一定是常量，因为它们任何时候都不需要进行变化，也没有必要进行变化。  </p>
+<h2 id="6-10-让类保持苗条身材——分解胖类型"><a href="#6-10-让类保持苗条身材——分解胖类型" class="headerlink" title=" 6.10 让类保持苗条身材——分解胖类型  "></a> 6.10 让类保持<code>苗条身材</code>——分解<code>胖类型</code>  </h2><p> 我们最开始说了个提取子函数，根据单一职责原则来对<code>large Method</code>进行了”瘦身”，而这里说的让<code>胖类型</code>减肥，保持”苗条身材”，两者如出一辙，只是范围变大了而已。这里主要说的是让类也满足单一职责原则。<br> 在开始写某一个类时，如果我们没有对其进行规划，进行拆分的话，大多数情况下，我们都会把巨多的函数写在同一个类里，而且随着需求的增加，我们会往其内写入更多的函数。让其变得越来越臃肿，越来越难以维护。所以在编写新类时，我们要先进行分析，将其按照功能的类别来进行划分，并组织到不同的类中来进行组合实现相应功能。这样做的好处是各个类职责单一，结构相对简单，便于扩展和维护。<br>当我们最开始在使用<code>ImageLoader</code>来完成简单的图片显示时，我们经常会碰到下面的代码，大致的代码是这样的：</p>
+<pre><code>public class ImageLoader {
+    private Map&lt;String, Bitmap&gt; mMemCache = new LinkedHashMap&lt;&gt;();//内存缓存
+    private Map&lt;String, Bitmap&gt; mDiskCache = new LinkedHashMap&lt;&gt;(); //硬盘缓存
+
+    public void displayImage(ImageView imageView, String url) {
+        Bitmap bitmap = decodeFromCache(url);
+
+        if (bitmap == null) {
+            bitmap = decodeFromDisk(url);
+        }
+
+        if (bitmap == null) {
+            bitmap = downloadImageFromNet(url);
+        }
+
+        imageView.setImageBitmap(bitmap);
+        cache(url, bitmap);
+    }
+
+    /**
+     * 缓存图片
+     */
+    private void cache(String url, Bitmap bitmap) {
+        cacheInMem(url, bitmap);
+        cacheInDisk(url, bitmap);
+    }
+
+    private void cacheInDisk(String url, Bitmap bitmap) {
+        mDiskCache.put(url, bitmap);
+    }
+
+
+    private void cacheInMem(String url, Bitmap bitmap) {
+        mMemCache.put(url, bitmap);
+    }
+
+    /**
+     * 从网络获取图片
+     */
+    private Bitmap downloadImageFromNet(String url) {
+        System.out.println(&quot;从网络获取图片&quot;);
+        return BitmapFactory.decodeFile(url);
+    }
+
+    /**
+     * 从硬盘获取图片
+     */
+    private Bitmap decodeFromDisk(String url) {
+        System.out.println(&quot;从硬盘获取图片&quot;);
+        return mDiskCache.get(url);
+    }
+
+    /**
+     * 从内存获取图片
+     */
+    private Bitmap decodeFromCache(String url) {
+        System.out.println(&quot;从内存获取图片&quot;);
+        return mMemCache.get(url);
+    }
+}
+</code></pre><p>在上面简单的<code>ImageLoader</code>的实现中，我们将图片的加载逻辑，图片的下载逻辑，图片的缓存逻辑都写在了同一个类里，很显然，这个类的职责太多了。而且下载图片、缓存图片这些功能都是会变的，因为我们可能会将下载引擎换成okhttp、将图片使用LRU。当需求出现变更我们需要在这个复杂的逻辑中去修改，维护成本非常高。<br>所以我们需要对这个类进行按照图片下载、图片缓存、图片显示这三部分来对上面的代码进行重构，使其满足单一职责原则。</p>
+<pre><code>//图片下载类
+public class ImageDownload {
+    /**
+     * 从网络获取图片
+     */
+    public Bitmap downloadImageFromNet(String url) {
+        System.out.println(&quot;从网络获取图片&quot;);
+        return BitmapFactory.decodeFile(url);
+    }
+}
+
+//图片缓存类
+public class ImageCache {
+    private Map&lt;String, Bitmap&gt; mMemCache = new LinkedHashMap&lt;&gt;();//内存缓存
+    private Map&lt;String, Bitmap&gt; mDiskCache = new LinkedHashMap&lt;&gt;(); //硬盘缓存
+
+    /**
+     * 缓存图片
+     */
+    public void cache(String url, Bitmap bitmap) {
+        cacheInMem(url, bitmap);
+        cacheInDisk(url, bitmap);
+    }
+
+    private void cacheInDisk(String url, Bitmap bitmap) {
+        mDiskCache.put(url, bitmap);
+    }
+
+
+    private void cacheInMem(String url, Bitmap bitmap) {
+        mMemCache.put(url, bitmap);
+    }
+
+
+    /**
+     * 从硬盘获取图片
+     */
+    private Bitmap decodeFromDisk(String url) {
+        System.out.println(&quot;从硬盘获取图片&quot;);
+        return mDiskCache.get(url);
+    }
+
+    /**
+     * 从内存获取图片
+     */
+    private Bitmap decodeFromCache(String url) {
+        System.out.println(&quot;从内存获取图片&quot;);
+        return mMemCache.get(url);
+    }
+
+    /**
+     * 向外暴露的获取图片的方法
+     */
+    public Bitmap getBitmap(String url) {
+        Bitmap bitmap = decodeFromCache(url);
+        if (bitmap == null) {
+            bitmap = decodeFromCache(url);
+        }
+        return bitmap;
+    }
+}
+
+    //图片显示控制逻辑
+    public class ImageLoader {
+    private ImageCache imageCache = new ImageCache();  //图片缓存类
+    private ImageDownload imageDownload = new ImageDownload();  //图片下载类
+
+    public void displayImage(ImageView imageView, String url) {
+        Bitmap bitmap = imageCache.getBitmap(url);
+
+        if (bitmap == null) {
+            bitmap = imageDownload.downloadImageFromNet(url);
+        }
+
+        imageView.setImageBitmap(bitmap);
+        imageCache.cache(url, bitmap);
+    }
+}
+</code></pre><p>到这里我们就完成了对上面简单的<code>ImageLoader</code>进行了功能的拆分，将原来一个类分为了三个类来进行组合，解决了单一类职责过多，难以维护的问题。这样做之后，各个类的代码相对较少，逻辑单一，代码简单，结构清晰，易于维护。</p>
+
       
     </div>
 
@@ -418,7 +1134,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行重构？"><span class="nav-text">为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重构的难点"><span class="nav-text">重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重构的原则"><span class="nav-text">重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哪些场景需要用到重构"><span class="nav-text">哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的重构方法"><span class="nav-text">常用的重构方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-为什么要进行重构？"><span class="nav-text">2.为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-重构的难点"><span class="nav-text">3.重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重构的原则"><span class="nav-text">4.重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-哪些场景需要用到重构"><span class="nav-text">5.哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-常用的重构方法"><span class="nav-text">6.常用的重构方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-提取子函数"><span class="nav-text">6.1 提取子函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-上移函数到父类"><span class="nav-text">6.2 上移函数到父类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-下移函数到子类"><span class="nav-text">6.3 下移函数到子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-封装固定的业务逻辑"><span class="nav-text">6.4 封装固定的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5使用泛型去除重复的逻辑"><span class="nav-text">6.5使用泛型去除重复的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-使用对象避免过多的参数"><span class="nav-text">6.6 使用对象避免过多的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-转移函数"><span class="nav-text">6.7 转移函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-8-将状态码转换为状态模式"><span class="nav-text">6.8 将状态码转换为状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-什么也不做的对象——nullObject模式"><span class="nav-text">6.9 什么也不做的对象——nullObject模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-让类保持苗条身材——分解胖类型"><span class="nav-text"> 6.10 让类保持苗条身材——分解胖类型  </span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
