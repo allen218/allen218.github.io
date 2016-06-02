@@ -64,7 +64,8 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/27.png">
-<meta property="og:updated_time" content="2016-05-28T07:23:16.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/19.png">
+<meta property="og:updated_time" content="2016-05-29T09:57:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈代码重构的重要性和方法">
 <meta name="twitter:description">
@@ -981,6 +982,305 @@ public class ImageCache {
     }
 }
 </code></pre><p>到这里我们就完成了对上面简单的<code>ImageLoader</code>进行了功能的拆分，将原来一个类分为了三个类来进行组合，解决了单一类职责过多，难以维护的问题。这样做之后，各个类的代码相对较少，逻辑单一，代码简单，结构清晰，易于维护。</p>
+<h2 id="6-11-重新组织函数"><a href="#6-11-重新组织函数" class="headerlink" title="6.11 重新组织函数"></a>6.11 重新组织函数</h2><p><strong>InLine Method(内联函数)</strong><br>这里所说的与我们的提取子函数恰好相反，主要解决的是这样子的两种情况：一个函数的本体与其函数名称同样清晰易懂，在函数调用点插入函数本体，然后移除该函数；或者是提取子函数的动作不是很合理，将其全部子函数进行恢复到函数本体后，再对其进行提取子函数的操作。<br>一个函数本体与其函数名称同样清晰的例子： </p>
+<pre><code>public int getRating(int num) {
+    return isMoreFive(6) ? 2 : 1;
+}
+
+public boolean isMoreFive(int num) {
+    return num &gt; 5 ? true : false;
+}  
+</code></pre><p><code>isMoreFive()</code>方法表示当前数是否大于5，而函数体内的表达式也可以非常明确的表示此含义，所以我们可以将上面的代码进行重构。代码如下：</p>
+<pre><code>public int getRating(int num) {
+    return num &gt; 5  ? 2 : 1;
+}
+</code></pre><p>这样子做之后，代码更加简洁，而所要表达的意思却没有发生变化。我们非常看好这样子做减法的操作。<br>关于函数提取不合理，需要使用内联函数的方式，将其所有代码先放回原函数再来重新提取的手法，我这里就不用例子了，但是需要简单的说明一下，就是当函数的提取没有满足单一职责或者很多的函数看上去只是在做其它函数的委托，而没有太大存在意义的时候，我们可以使用此方法来进行重构。  </p>
+<p><strong>Inline Temp (内联临时变量)</strong><br>你有一个临时变量，它只被一个简单的表达式赋值过一次，但这个临时变量妨碍了其它的重构手法。这时我们可以将这个临时变量移除，然后用给临时变量赋值的表达式来对临时变量进行替换。  </p>
+<pre><code>double currentPrice = originPrice * 0.98;
+return currentPrice &gt; 1000;
+</code></pre><p>将其替换为：</p>
+<pre><code>return originPrice * 0.98 &gt; 1000;
+</code></pre><p><strong>Replace Temp with Query（用查询取代临时变量）</strong><br>你的程序以一个临时变量来存储一个表达式的运算结果，将这个表达式提炼到一个函数中去，然后，将所有使用这个临时变量的地方都替换成新的函数。这样做的目的是为了让新的函数可以被其它地方所使用。</p>
+<pre><code>double basePrice = quantity * price;
+        if (basePrice &gt; 500) {
+            return basePrice * 0.95;
+        } else {
+            return basePrice * 0.98;
+        }
+</code></pre><p>这里我们使用了一个临时变量<code>basePrice</code>来存储了计算价格的表达式。这时，我们可以将这个表达式提炼到一个函数中，然后再通过函数来引用这个表达式。 </p>
+<pre><code>public double getPrice(int quantity, double price) {
+    if (getBasePrice(quantity, price) &gt; 500) {
+        return getBasePrice(quantity, price) * 0.95;
+    } else {
+        return getBasePrice(quantity, price) * 0.98;
+    }
+}
+
+private double getBasePrice(int quantity, double price) {
+    return quantity * price;
+}
+</code></pre><p>这个重构手法我觉得需要考虑此抽离的表达式是否其它地方还需要被引用，也就是要考虑一下利弊，因为我觉得这里每次都去调用一次相应的函数，然后进行计算的话，总是没有一次就把值存储起来而每次直接取值来的划算，除非此函数真的被其它地方引用到。  </p>
+<p><strong>Introduce Explaining Variablexhty（引入解释性变量）</strong><br>你有一个复杂的表达式，可以将这个表达式或者表达式的一部分赋值给临时变量，以此临时变量的名称来解释其所表达的意义。</p>
+<pre><code>if (platform.toUpperCase().indexOf(&quot;ANDROID&quot;)&gt;-1
+                &amp;&amp; brower.toUpperCase().indexOf(&quot;UC&quot;)
+                &amp;&amp;isInstalled()&amp;&amp;resize&gt;0) {
+            //do someString
+        }
+</code></pre><p>这里我们在条件里写了很多的表达式来作判断，造成我们的条件不容易被理解，这种情况下，我们需要引入解释性变量，让每个条件表达式的意思变得理清晰，便于理解。  </p>
+<pre><code>boolean isAndroidPlatform = platform.toUpperCase().indexOf(&quot;ANDROID&quot;) &gt; -1;
+boolean isUCBrower = brower.toUpperCase().indexOf(&quot;UC&quot;);
+boolean isNotZero = resize &gt; 0;
+if (isAndroidPlatform
+        &amp;&amp; isUCBrower
+        &amp;&amp; isInstalled() &amp;&amp; isNotZero) {
+    //do someString
+}
+</code></pre><p><strong>Split Temporary Variable（分解临时变量）</strong><br>你的程序中某个临时变量被赋值不只一次，而这个临时变量所记录的信息既不是循环变量，也不是收集计算结果，针对每次赋值建立一个独立、对应的临时变量。 这里主要说的是，每个临时变量都有自己的职责，虽然可以使用同一个临时变量完成所有的操作，但是每次临时变量所承担的责任是不相同的。这样子的情况下，我们需要在每次对临时变量进行赋值时，考虑是否此时的赋值的意义是否与上一次的赋值意思相同，如果不同，此时我们需要使用一个新的临时变量来对其值进行存储。</p>
+<pre><code>int result = 0;
+int velocity = 100;
+int carDistance = velocity * 6;
+
+velocity = 10;
+int bikeDistance = velocity * 6;
+return carDistance + bikeDistance;
+</code></pre><p>上面我们通过<code>velocity</code>来分别记录了汽车的速度和自行车的速度，也就是有两个职责。而我们使用了一个变量来进行存储。虽然结果是一样的，但是在看函数时，可能会给阅读者带来困惑，两个不同意思的值使用了同一个临时变量进行了存储，会让人产生歧义。我们使用分解临时变量的重构手法来对其进行重构：</p>
+<pre><code>int result = 0;
+int carVelocity = 100;
+int carDistance = carVelocity * 6;
+
+int bikeVelocity = 10;
+int bikeDistance = bikeVelocity * 6;
+return carDistance + bikeDistance;
+</code></pre><p>我们将第一次的赋值所对应的临时变量修改为<code>carVelocity</code>，而将第二次赋值，我们修改为<code>bikeVelocity</code>，这样子将两次不同意义的赋值分别用两个临时变量进行存储，意义明确。  </p>
+<p><strong>Rmove Assignments to Parameters（移除对变量的赋值）</strong><br>函数中对其参数进行直接赋值，可以将参数先使用临时变量存储，然后再修改其临时变量的值。在<code>Java</code>中参数的传递使用的是值传递的方式，对于基本数据类型的传递直接修改其参数可能不会有多大的问题，但是如果是对对象进行修改的话，可能得到的结果并不是你所想要的。而且这样子的写法也是不太符合代码规范的操作。</p>
+<pre><code>public int getDiscount(int inputValue) {
+    if (inputValue &gt; 100) {
+        inputValue -= 2;
+    }
+    return inputValue;
+}
+</code></pre><p>将其修改为:  </p>
+<pre><code>public int getDiscount(int inputValue) {
+    int result = inputValue;
+    if (result &gt; 100) {
+        result -= 2;
+    }
+    return result;
+}
+</code></pre><p><strong>Replace Method with Method Object（使用函数对象取代函数）</strong><br>你有一个大型函数，其中对局部变量的使用使你很难使用提取子函数的操作，这种情况下，我们可以将这个函数放进一个单独的对象中，如此一来局部变量就变成了对象中的成员变量，而函数所接收的参数通过此对象的构造方法传入。然后你可以在同一个对象将这个大型函数分解为多个小型函数。<br>这个方法是我之前没有使用过，而又感觉非常棒的一种解决思路。<br><img src="/uploads/img/AndroidAdvanceDevelop/6/19.png" alt="img1">我们通过将<code>price()</code>方法里的大型函数抽离到一个新的对象<code>PriceCalculator</code>中，将其局部变量直接变成新对象里的字段，然后将再对其函数进行了抽取<code>compute()</code>子函数。在原来引用的地方我们通过内部创建新的对象，并调用其<code>compute()</code>函数来完成其功能。</p>
+<pre><code>public class Acount {
+    public double getTotalPrice(int inputVal, int quantity, int dateToYear) {
+        double price1 = inputVal * 0.7;
+        double price2 = inputVal * dateToYear + 100;
+        if (dateToYear &gt; price1) {
+            price2 -= 20;
+        }
+        double price3 = price1 * quantity / 3 +  delta();
+        return price1 + price2 + price3;
+    }
+}
+</code></pre><p>我们将这个<code>getTotalPrice()</code>方法通过函数对象的方式来对其进行替换。首先我们将其参数和局部变量都变成新对象里的字段。</p>
+<pre><code>private int inputVal;
+private int quantity;
+private int dateToYear;
+private double price1;
+private double price2;
+private double price3;
+private Acount source;
+</code></pre><p>然后，将参数通过构造函数来进行传递进来。</p>
+<pre><code>public PriceCalculator(Acount source, int inputVal, int quantity, int dateToYear) {
+    this.inputVal = inputVal;
+    this.quantity = quantity;
+    this.dateToYear = dateToYear;
+    this.source = source;
+}
+</code></pre><p>这里我们将原函数参数列表中的三个参数都通过构造函数传递了进来，而且将原对象本身也传递了进来，为了对原来函数进行调用。  </p>
+<pre><code>public double compute() {
+    price1 = inputVal * 0.7;
+    price2 = inputVal * dateToYear + 100;
+    if (dateToYear &gt; price1) {
+        price2 -= 20;
+    }
+    price3 = price1 * quantity / 3 + source.delta();
+    return price1 + price2 + price3;
+}
+</code></pre><p>这里针对原函数进行了抽取子函数的操作，对应<code>compute()</code>函数。在此函数里我们使用了相应了六个字段，还通过原函数的对象调用了原函数里的方法来完成函数的功能。  </p>
+<pre><code>public double getTotalPrice(int inputVal, int quantity, int dateToYear) {
+        return new PriceCalculator(this, inputVal, quantity, dateToYear).compute();
+    }
+</code></pre><p>最后我们修改了原函数以委托的形式来调用了新创建的对象完成了相应了功能转移。</p>
+<h2 id="6-12-在对象之间搬移特性"><a href="#6-12-在对象之间搬移特性" class="headerlink" title="6.12 在对象之间搬移特性"></a>6.12 在对象之间搬移特性</h2><p><strong>Move Method (搬移函数)</strong><br>你的程序中，有一个函数与其所属类外的其它类有着更为密切的交流；这时，在该函数最常引用的类中建立一个有着相似功能的新函数，然后将旧函数变成一个委托函数，也就是直接在旧函数里调用新函数；或者直接删除旧函数，并相所有对旧函数的引用改为引用新函数。<br>这里所说的和我们上面 <strong>6.7转移函数</strong>说的意思是一样的。所以这里就不再熬述。  </p>
+<p><strong>Move Filed（搬移字段）</strong><br>这个和搬移方法类似。你的程序中，某个字段被其所属类之外的其它类更频繁的使用到，在目标类中新建字段，在源字段所属的类中调用新建的字段。在<code>Move Method</code>时，我们一般会先使用<code>Move Filed</code>方法。<br>多数情况下，我们在移动字段前，如果字段是<code>public</code>访问权限时，我们通常先使用<code>private</code>将其修改后，使用函数来对其进行调用。这样，不管字段移动到何处，我只需要改动其调用函数就可以了，而不需要对每处调用都进行修改。  </p>
+<p><strong>Extract Class（提炼类）</strong><br>某个类做了应该使用两个或者更多类所做的事。建立一个或多个新类，将其一部分字段和函数移到相应的类中，让每个类尽量满足单一职责。这里和我们上面<strong>6.10让类保持苗条身材——分解”胖类型”</strong>的意思是一致的。</p>
+<p><strong>Inline Class（将类内联化）</strong><br>这个刚好与<code>Extract Class</code>相反。某个类没有做太多的事情，将这个类里所有的字段和函数移到另一个类中，然后将此类删除。<br>如果一个类没有承担太多的责任，不再有单独存在的理由，(通常是由于之前的重构抽取了其责任),这里我们需要将此”萎缩类”合并到与其调用最频繁的类中去，然后删除此“萎缩类”。<br>具体的操作步骤是：  </p>
+<blockquote>
+<ol>
+<li>在目标类身上声明源类的所有使用public修辞的函数，并实现其功能，并将源类中的所有public函数变成委托函数，让其调用目标类中新声明的函数,看是否运行正常。  </li>
+<li>将源类中所有<code>public</code>修辞改为<code>private</code>修辞，让其所有源类的引用点，改而引用目标类。  </li>
+<li>再使用<code>Move Method</code>或者<code>Move Filed</code>手法将其所有字段和函数移至目标类。<br>这里我们写一个简单的例子来说明一下吧。</li>
+</ol>
+</blockquote>
+<pre><code>public class Person {
+    private String name;
+    private Telephone telephone = new Telephone();
+
+    public String getName() {
+        return name;
+    }
+
+    public Telephone getTelephone() {
+        return telephone;
+    }
+
+    public String getTelephoneNum() {
+        return telephone.getTelephoneNum();
+    }
+}
+
+public class Telephone {
+    private String telephoneNum;
+    private String areaCode;
+
+    public void setTelephoneNum(String telephoneNum) {
+        this.telephoneNum = telephoneNum;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getTelephoneNum() {
+        return telephoneNum;
+    }
+}
+</code></pre><p>这里有两个类，一个<code>Person</code>类，一个<code>Telephone</code>类，<code>Telephone</code>类经过<code>Move Method</code>和<code>Move Filed</code>方法重构之后，只剩下<code>telephoneNum</code>和<code>areaCode</code>两种属性。而这两个属性不足支撑其作为一个单独的类而独立存在。而与其交流最频繁的类是<code>Person</code>类，在此，我们需要把一个不需要存在的类通过内联重构手法将其组合到与其交流最频繁的类中。<br>我们先将<code>public</code>修辞的属性和函数移到<code>person</code>中。并将<code>Telephone</code>类中的所有public方法变成委托函数，让其调用<code>person</code>类中的方法。</p>
+<pre><code>public class Person {
+    private String name;
+    private Telephone telephone = new Telephone();
+
+    private String telephoneNum;
+    private String areaCode;
+
+    public String getName() {
+        return name;
+    }
+
+    public Telephone getTelephone() {
+        return telephone;
+    }
+
+    public String getTeleNum() {
+        return telephone.getTelephoneNum();
+    }
+
+    public void setTelephoneNum(String telephoneNum) {
+        this.telephoneNum = telephoneNum;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getTelephoneNum() {
+        return telephoneNum;
+    }
+}
+
+public class Telephone {
+    private Person person = new Person();
+
+    public void setTelephoneNum(String telephoneNum) {
+        person.setTelephoneNum(telephoneNum);
+    }
+
+    public String getAreaCode() {
+        return person.getAreaCode();
+    }
+
+    public void setAreaCode(String areaCode) {
+        person.setAreaCode(areaCode);
+    }
+
+    public String getTelephoneNum() {
+        return person.getTelephoneNum();
+    }
+}
+</code></pre><p>到这里，编译测试一下，是否正常运行，结果是否正确，如果没有问题的话，我们再将<code>Telephone</code>类中的<code>public</code>方法改为<code>private</code>，切断外界与<code>telephone</code>的交流，改而将其所有引用通过<code>Person</code>类的相应方法来完成调用。</p>
+<p><strong>Hide Delegate（隐藏“委托关系”）</strong><br>客户通过一个委托类来调用另一个对象，并调用后者的相应函数，这时，我们可以在这个委托类中建立客户所需的所有函数，然后隐藏委托关系。也就是对客户隐藏这层委托关系，而只让委托关系发生在委托类与被委托类之间。其实，这种重构手法可以说是对委托关系进行一次封装。<br>如果客户通过调用委托类，得到了被委托对象，然后调用后者的函数，这里，也就是说，客户知道了这层委托关系，如果后面，委托关系发生了变化，客户这边也需要进行相应的调整，而这显然是不合理的。我们应该通过在委托类与被委托类间进行一层封装，隔离变化，而让客户只需要调用相应的对外暴露的函数而不需要承担变化所带来的风险。使变化发生的风险是可控的。我们以人和部门的例子来说明一下怎么来使用<code>Hide Deletage</code>重构手法来隐藏委托关系。  </p>
+<pre><code>public class Person {
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+}
+
+public class Department {
+    private String manager;
+
+    public Department(String manager) {
+        this.manager = manager;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+}
+</code></pre><p>如果客户需要知道某个人的经理叫什么名字,它需要这样做： </p>
+<blockquote>
+<p>john.getDepartment().getManager()  </p>
+</blockquote>
+<p>而这样子的话，客户就知道了<code>DepartMent</code>类的实现原理了，于是客户知道<code>Department</code>中存储的是经理的信息。如果对客户隐藏<code>Department</code>可以减少客户与<code>Department</code>的耦合。为解决这个问题，我们在<code>Person</code>中建立一个简单的委托函数:</p>
+<pre><code>public String getManager() {
+    return department.getManager();
+}
+</code></pre><p>而让客户直接调用<code>Person</code>类中的<code>getManager()</code>函数，这样子很好的解决了客户与<code>Department</code>类耦合的问题，同时也隔离了变化，客户端不需要知道其内部是怎么实现了，客户端只需要调用其相应暴露的方法就可以了，至于变化，是委托与被委托之间来处理的，与客户无关。  </p>
+<p><strong>Remove Middle Man（移除中间人）</strong><br>某个类做了过多的简单委托动作，而这种动作已经带来了不好的影响，这时，我们可以让客户直接调用受托对象。这与<code>Hide Deletage</code>手法也是相反的，至于什么时候用何种方法，这里没有一个明确的答案，当你觉得在服务对象里多次重复写同样的方法给你造成麻烦时，可能这时，就需要使用<code>Remove Middle Man</code>重构手法来改变这一现状了。<br>具体做法如下：  </p>
+<blockquote>
+<ol>
+<li>在服务类中建立一个函数，用以获取受托对象  </li>
+<li>对于每个委托函数，在服务类中删除该函数，并让需要调用函数的客户转为直接调用受托对象。  </li>
+</ol>
+</blockquote>
+<p>在<code>Hide Deletage</code>重构手法中，我们隐藏了<code>Department</code>类，而在<code>Person</code>类中创建了相应的委托行为，用以暴露<code>Department</code>的方法。而随着需要的不断变化，如果<code>Department</code>类中有越来越多的方法需要对外暴露，而每暴露一个方法，都需要在<code>Person</code>类中创建该方法的委托，这时，就是需要使用<code>Remove Middle Man</code>了。也就是对<code>Hide Deletage</code>中的代码进行一次复原。  </p>
+<p><strong>Introduce Foreign Method（引入外加函数）</strong><br>你需要为提供服务的类增加一个函数，而你无法修改这个服务类，这时，你可以在客户类中建立一个函数，并以第一参数形式传递这个服务类对象。<br>这种情况主要说的是，当你需要调用某个服务类的某个函数来完成服务类提供的相应功能时，此时，服务类没有提供完成相应功能的这个函数，而本来通过服务类就可以完成相应功能的时候，我们需要通过在客户端中外加函数来替服务类来完成此功能，而日后，只要条件成熟了，你可以修改服务类的代码时，你就需要把这个外加函数添加到服务类中。<br>只要是通过外加函数实现的服务，其实都是临时的解决方法，只是权宜之计，而最终我们都是需要想办法将其本应该由服务类提供的函数添加回服务类本身。外加函数的具体做法分为：  </p>
+<blockquote>
+<ol>
+<li>在客户类中建立一个函数，用来提供你需要的功能。这个函数不应该直接调用客户类中的任何特性，如果需要，可以使用参数的形式传递进来。  </li>
+<li>以服务类实例作为该函数的第一个参数传入。  </li>
+<li>将该函数注释为:”外加函数 此函数应该在服务类中实现”  </li>
+</ol>
+</blockquote>
+<p>比如：我需要跨过一个收费周期。原本代码像这样：  </p>
+<pre><code>Date newStart = new Date(previousEnd.getYear(),previousEnd.getMonth(),previousEnd.getDate() + 1);  
+</code></pre><p>我可以将赋值运算右侧提炼到一个独立的函数中，这个函数就称为一个外加函数，如果可以，应该将其添加到Date服务类中。  </p>
+<pre><code>Date newStart = nextDay(previousEnd);
+//此方法为外加函数，应该添加到Date类中。
+private static Date nextDay(Date date) {
+    return new Date(previousEnd.getYear(),previousEnd.getMonth(),previousEnd.getDate() + 1);
+}
+</code></pre><p><strong>Introduce Local Extension（引入本地扩展）</strong><br>你需要为服务类提供一些额外函数，但你无法修改这个类。建立一个新类，使它包含这些额外函数，让这个扩展类成为源类的子类或者包装类。也就是相当于是将上面的外加函数添加到了一个新的类中，而这个类继承了服务类，也就变像的将函数添加到了服务类中。当然，如果可以修改源码，最好的办法还是在源服务类中进行添加相应函数。<br>如果只需要一两个函数扩展的话，那也大可不必新建一个类来做此操作。直接使用<code>Introduce Foreign Method</code>的方式来完成就可以了。而如果超过这个限度，外加函数就很难以控制它们了。所以，你需要使用一个单独的类将这些外加函数独立出来。还需要使用这个类要么继承服务类，要么对服务类进行包装。我们将这种情况统称为local extension(本地扩展)。<br>所谓本地扩展是一个独立的类，但也是被扩展类的子类：它提供源类的一切特性，同时额外添加新的特性。在任何地方你使用源类型，都可以使用本地扩展来取而代之。<br>本地扩展的具体做法为：  </p>
+<blockquote>
+<ol>
+<li>建立一个扩展类，将它作为原始类的一个子类或者包装类  </li>
+<li>在扩展类中加入转型构造函数 如果是子类化，转型构造函数应该调用适当的父类的构造函数。如果是包装，转型构造函数应该接收被包装类对象，并将其以实例变量的形式保存起来。  </li>
+<li>在扩展类中增加新的特性。  </li>
+<li>在需要调用新特性的地方，将调用源对象改为调用扩展对象。  </li>
+<li>将针对源服务类增加的所有外加函数都搬移到扩展类中。  </li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -1080,7 +1380,7 @@ public class ImageCache {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1134,7 +1434,7 @@ public class ImageCache {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-为什么要进行重构？"><span class="nav-text">2.为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-重构的难点"><span class="nav-text">3.重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重构的原则"><span class="nav-text">4.重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-哪些场景需要用到重构"><span class="nav-text">5.哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-常用的重构方法"><span class="nav-text">6.常用的重构方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-提取子函数"><span class="nav-text">6.1 提取子函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-上移函数到父类"><span class="nav-text">6.2 上移函数到父类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-下移函数到子类"><span class="nav-text">6.3 下移函数到子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-封装固定的业务逻辑"><span class="nav-text">6.4 封装固定的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5使用泛型去除重复的逻辑"><span class="nav-text">6.5使用泛型去除重复的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-使用对象避免过多的参数"><span class="nav-text">6.6 使用对象避免过多的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-转移函数"><span class="nav-text">6.7 转移函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-8-将状态码转换为状态模式"><span class="nav-text">6.8 将状态码转换为状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-什么也不做的对象——nullObject模式"><span class="nav-text">6.9 什么也不做的对象——nullObject模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-让类保持苗条身材——分解胖类型"><span class="nav-text"> 6.10 让类保持苗条身材——分解胖类型  </span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-为什么要进行重构？"><span class="nav-text">2.为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-重构的难点"><span class="nav-text">3.重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重构的原则"><span class="nav-text">4.重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-哪些场景需要用到重构"><span class="nav-text">5.哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-常用的重构方法"><span class="nav-text">6.常用的重构方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-提取子函数"><span class="nav-text">6.1 提取子函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-上移函数到父类"><span class="nav-text">6.2 上移函数到父类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-下移函数到子类"><span class="nav-text">6.3 下移函数到子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-封装固定的业务逻辑"><span class="nav-text">6.4 封装固定的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5使用泛型去除重复的逻辑"><span class="nav-text">6.5使用泛型去除重复的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-使用对象避免过多的参数"><span class="nav-text">6.6 使用对象避免过多的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-转移函数"><span class="nav-text">6.7 转移函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-8-将状态码转换为状态模式"><span class="nav-text">6.8 将状态码转换为状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-什么也不做的对象——nullObject模式"><span class="nav-text">6.9 什么也不做的对象——nullObject模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-让类保持苗条身材——分解胖类型"><span class="nav-text"> 6.10 让类保持苗条身材——分解胖类型  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-11-重新组织函数"><span class="nav-text">6.11 重新组织函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-12-在对象之间搬移特性"><span class="nav-text">6.12 在对象之间搬移特性</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

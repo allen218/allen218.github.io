@@ -59,21 +59,17 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ListView原理及设计模式浅析">
-<meta property="og:url" content="http://yoursite.com/2016/03/27/ListView原理解析/index.html">
+<meta property="og:title" content="RecyclerView下拉刷新时快速滑动崩溃的问题解决">
+<meta property="og:url" content="http://yoursite.com/2016/06/02/RecyclerView下拉刷新时快速滑动崩溃的问题解决/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/4.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/8.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/6.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/7.png">
-<meta property="og:updated_time" content="2016-04-02T11:30:20.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/a2.jpeg">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/1.png">
+<meta property="og:updated_time" content="2016-06-02T06:37:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ListView原理及设计模式浅析">
+<meta name="twitter:title" content="RecyclerView下拉刷新时快速滑动崩溃的问题解决">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/a2.jpeg">
 
 
 
@@ -91,7 +87,7 @@
   };
 </script>
 
-  <title> ListView原理及设计模式浅析 | Allen'Notes </title>
+  <title> RecyclerView下拉刷新时快速滑动崩溃的问题解决 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -213,7 +209,7 @@
             
             
               
-                ListView原理及设计模式浅析
+                RecyclerView下拉刷新时快速滑动崩溃的问题解决
               
             
           </h1>
@@ -225,8 +221,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-27T20:24:13+08:00" content="2016-03-27">
-              2016-03-27
+            <time itemprop="dateCreated" datetime="2016-06-02T11:37:59+08:00" content="2016-06-02">
+              2016-06-02
             </time>
           </span>
 
@@ -236,8 +232,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/27/ListView原理解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/ListView原理解析/" itemprop="commentsCount"></span>
+                <a href="/2016/06/02/RecyclerView下拉刷新时快速滑动崩溃的问题解决/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/02/RecyclerView下拉刷新时快速滑动崩溃的问题解决/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -259,48 +255,54 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/1/5.png" alt="图1"><br><a id="more"></a></p>
-<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p><code>ListView</code>是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。</p>
-<h1 id="2-展示列表所需要的元素组成"><a href="#2-展示列表所需要的元素组成" class="headerlink" title="2.展示列表所需要的元素组成"></a>2.展示列表所需要的元素组成</h1><blockquote>
-<p>1.需要用来展示列表的<code>ListView</code><br>2.用来组织数据并映射到<code>ListView</code>的<code>Adapter</code><br>3.需要展示的数据集<br>4.需要展示的<code>View</code>模板</p>
-</blockquote>
-<h1 id="3-各组成之间的关系"><a href="#3-各组成之间的关系" class="headerlink" title="3.各组成之间的关系"></a>3.各组成之间的关系</h1><p><code>ListView</code>只负责加载、管理视图，至于有多少数据，每一项数据要怎么来展示，这些它都不关心。<br><code>Adapter</code>使用<code>Adapter</code>模式，使用抽象方式将用户需要指定的数据抽象出来，让用户去实现。比如：有多少数据需要展示、用什么方式来进行展示等等。<br>需要实现的<code>Adapter</code>的函数为：</p>
-<blockquote>
-<p>1.getCount():指定当前有多少数据需要展示<br>2.getItem(int):获取当前<code>position</code>位置的数据<br>3.getItemId(int):直接返回当前对应的<code>position</code><br>4.getView(int,View,ViewGroup):返回当前<code>position</code>对应的<code>item</code>的<code>view</code></p>
-</blockquote>
-<h1 id="4-ListView原理"><a href="#4-ListView原理" class="headerlink" title="4.ListView原理"></a>4.ListView原理</h1><p>当处理较大的数据时，<code>Listview</code>并不是一次性加载所有数据，而是只加载铺满整个屏幕的数据。当屏幕向下滚动时，第一个元素离开了屏幕之后会进入到<code>Listview</code>里的一个<code>Recycler</code>集合中，<code>Recycler</code>会将当前视图缓存。这时最下面需要填充一个新的元素，<code>ListView</code>会先去<code>Recycler</code>集合里去取，如果有就会复用此视图，如果没有就接着创建。通过<code>getView(int,View,ViewGroup)</code>方法将所取到的数据传递给用户来进行复用，如果没有传递的<code>convertView</code>将为<code>null</code>.<br><img width="480" height="360" src="/uploads/img/AndroidAdvanceDevelop/1/4.png"><br>上面这张图很好的说明了<code>ListView</code>的复用原理。</p>
-<pre><code>@Override
-public View getView(int position, View convertView, ViewGroup parent) {
-    View mView = null;
-    if (convertView != null)
-        mView = convertView;
-    else {
-        //重新加载视图
-        mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, null);
-    }
-    //这里将数据和视图进行绑定
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/7/a2.jpeg" alt="图1"><br><a id="more"></a></p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>这个问题是在做项目的时候发现的，当然并非我第一个发现，而是看到了一些网上的信息后，发现很多都没有说清楚到底是什么导致的此问题，而只是有一些解决方法，也就是知其所以然，而不知其所以然。觉得有必要留下一个TAG，以便后面忘记了，还可以找到解决方法。当然，如果知道问题是什么了，由什么引起的后，也应该会知道怎么解决。  </p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>在使用<code>RecyclerView</code>时，我们都会搭配<code>SwipeRefreshLayout</code>来做下拉刷新，而问题点就在这个下拉刷新的地方，我们下拉刷新一般会先清空适配器中的数据，然后再去请求数据进行填充，问题就发生在这个当我们清空数据后，这时我们进行了快速滑动，此时会抛出异常，如下所示：<br><img src="/uploads/img/AndroidAdvanceDevelop/7/1.png" alt="图1">由图上可以看出这个问题是<code>RecyclerView</code>内部抛出来的，也就是说这可能是<code>RecyclerView</code>的内部bug导致的，不管那么多了，现在问题我们已经清楚了，就是由于下拉刷新，清空数据后，此时页面刚好在滑动，此时就会抛出异常。  </p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>问题点清楚以后，我们来分析其解决方法，这里应该有两个方面来进行分析，第一个方面就是下拉刷新时是否可以将数据不要清空;另一个方面是下拉刷新时当数据没有加载完成时，不要进行滑动。思路有了之后，我们就从这两个方面来分别考虑其可实现的可能。</p>
+<h2 id="1-下拉刷新时不清空数据"><a href="#1-下拉刷新时不清空数据" class="headerlink" title="1.下拉刷新时不清空数据"></a>1.下拉刷新时不清空数据</h2><p>我个人想到的是这种方法，在我对<code>RecyclerView.Adapter</code>进行封装的<a href="https://github.com/allen218/RecyclerViewBaseAdapter" target="_blank" rel="external"><code>RecyclerViewBaseAdapter</code></a>里就是采用此方法来处理数据的。</p>
+<pre><code>public void addData(List&lt;D&gt; items) {
+    boolean isChangeData = items.removeAll(mData);
 
-    return mView;
+    if (items.size() == 0) {
+        //走到这里,说明加载的数据全部为重复数据,所以数据没有变化
+        if (mProgressBarView != null) {
+            mProgressBarView.setVisibility(View.GONE);
+            mNotMoreDataView.setVisibility(View.GONE);
+        }
+    }
+
+    mData.addAll(items);
+
+    notifyDataSetChanged();
+</code></pre><p>这里就是将每次添加到适配器中的数据先使用<code>removeAll()</code>去除重复项，然后再添加到数据集合中，当然，这里我们数据集合里往往会存放对象，而对象之间比较是否相等时，我们需要将此对象实现<code>hashCode()</code>和<code>equeal()</code>两个方法。<br>在这里处理下拉刷新时，还需要注意这样处理，就是当是下拉刷新时，需要将数据添加到数据集合的前面，而不是尾部。这里我们需要对下拉刷新做一个判断：  </p>
+<pre><code> @Override
+public void setData(List list) {
+    errorString = null;
+    list.removeAll(datas);
+
+    if (isDownRefresh) {
+        //是否是下拉刷新
+        datas.addAll(0, list);
+    } else {
+        datas.addAll(list);
+    }
+    notifyDataSetChanged();
 }
-</code></pre><p>这里的<code>position</code>表示当前<code>item</code>是第几项数据，<code>convertView</code>表示缓存的<code>item view</code>，<code>parent</code>表示<code>item view</code>的父视图，这里所指的就是我们的<code>Listview</code>。这里最重要的就是<code>convertView</code>，如果<code>convertView</code>不为空，可以直接复用该视图，如果为空，就要重新创建视图，最后返回当前<code>item</code>所对应的已绑定数据的<code>view</code>.</p>
-<h1 id="5-ListView设计模式解析"><a href="#5-ListView设计模式解析" class="headerlink" title="5.ListView设计模式解析"></a>5.ListView设计模式解析</h1><p><code>listView</code>运用了<code>Adapter</code>模式，而在<code>Adapter</code>类中却还运用了观察者模式，<code>Adapter</code>内部有一个被观察者类，<code>ListView</code>作为它的一个观察者,在将<code>Adapter</code>设置给<code>ListView</code>时，<code>ListView</code>就被当作观察者注册到了<code>Adapter</code>内的被观察者对象上了。<br>我们以<code>ListView</code>的数据刷新来通过源码实现来看看其设计模式</p>
-<pre><code>@Override
-public void setAdapter(ListAdapter adapter) {
-    //代码省略...
-    super.setAdapter(adapter);
-        //代码省略...
-    mDataSetObserver = new AdapterDataSetObserver();
-    mAdapter.registerDataSetObserver(mDataSetObserver);
-        //代码省略...
-}
-</code></pre><p>上面源码说明在<code>setAdapter</code>方法里创建了一个<code>AdapterDataSetObserver</code>对象，并把该对象注册到了<code>mAdapter</code>。</p>
-<p>再来看看我们<code>Adapter</code>的父类<code>BaseAdapter</code></p>
-<p>在<code>BaseAdapter</code>基类中我们看到了上面的<code>AdapterDataSetObserver</code>类被注册到了<code>DataSetObservable</code>被观察者对象中。<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/8.png"></p>
-<p>接下来我们来看看<code>DataSetObservable</code>类<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/5.png"><br>从图上可以看出<code>DataSetObservable</code>就是继承了<code>Java</code>提供的被观察者对象，并通过<code>notifyChanged</code>来通知注册了的观察者对象。</p>
-<p>到这里还是没有看到<code>ListView</code>注册了<code>Adapter</code>。而注册的是<code>AdapterDataSetObserver</code>对象。那我们就去看看这个<code>AdapterDataSetObservable</code>这个对象的实现吧。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/6.png"><br>从图上可以看出，这是一个典型的Observer的实现，通过实现<code>onChanged</code>来接收被观察都传递过来的数据。在<code>onChanged</code>方法里调用了父类的方法，我们去父类一探究竟。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/7.png"><br>在<code>AdapterDataSetObserver</code>的<code>onChanged</code>方法中，我们获取了<code>item</code>的个数，以及调用<code>requestLayout</code>方法来进行重新布局，绘制整个<code>listView</code>的<code>item View</code>.执行完此过程后，<code>ListView</code>中的数据就得到了刷新。</p>
-<p>这里的<code>AdapterDataSetObserver</code>对象里调用的都是<code>AdapterView</code>或者<code>ViewGroup</code>类的属性或方法完成功能.而<code>ListView</code>继承自<code>AdapterView</code>.因此，只可以说<code>AdapterDataSetObserver</code>只是在外层做了一下包装，核心的功能应该是<code>ListView</code>，确切的说是<code>AdapterView</code>。<code>ListView</code>通过<code>Adapter</code>模式、观察者模式、以及使用<code>item View</code>复用来高效的展示列表数据</p>
+</code></pre><p>当是下拉刷新时，我们将请求的数据添加到position为0的位置。这样就大概可以解决我们上面抛异常的问题了，当然这里如果下拉刷新时，新数据超过一页的时候，数据的显示，也就是第二页数据显示的位置，可能还需要在这个<code>setData()</code>方法里根据<code>list.reomve(datas)</code>返回的是否是boolean值还再进行插入数据集合的处理了。  </p>
+<h2 id="2-当下拉刷新时，静止滑动"><a href="#2-当下拉刷新时，静止滑动" class="headerlink" title="2.当下拉刷新时，静止滑动"></a>2.当下拉刷新时，静止滑动</h2><p>这个方法呢，体验就没那么好了，如果数据没加载完成时，不让滑动？数据请求比较快，还好一点，如果比较慢的话，会给用户造成app已死的假象，因为不能动了嘛。当然，如果没有什么好的解决方法时，也只能这么勉强先应付着吧。</p>
+<pre><code>mRecyclerView.setOnTouchListener(
+    new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        if (mIsRefreshing) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+);
+</code></pre><p>当刷新时设将<code>mIsRefreshing</code>设置为true,拦截滑动事件，而当刷新完毕后，再将<code>mIsRefreshing</code>设置为false.<br>好了，使用上面两种方法都是可以解决抛异常的，但我个人还是倾向于使用第一种方法。</p>
 
       
     </div>
@@ -318,17 +320,13 @@ public void setAdapter(ListAdapter adapter) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" rel="next" title="Android开发进阶第一章—Android的构成基石读书笔记">
-                <i class="fa fa-chevron-left"></i> Android开发进阶第一章—Android的构成基石读书笔记
+              <a href="/2016/05/14/Meterial-Design控件库全览-不断更新中/" rel="next" title="Meterial Design控件库全览(不断更新中)">
+                <i class="fa fa-chevron-left"></i> Meterial Design控件库全览(不断更新中)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/30/PulltoRefresh源码分析/" rel="prev" title="PulltoRefresh源码分析">
-                PulltoRefresh源码分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -354,8 +352,8 @@ public void setAdapter(ListAdapter adapter) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/27/ListView原理解析/"
-           data-title="ListView原理及设计模式浅析" data-url="http://yoursite.com/2016/03/27/ListView原理解析/">
+      <div class="ds-thread" data-thread-key="2016/06/02/RecyclerView下拉刷新时快速滑动崩溃的问题解决/"
+           data-title="RecyclerView下拉刷新时快速滑动崩溃的问题解决" data-url="http://yoursite.com/2016/06/02/RecyclerView下拉刷新时快速滑动崩溃的问题解决/">
       </div>
     
   </div>
@@ -454,7 +452,7 @@ public void setAdapter(ListAdapter adapter) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介"><span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-展示列表所需要的元素组成"><span class="nav-text">2.展示列表所需要的元素组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-各组成之间的关系"><span class="nav-text">3.各组成之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-ListView原理"><span class="nav-text">4.ListView原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ListView设计模式解析"><span class="nav-text">5.ListView设计模式解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-text">场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方法"><span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-下拉刷新时不清空数据"><span class="nav-text">1.下拉刷新时不清空数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-当下拉刷新时，静止滑动"><span class="nav-text">2.当下拉刷新时，静止滑动</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
