@@ -65,7 +65,13 @@
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/27.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/6/19.png">
-<meta property="og:updated_time" content="2016-05-29T09:57:42.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/7/7.png">
+<meta property="og:updated_time" content="2016-06-05T07:17:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈代码重构的重要性和方法">
 <meta name="twitter:description">
@@ -1278,9 +1284,452 @@ private static Date nextDay(Date date) {
 <li>在扩展类中加入转型构造函数 如果是子类化，转型构造函数应该调用适当的父类的构造函数。如果是包装，转型构造函数应该接收被包装类对象，并将其以实例变量的形式保存起来。  </li>
 <li>在扩展类中增加新的特性。  </li>
 <li>在需要调用新特性的地方，将调用源对象改为调用扩展对象。  </li>
-<li>将针对源服务类增加的所有外加函数都搬移到扩展类中。  </li>
+<li>将针对源服务类增加的所有外加函数都搬移到扩展类中。    </li>
 </ol>
 </blockquote>
+<h2 id="6-13重新组织数据"><a href="#6-13重新组织数据" class="headerlink" title="6.13重新组织数据"></a>6.13重新组织数据</h2><p><strong>Self Encapsulate Field（自封装字段）</strong><br>你直接访问一个字段，但你发现与字段的耦合关系并得越来越难以维护，当需要对字段进行修改时，所有直接对片段的修改点都需要被重新修改。而且无法对字段的修改进行控制，也就是字段的值是不可控的，这也容易导致相应的风险。解决方法就是对这个字段进行<code>private</code>封装，并添加相应的访问函数。<br>这种方式我想就不必浪费口舌了，我相信所有使用过<code>java</code>的人，都会明白这个道理。  </p>
+<p><strong>Replace Data Value with Object（用对象来替换数据值）</strong><br>你有一个数据项，需要与其他数据和行为一起使用才有意义。比如，定单和客户、人和手机号码等等，在最初的时候，我们可能新建了一个定单类，而把客户作用定单的一个数据项，而随着业务的扩展，我们需要为客户添加相应的信息，此时，如果还是在定单类里进行扩展，就会导致职责不清、高耦合等问题；以或者我们创建了一个<code>person</code>类，并将电话号码当作<code>person</code>类的一个数据项，来存储电话号码，但是后来，对电话号码进行了细分，需要格式化、抽取区号等等的操作。这时我们就需要将<code>客户</code>或者<code>电话号码</code>从相应的寄生类中抽取出来，单独的自成一类来进行扩展，解除强耦合的关系。<br>接下来，我们以定单和客户的关系来说明一下用对象替换数据值的方法。我们以定单和用户的例子来进行说明。  </p>
+<pre><code>public class Order {
+    private String customer;
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+}
+</code></pre><p>上面有一个定单类，类里面使用字段来记录客户信息。并提供了获取客户和设置客户信息的相应函数。我们现在需要将记录客户信息的<code>customer</code>字段抽取出来单独创建一个类来进行客户信息的记录操作。<br>首先我们创建一个<code>Customer</code>类，然后将<code>Order</code>类中的字段移到<code>customer</code>类中，并在构造函数中接收此字段的信息，然后提供相应的访问函数。  </p>
+<pre><code>public class Customer {
+    private String name;
+
+    Customer(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre><p>我们创建了一个<code>name</code>的字段，这里的字段名不需要跟<code>order</code>的一样，只需要都是<code>String</code>类型即可。创建完后，我们需要将<code>order</code>类中和<code>customer</code>字段相应的都改为调用<code>Customer</code>新类。这里我们首先将字段的类型修改为新类的类型，然后修改相应的取值/设值函数。  </p>
+<pre><code>public class Order {
+    private Customer customer;
+
+    public Order(String customer1) {
+        customer = new Customer(customer1);
+    }
+
+    public String getCustomer() {
+        return customer.getName();
+    }
+
+    public void setCustomer(String customer1) {
+        customer = new Customer(customer1);
+    }
+}
+</code></pre><p>这里需要对<code>setCustomer()</code>函数进行说明一下，因为之前我们的<code>customer</code>是一个<code>String</code>的值对象。所以这里我们有你有我 替换时，也需要使用值对象，而值对象的特点就是不可被修改。所以这里我们每次设值都会创建一个新的对象，因为不能对原来的对象进行修改，如果修改就变成了引用对象了，而引用对象并不符合原来的定义。当然这里也可以修改为引用对象，但这并不不是本重构方法所要说的，下面会有关于值对象到引用对象的重构手法。<br>这里我们还需要使用<code>rename method</code>来对相应函数进行修改，让其更能符合修改后意思表达。比如这里的<code>getCustomer()</code>修改为 </p>
+<pre><code>public String getCustomerName() {
+    return customer.getName();
+}
+</code></pre><p>因为这里获取的就是客户名称的函数。同样的相应的参数名也做一下修改。 </p>
+<pre><code>public Order(String customerName) {
+    customer = new Customer(customerName);
+}
+public void setCustomer(String customerName) {
+    customer = new Customer(customerName);
+}
+</code></pre><p>OK,此项重构到此以完成。  </p>
+<p><strong>Change Value to Reference（将值对象修改为引用对象）</strong><br>你从一个类衍生出许多彼此相等的实例，而你希望将它们替换为同一个对象。这时，你可以将这个值对象变成引用对象。<br><img src="/uploads/img/AndroidAdvanceDevelop/7/2.png" alt="img1">从图上可以看出，我们通过值对象转换成引用对象，将定单与客户的关系从一对一，变成了一对多，这也更符合现实的情况。<br>要在引用对象和值对象之间做出选择有时并不容易，有时候，你会使用一个简单值对象(一般指的就是基本数据类型的对象)来保存某些简单的数据，而后，需求的增加，你可能会希望给这个对象加入一些可修改的数据，并确保对任何一个对象的修改都能影响到所有使用此对象的地方。这时候你需要将值对象修改为引用对象。<br>我们在<code>replace data value with object</code>重构留下的代码开始，对其进行继续重构，让其满足对现实事物的描述。先来看看<code>Customer</code>类：</p>
+<pre><code>public class Customer {
+    private String name;
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre><p>下面是<code>Order</code>类：</p>
+<pre><code>public class Order {
+    private Customer customer;
+
+    public Order(String customerName) {
+        customer = new Customer(customerName);
+    }
+
+    public String getCustomer() {
+        return customer.getName();
+    }
+
+    public void setCustomer(String customerName) {
+        customer = new Customer(customerName);
+    }
+}
+</code></pre><p>在<code>Order</code>类中的<code>setCustomer(String customerName)</code>函数中我们使用创建对象的方式来模拟值对象，以致于每一个定单对应一个新的用户，而现实生活是多个不同定单可能对应的都是同一个用户，所以我们要使用<code>change value to reference</code>的方式来进行重构。<br>首先我们使用<code>replace constructor with factory method</code>来进行对象的创建 </p>
+<pre><code>public static Customer create(String name) {
+    return new Customer(name);
+}
+
+private Customer(String name) {
+    this.name = name;
+}
+</code></pre><p>然后改变<code>Order</code>对象对<code>customer</code>对象的创建方式：</p>
+<pre><code>public Order(String custosmerName) {
+    customer = Customer.create(custosmerName);
+}
+</code></pre><p>接下来，为了避免重复创建对象，满足同一个<code>customer</code>对象，只应该存在一个对前提下，我们将所有存在的<code>customer</code>对象预先创建好，并存储到了一个静态的集合中，每当<code>order</code>类调用<code>customer</code>的静态工厂函数创建对象时，我们就从此集合中取出相应的对象进行返回。  </p>
+<pre><code>private static Map&lt;String, Customer&gt; mCustomerInstance = new HashMap&lt;&gt;();
+
+{
+    new Customer(&quot;zhangshan&quot;).store();
+    new Customer(&quot;lisi&quot;).store();
+    new Customer(&quot;wangwu&quot;).store();
+}
+
+private void store() {
+    mCustomerInstance.put(name, this);
+}
+</code></pre><p>这里我们使用静态代码块初始化存在的<code>Customer</code>对象后，将其通过<code>store()</code>函数将其存入到<code>HashMap</code>集合中进行存储。<br>现在，我们需要修改工厂函数：</p>
+<pre><code>public static Customer create(String name) {
+    return mCustomerInstance.get(name);
+}
+</code></pre><p>这样就保证了同一对象不会被多次创建。也使得订单和客户变成了多对一的关系。符合现实生活。  </p>
+<p><strong>Change Reference to Value（将引用对象改为值对象）</strong><br>你有一个引用对象，很小且不可变，而且不易管理，这时，你需要将此引用对象改为值对象。<br>这个重构方式刚好和<code>change value to reference</code>相反，这里要说明一下的是，每个重构手法都是根据相应的场景而进行使用的，而没有一定要使用什么重构手法去硬套。也就是没有哪种手法比其它手法更好，有的只是相应的重构手法对应特定的代码场景。<br>如果引用对象开始变得难以使用，也许就应该将它改为值对象。值对象有一个特点，就是它们应是不可改变的，也就是，在任何时候，通过同一对象的同一个查询函数返回的值都应该是相等的。如果你遇到了引用对象做着值对象的操作时，就需要将此引用对象变成值对象。 </p>
+<p><strong>Replace Array with Object（使用对象来替换数组）</strong><br>你有一个数组，数组里的每个元素都各自代表不同的东西。此时，可以使用对象来替换数组，将数组里的每个元素在对象里通过字段来进行表示。<img src="/uploads/img/AndroidAdvanceDevelop/7/3.png" alt="img1">这里说的就是数组里的每个元素转换成对象里的相应字段，然后提供设值/取值函数的过程。 </p>
+<p><strong>Duplicate Observed Data（复制“被监视数据”）</strong><br>你有一些领域数据置身于<code>GUI</code>控件中，而领域函数需要访问这些函数。这里主要说的是界面和业务逻辑，领域数据就是通过界面所获得的数据，也就是用户输入的数据，而领域函数就是处理业务逻辑的函数。通过<code>Observable</code>模式，用以同步界面和业务逻辑中的重复数据。 <img src="/uploads/img/AndroidAdvanceDevelop/7/4.png" alt="img1">从图上可以看出，主要做的工作就是对界面和业务逻辑解耦，通过<code>Observable</code>设计模式来进行数据的同步更新。  </p>
+<p><strong>Change Unidirectional Association to Bidirectional（将单向关联改为双向关联）</strong><br>两个类都需要使用对方的某些特性，但其间只有一条单向连接。此时，添加一个反向指针，并使修改函数能够同时更新两条连接。这里的反向指针指的就是被引用类指向引用类的那条引用对象。而修改函数指的是对类中指针（也就是引用对象）进行修改的函数，如在<code>order</code>类中的指针是<code>customer</code>对象，然后通过<code>setCustomer()</code>函数来对<code>Customer</code>进行修改，这里的<code>setCustomer()</code>函数就是修改函数。<br>做法： </p>
+<blockquote>
+<ol>
+<li>在被引用类中增加一个字段，用以保存反向指针。  </li>
+<li>决定由哪个类——引用端还是被引用端来控制关联关系。  </li>
+<li>在被控制端建立一个辅助函数，让其可以访问对应的引用对象。    </li>
+<li>如果既有的修改函数在控制端，让它负责更新反向指针。  </li>
+<li>如果既有的修改函数在被控制端，就在控制端建立一个控制函数，并让既有的修改函数调用这个新建的控制函数。    </li>
+</ol>
+</blockquote>
+<p>我们还是以<code>Order</code>和<code>Customer</code>的例子来做说明：<br>在例子中，<code>Order</code>引用了<code>Customer</code>而没有反向引用。  </p>
+<pre><code>public class Order {
+private Customer customer;
+</code></pre><p>而由于一个客户可以拥有多个订单，所以这里我们需要在<code>Customer</code>类中添加引用<code>Order</code>类的反向指针，而且还是不重复多个订单，所以这里我们将这个字段定义为一个<code>Set</code>类型的集合。<br>根据做法二所说的，我们接下来需要指定谁来做控制端。这里我们有一些原则。  </p>
+<blockquote>
+<ol>
+<li>如果两者都是引用对象，而其间的关联是一对多的关系，那么就由’拥有单一引用’的一方来承担<code>控制者</code>角色。比如：一个客户可拥有多份订单，这就是一对多的关系，而<code>Order</code>类中的<code>customer</code>引用是一的一方，也就是<code>order</code>类中拥有<code>customer</code>这个单一引用，所以关系由<code>Order</code>来控制。  </li>
+<li>如果某个对象是组成另一个对象的部件，也就是另一个对象是依赖此对象来创建的，那么由后者来承担控制关系。  </li>
+<li>如果两都都是引用对象，而其间的关联是”多对多”的关系，那么由哪一方来控制关联关系，都无所谓。  </li>
+</ol>
+</blockquote>
+<p>本例中，<code>Order</code>类为控制对象，根据做法三，我们需要在<code>Customer</code>建立一个辅助函数，让其可以访问<code>Customer</code>类中的<code>orders</code>定单集合。<code>Order</code>的修改函数将使用这个辅助函数对指针两端对象进行同步控制。我们将这个辅助函数命名为<code>friendOrders()</code>，相应的代码如下：</p>
+<pre><code>public Set friendOrder() {
+    return mOrders;
+}
+</code></pre><p>现在，根据做法四：我要改变修改函数，也就是<code>setCustomer()</code>,令其更新反向指针。  </p>
+<pre><code>public void setCustomer(Customer customerArgs) {
+    if (customer != null) {
+        customer.friendOrder().remove(this);
+    }
+    customer = customerArgs;
+    if (customer != null) {
+        customer.friendOrder().add(this);
+    }
+}
+</code></pre><p>这里的操作主要是先让对方删除你的指针，也就是我们这里的</p>
+<pre><code>customer.friendOrder().remove(this);
+</code></pre><p>然后，再将你的指针指向一个新的对象</p>
+<pre><code>customer = customerArgs;
+</code></pre><p>最后，让那个新的对象将把它的指针指向你。</p>
+<pre><code>customer.friendOrder().add(this);
+</code></pre><p>如果你希望在<code>Customer</code>中也能修改连接，就让它调用控制方法。  </p>
+<pre><code>public void addOrder(Order order) {
+    order.setCustomer(this);
+}
+</code></pre><p>如果一份定单也可以对应多个客户，也就是多对多的关系，那么重构后就是下面这样：  </p>
+<pre><code>public void addCustomer(Customer addCustomer) {
+    addCustomer.friendOrder().add(this);
+    mCustomers.add(addCustomer);
+}
+
+public void removeCustomer(Customer customer1) {
+    customer1.friendOrder().remove(customer1);
+    mCustomers.remove(customer1);
+}
+
+    public void addOrder(Order order) {
+    order.addCustomer(this);
+}
+
+public void removeOrder(Order order) {
+    order.removeCustomer(this);
+}
+</code></pre><p><strong>Change Bidirectional Association to Unidirectional（将双向关联改为单向关联）</strong><br>两个类之间有双向关联，但其中一个类如今不再需要另一个类的特性，这时，我们应该去除不必要的关联，将双向关联变为单向关联。<br>双向关联不仅增加了两个类的复杂度，而且导致两类间的高度耦合，除非有必要使用，不然，尽量使用单向关联。当我们使用了双向关联，只要有机会我会都应该将双向关联改为单向关联。去除关联关系最主要的就是去除相互类中依赖的指针，也就是对应的保存指针的字段。<br>我们还是以上例中的<code>Order</code>和<code>Customer</code>来说明此重构手法吧。  </p>
+<pre><code>public void addCustomer(Customer addCustomer) {
+    addCustomer.friendOrder().add(this);
+    mCustomers.add(addCustomer);
+}
+
+public void removeCustomer(Customer customer1) {
+    customer1.friendOrder().remove(customer1);
+    mCustomers.remove(customer1);
+}
+
+    public void addOrder(Order order) {
+    order.addCustomer(this);
+}
+
+public void removeOrder(Order order) {
+    order.removeCustomer(this);
+}
+</code></pre><p>这里<code>order</code>和<code>customer</code>是双向关联关系，而我们发现只有当<code>Customer</code>存在的时候，<code>Order</code>才会存在。也就是说，这里<code>Customer</code>和<code>order</code>只能是一对多的关系，其中<code>Customer</code>为一，<code>order</code>为多，也就是一个<code>Customer</code>对应多个<code>Order</code>。所以，我们需要将<code>Order</code>中的<code>Customer</code>指针移除。同时需要检查是否有依赖<em>customer字段存在，(这里为了区分，将字段前加上“</em>”).如果确实有，那么需要为此提供替代品。<br>我们需要研究所有读取这个字段的函数，以及所有使用这些函数的函数。同时需要使用另一种方式提供<code>Customer</code>对象，一般意味着我们需要将<code>Customer</code>对象作为参数传递到函数中。  </p>
+<pre><code>public double getDiscountedPrice() {
+    return getPrice() * (1 - customer.getdiscount());
+}
+</code></pre><p>修改成通过参数传递的方式，而非使用指针对象：  </p>
+<pre><code>public double getDiscountedPrice(Customer customer) {
+    return getPrice() * (1 - customer.getdiscount());
+}
+</code></pre><p>另一种做法就是修改其取值函数，使其在不使用<code>_customer</code>字段的前提下，提供一个<code>Customer</code>对象。我们将<code>Order</code>类中的取值函数替换成这样:  </p>
+<pre><code>public Customer getCustomer() {
+    Iterator iterator = Customer.getInstance().entrySet().iterator();
+    while (iterator.hasNext()) {
+        Customer customer = (Customer) iterator.next();
+        if (customer.containCustomer(this)) {
+            return customer;
+        }
+    }
+    return null;
+}
+</code></pre><p>然后，我们在<code>Order</code>类所有引用到<code>_customer</code>字段的地方，使用<code>getCustomer()</code>函数进行替换。当我们移除<code>_customer</code>后，其实两个类的关系就变成单向关系了。但是即使我们移除了<code>_customer</code>字段，两个类间的相互依赖关系依然存在。</p>
+<p><strong>Replace Magic Number with Symbolic Constant（使用常量替换魔法数）</strong><br>你在代码中使用了数字，如果这个数字有特别的意思，这时，你应该根据数字所代表的意思创建一个常量，然后使用这个常量去替换这个数字。<img src="/uploads/img/AndroidAdvanceDevelop/7/5.png" alt="img1">正如图上所展示的，就是将数字替换成静态常量，没有其它的。  </p>
+<p><strong>Encapsulate Field（封装字段）</strong><br>你的类中有一个<code>public</code>字段，请将这个字段的权限设置为<code>private</code>，然后为此字段提供取值/设值函数。<img src="/uploads/img/AndroidAdvanceDevelop/7/6.png" alt="img1">这个也没什么好说的，最简单的字段封装。  </p>
+<p><strong>Encapsulate Collection（封装集合）</strong><br>有个函数返回一个集合，让这个函数返回该集合的一个只读副本，并在这个类中提供添加/移除集合元素的函数。<br>这里主要说的就是当你返回这个集合时，这个集合使用集合工具中的封装集合的方法<code>unmodifiableXXX()</code>,XXX代表相应的集合类型，让其返回一个只读也就是不可修改的集合。</p>
+<pre><code>public Set getCollection() {
+    return Collections.unmodifiableSet(data);
+}
+</code></pre><p>然后在这个集合所属的类中添加添加/移除集合元素的方法。</p>
+<p><strong>Replace Type Code with Class（以类取代类型码）</strong><br>类中使用了数值类型码，但它不影响类的行为。不影响类的行为可以理解为类中不会根据不同的类型码而执行不同的操作。这种情况下，可以使用一个类替换该数值类型码。这样做的好处有两点：1.可以对这个类进行类型检验，通过类来控制传值的范围，如果是直接通过数值传值的话，可能会传递非法的值。2.将与类型码有关的逻辑抽离到了一个单独的类中，解耦便于维护。  <img src="/uploads/img/AndroidAdvanceDevelop/7/7.png" alt="img1"><br>这里我们使用人和血型的例子来说明此重构手法的使用.首先来看一下<code>Person</code>类的代码：  </p>
+<pre><code>public class Person {
+    public static final int O = 0;
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int AB = 3;
+
+    private int bloodGroup;
+
+    public Person(int bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public int getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(int bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+}
+</code></pre><p>我们将<code>Person</code>类中的类型码移到新创建的类<code>BloodGroup</code>中，然后使用<code>BloodGroup</code>类来代替类型码。  </p>
+<pre><code>public class BloodGroup {
+    public static final BloodGroup O = new BloodGroup(0);
+    public static final BloodGroup A = new BloodGroup(1);
+    public static final BloodGroup B = new BloodGroup(2);
+    public static final BloodGroup AB = new BloodGroup(3);
+
+    public static BloodGroup[] bloodGroup = {O, A, B, AB};
+
+    private int mCode;
+
+    public BloodGroup(int code) {
+        this.mCode = code;
+    }
+
+    public int getCode() {
+        return mCode;
+    }
+
+    public static BloodGroup code(int code) {
+        return bloodGroup[code];
+    }
+}
+</code></pre><p>然后，我们将<code>Person</code>类中的类型码使用新建类<code>BloodGroup</code>进行替换。</p>
+<pre><code>public class Person {
+    public static final int O = new BloodGroup(0).getCode();
+    public static final int A = new BloodGroup(1).getCode();
+    public static final int B = new BloodGroup(2).getCode();
+    public static final int AB = new BloodGroup(3).getCode();
+
+    private BloodGroup bloodGroup;
+
+    public Person(int bloodGroup) {
+        this.bloodGroup = BloodGroup.code(bloodGroup);
+    }
+
+    public int getBloodGroup() {
+        return bloodGroup.getCode();
+    }
+
+    public void setBloodGroup(int bloodGroup) {
+        this.bloodGroup = BloodGroup.code(bloodGroup);
+    }
+}
+</code></pre><p>接下来我们需要修改<code>Person</code>类中的函数，让其使用<code>BloodGroup</code>来代替整数类型码。 </p>
+<pre><code>public Person(BloodGroup bloodGroup) {
+    this.bloodGroup = bloodGroup;
+}
+
+public int getBloodGroupCode() {
+    return bloodGroup.getCode();
+}
+
+public BloodGroup getBloodGroup() {
+    return bloodGroup;
+}
+
+public void setBloodGroup(BloodGroup bloodGroup) {
+    this.bloodGroup = bloodGroup;
+}
+</code></pre><p>这里我们使用<code>rename method</code>的方法将原来的返回int类型的<code>getBloodGroup()</code>函数修改为<code>getBloodGroupCode()</code>,并添加了相应的取值/设值函数及对构造方法进行了修改。<br>修改完成后，我们需要修改调用<code>Person</code>类的地方，让其使用新的类型来进行调用。比如，构造函数的调用，原来是这样的：  </p>
+<pre><code>Person person1 = new Person(Person.A);
+</code></pre><p>现在变成了： </p>
+<pre><code>Person person = new Person(BloodGroup.A);
+</code></pre><p>从传递数值类型码变成了传递对象，避免了不合法数值，变得更安全了。  </p>
+<p>然后，相就的取值函数也发生了变化，原来是这样的：  </p>
+<pre><code>person.getBloodGroupCode();
+</code></pre><p>现在变成了：</p>
+<pre><code>person1.getBloodGroup().getCode();
+</code></pre><p>设值函数原来是这样的：</p>
+<pre><code>person.setBloodGroup(Person.A);
+</code></pre><p>现在同样也变成了：</p>
+<pre><code>person.setBloodGroup(BloodGroup.A);
+</code></pre><p>替换完毕后，我们需要把相应的与数值类型码整数相关的函数和字段删除。下面都是需要删除的代码：  </p>
+<pre><code> public static final int O = new BloodGroup(0).getCode();
+public static final int A = new BloodGroup(1).getCode();
+public static final int B = new BloodGroup(2).getCode();
+public static final int AB = new BloodGroup(3).getCode();
+
+private BloodGroup bloodGroup;
+
+public Person(BloodGroup bloodGroup) {
+    this.bloodGroup = bloodGroup;
+}
+
+public Person(int bloodGroup) {
+    this.bloodGroup = BloodGroup.code(bloodGroup);
+}
+</code></pre><p>好了，到这里，我们就把使用数值类型码的地方全部替换为对象了，此次重构也就完成了。</p>
+<p><strong>Replace Type Code with Subclasses（以子类取代类型码）</strong><br>你有一个不可变的类型码，这个类型码会影响类的行为。此时，可以使用子类取代这种类型码，也就是将每个类型码变为由相应的子类去实现。<br>什么情况下使用这种重构手法呢？<br>一般是在像类中有<code>switch</code>或者<code>if-else</code>之类的条件表达式，根据不同的类型码状态去执行相应的动作，这种情况下可以使用子类来取代类型码，把宿主类当作基类，每个类型码作为一个子类去实现相应的特性，然后，将基类中的相应函数使用<code>push down method</code>的方式，移到相应的子类中。<br>什么情况不适合使用此重构手法呢？</p>
+<ol>
+<li>如果有类型码在对象创建完成后发生了改变。  </li>
+<li>类型码宿主类已经有了相应的子类，而java中只支持单继承，这种情况我们需要使用<code>Replace Type Code with State/Strategy</code>来使用多态去之实现。  </li>
+</ol>
+<p><code>Replace Type Code with Subslasses</code>的好处在于：它把需要对“不同行为的了解”从类的用户转移到类自身。如果需要增加一个新的变化，只需要添加一个子类就行了。如果没有多态机制，这里我们需要对每次行为的增加，去修改每一处对类型码的判断。因此，如果以后需要增加新的行为，这项重构是非常有价值的。<br>这里我们使用雇员和薪资的例子来说明一下此重构手法。首先我们先来看看雇员类的代码：  </p>
+<pre><code>public class Employee {
+    public static final int SALESMAN = 0;
+    public static final int ENGINEER = 1;
+    public static final int MANAGER = 2;
+
+    private int type;
+
+    Employee(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+}
+</code></pre><p>我们需要将类型码替换成宿主类的子类，这里我们以<code>Engieer</code>为例：<br>首先将宿主类中的获取<code>Type</code>的函数抽象出来：然后创建<code>Engieer</code>继承宿主类，实现<code>getType()</code>方法。</p>
+<pre><code>public class Engieer extends Employee {
+    Engieer(int type) {
+        super(type);
+    }
+
+    @Override
+    protected int getType() {
+        return Employee.ENGINEER;
+    }
+}
+</code></pre><p>同时，我们需要修改<code>Employee</code>的构造函数为工厂函数，让其根据相应type创建相应的类型码对象。</p>
+<pre><code>protected Employee(int type) {
+    this.type = type;
+}
+
+public static Employee getInstance(int type) {
+    switch (type) {
+        case SALESMAN:
+            return new Salesman(type);
+
+        case ENGINEER:
+            return new Engieer(type);
+
+        case MANAGER:
+            return new Manager(type);
+
+        default:
+            throw new RuntimeException(&quot;类型码输入错误,不存在此类型码&quot;);
+    }
+}
+</code></pre><p>这里我们不可避免的使用了<code>switch</code>语句，这里使用是可以接受的，因为这只是在创建相应对象时根据类型码进行了判断。这里的例子是很简单的，我们在使用此重构手法过程中，可能还会需要使用<code>push down method</code>等重构手法将相应基类的函数移到对应的子类中。</p>
+<p><strong>Replace Type Code with State/Strategy（使用状态/策略模式替换类型码）</strong><br>你有一个类型码，它会影响类的行为，而你无法通过<code>Replace Type code with subclasses</code>来消除它。这时，你可以使用状态或者策略模式去取代类型码。这里主要说的是，你需要单独创建一个状态/策略基类，而不是使用宿主类来作为基类，然后通过类型码宿主类来对状态基类的引用，来根据不同的状态去执行相应的动作。<br>这里我们在前面<code>6.8 将状态码转换为状态模式</code>已经作为详细的说明。  </p>
+<p><strong>Replace Subclass with Field（以字段取代子类）</strong><br>你的各个子类之间唯一的差别就是返回常量数据的函数身上，也就是说唯一的差别只是返回常量数据的函数不同。此时，你可以修改这些函数，使它们返回超类中的某个新增字段，然后将子类销毁。<br>我们以男人和女人的例子来说明一下此重构手法。首先来看一下男人和女人类的超类<code>Person</code>类的情况。  </p>
+<pre><code>public abstract class Person {
+
+    abstract boolean isMale();
+
+    abstract String getCode();
+}
+</code></pre><p>及其子类男人和女人的实现：</p>
+<pre><code>//男人
+public class Male extends Person {
+    @Override
+    boolean isMale() {
+        return true;
+    }
+
+    @Override
+    String getCode() {
+        return &quot;M&quot;;
+    }
+}
+//女人
+public class Female extends Person {
+    @Override
+    boolean isMale() {
+        return false;
+    }
+
+    @Override
+    String getCode() {
+        return &quot;F&quot;;
+    }
+}
+</code></pre><p>从上面的代码可以看出，男人和女人子类的<code>getCode()</code>方法返回了一个硬编码的值，这样子的情况就需要我们使用<code>Replace Subclass with Field</code>来将不必要的子类去除，减少由于子类继承的复杂度。<br>首先我们将两个抽象方法转换成字段的形式在父类中保存其状态。</p>
+<p>首先我们在父类中分别声明两个工厂函数，让其调用Person的构造函数，用来创建男人对象和女人对象。</p>
+<pre><code>private boolean isMale;
+private String code;
+</code></pre><p>然后将上面两个字段作为构造函数的两个参数，让创建<code>Person</code>类时，传递相应的参数：  </p>
+<pre><code>public Person(boolean isMale, String code) {
+    this.code = code;
+    this.isMale = isMale;
+}
+</code></pre><p>再在<code>Person</code>类中创建两个工厂函数，分别为创建男人和女人对象：</p>
+<pre><code>public static Person createMale(boolean isMale, String code) {
+    return new Person(isMale, code);
+}
+
+public static Person createFemale(boolean isMale, String code) {
+    return new Person(isMale, code);
+}
+</code></pre><p>最后，提供相应的取值函数。  </p>
+<pre><code>public boolean isMale() {
+    return isMale;
+}
+
+public String getCode() {
+    return code;
+}
+</code></pre><p>到此之后，子类的功能就被搬移到了父类中，此时，我们就可以移除子类，而在其所有引用处，将其实现改为由父类来代替。</p>
 
       
     </div>
@@ -1434,7 +1883,7 @@ private static Date nextDay(Date date) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-为什么要进行重构？"><span class="nav-text">2.为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-重构的难点"><span class="nav-text">3.重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重构的原则"><span class="nav-text">4.重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-哪些场景需要用到重构"><span class="nav-text">5.哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-常用的重构方法"><span class="nav-text">6.常用的重构方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-提取子函数"><span class="nav-text">6.1 提取子函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-上移函数到父类"><span class="nav-text">6.2 上移函数到父类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-下移函数到子类"><span class="nav-text">6.3 下移函数到子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-封装固定的业务逻辑"><span class="nav-text">6.4 封装固定的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5使用泛型去除重复的逻辑"><span class="nav-text">6.5使用泛型去除重复的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-使用对象避免过多的参数"><span class="nav-text">6.6 使用对象避免过多的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-转移函数"><span class="nav-text">6.7 转移函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-8-将状态码转换为状态模式"><span class="nav-text">6.8 将状态码转换为状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-什么也不做的对象——nullObject模式"><span class="nav-text">6.9 什么也不做的对象——nullObject模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-让类保持苗条身材——分解胖类型"><span class="nav-text"> 6.10 让类保持苗条身材——分解胖类型  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-11-重新组织函数"><span class="nav-text">6.11 重新组织函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-12-在对象之间搬移特性"><span class="nav-text">6.12 在对象之间搬移特性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前提"><span class="nav-text">1.前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-为什么要进行重构？"><span class="nav-text">2.为什么要进行重构？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-重构的难点"><span class="nav-text">3.重构的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重构的原则"><span class="nav-text">4.重构的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-哪些场景需要用到重构"><span class="nav-text">5.哪些场景需要用到重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Duplicated-Code-重复代码"><span class="nav-text">1.Duplicated Code(重复代码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Long-Method-过长函数"><span class="nav-text">2.Long Method(过长函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Large-Class-过大的类"><span class="nav-text">3.Large Class(过大的类)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-常用的重构方法"><span class="nav-text">6.常用的重构方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-提取子函数"><span class="nav-text">6.1 提取子函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-上移函数到父类"><span class="nav-text">6.2 上移函数到父类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-下移函数到子类"><span class="nav-text">6.3 下移函数到子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-封装固定的业务逻辑"><span class="nav-text">6.4 封装固定的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5使用泛型去除重复的逻辑"><span class="nav-text">6.5使用泛型去除重复的逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-使用对象避免过多的参数"><span class="nav-text">6.6 使用对象避免过多的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-转移函数"><span class="nav-text">6.7 转移函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-8-将状态码转换为状态模式"><span class="nav-text">6.8 将状态码转换为状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-什么也不做的对象——nullObject模式"><span class="nav-text">6.9 什么也不做的对象——nullObject模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-让类保持苗条身材——分解胖类型"><span class="nav-text"> 6.10 让类保持苗条身材——分解胖类型  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-11-重新组织函数"><span class="nav-text">6.11 重新组织函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-12-在对象之间搬移特性"><span class="nav-text">6.12 在对象之间搬移特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-13重新组织数据"><span class="nav-text">6.13重新组织数据</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
