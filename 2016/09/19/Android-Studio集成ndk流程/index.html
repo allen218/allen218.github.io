@@ -57,18 +57,60 @@
 
 
 
-<meta name="description">
+<meta name="description" content="今天来讲一下Android Studio集成ndk开发的流程及相应的一些配置，也算是留一个笔记，方便以后查阅。 
+整个流程大概分为以下几部分：
+
+
+配置build.gradle让其支持ndk的编译
+编写native方法及加载相应的so库
+手动编译c头文件
+实现native方法
+测试
+
+
+1.配置build.gradle1.先在build.gradle文件中配置在app的build.gradle中的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RecyclerView每个Item展示倒计时">
-<meta property="og:url" content="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/index.html">
+<meta property="og:title" content="Android_Studio集成ndk开发流程">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/Android-Studio集成ndk流程/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
-<meta property="og:updated_time" content="2016-04-25T02:49:39.000Z">
+<meta property="og:description" content="今天来讲一下Android Studio集成ndk开发的流程及相应的一些配置，也算是留一个笔记，方便以后查阅。 
+整个流程大概分为以下几部分：
+
+
+配置build.gradle让其支持ndk的编译
+编写native方法及加载相应的so库
+手动编译c头文件
+实现native方法
+测试
+
+
+1.配置build.gradle1.先在build.gradle文件中配置在app的build.gradle中的">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/8.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/10.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/11.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/12.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/13.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/14.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/15.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/16.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/17.png">
+<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/18.png">
+<meta property="og:updated_time" content="2016-09-20T15:38:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RecyclerView每个Item展示倒计时">
-<meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
+<meta name="twitter:title" content="Android_Studio集成ndk开发流程">
+<meta name="twitter:description" content="今天来讲一下Android Studio集成ndk开发的流程及相应的一些配置，也算是留一个笔记，方便以后查阅。 
+整个流程大概分为以下几部分：
+
+
+配置build.gradle让其支持ndk的编译
+编写native方法及加载相应的so库
+手动编译c头文件
+实现native方法
+测试
+
+
+1.配置build.gradle1.先在build.gradle文件中配置在app的build.gradle中的">
+<meta name="twitter:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/7/8.png">
 
 
 
@@ -86,7 +128,7 @@
   };
 </script>
 
-  <title> RecyclerView每个Item展示倒计时 | Allen'Notes </title>
+  <title> Android_Studio集成ndk开发流程 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +250,7 @@
             
             
               
-                RecyclerView每个Item展示倒计时
+                Android_Studio集成ndk开发流程
               
             
           </h1>
@@ -220,8 +262,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
-              2016-03-12
+            <time itemprop="dateCreated" datetime="2016-09-19T22:47:12+08:00" content="2016-09-19">
+              2016-09-19
             </time>
           </span>
 
@@ -231,8 +273,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
+                <a href="/2016/09/19/Android-Studio集成ndk流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/19/Android-Studio集成ndk流程/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -254,144 +296,66 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/45.png" alt="img1"></p>
-<a id="more"></a>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
-</blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
+        <p>今天来讲一下<code>Android Studio</code>集成ndk开发的流程及相应的一些配置，也算是留一个笔记，方便以后查阅。 </p>
+<p>整个流程大概分为以下几部分：</p>
 <blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
+<ol>
+<li>配置<code>build.gradle</code>让其支持ndk的编译</li>
+<li>编写<code>native</code>方法及加载相应的<code>so</code>库</li>
+<li>手动编译<code>c</code>头文件</li>
+<li>实现<code>native</code>方法</li>
+<li>测试</li>
+</ol>
 </blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。</p>
-</blockquote>
-</blockquote>
-<h1 id="2-定时器工具类的实现"><a href="#2-定时器工具类的实现" class="headerlink" title="2.定时器工具类的实现"></a><strong>2.定时器工具类的实现</strong></h1><blockquote>
-<p>定时器的实现：<br><strong>1.这里我直接通过handle来写一个循环，然后，提供一个</strong><code>start()</code>方法来实现一个定时器  </p>
-<pre><code>public BackTimerUtils(Activity context, List&lt;Long&gt; data) {
-    this.mTimeList = data;
-    this.mContext = context;
+<h1 id="1-配置build-gradle"><a href="#1-配置build-gradle" class="headerlink" title="1.配置build.gradle"></a>1.配置build.gradle</h1><h2 id="1-先在build-gradle文件中配置"><a href="#1-先在build-gradle文件中配置" class="headerlink" title="1.先在build.gradle文件中配置"></a>1.先在<code>build.gradle</code>文件中配置</h2><p>在<code>app</code>的<code>build.gradle</code>中的<code>defaultConfig</code>括号内添加以下代码：</p>
+<pre><code>ndk {
+    moduleName &quot;hardcontrol&quot;          //生成的so名字
+    abiFilters &quot;armeabi&quot;, &quot;armeabi-v7a&quot;, &quot;x86&quot; //指定编译的so库所支持的平台
+    ldLibs &quot;log&quot;  //配置log库
+    stl=&quot;system&quot;  //系统默认最小支持的c++运行时库
+    cFlags=&quot;-std=c++11&quot;  //标记
 }
-private Handler handler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-        start();
-    }
-}
-public void start() {
-    handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            handler.sendEmptyMessage(0);
-            handleListTime();
-        }
-    }, 1000);
-}
-</code></pre><blockquote>
-<p>这里的  <code>List&lt;Long&gt; data（）</code>主要是需要接收一个每item剩余的时间(这里都是毫秒数)，也就是每个item从哪个时间 点开始倒计时。</p>
-</blockquote>
-<p><strong>2.写一个接口，让需要倒计时的地方来监听此定时器接收更新</strong></p>
-<pre><code>    public interface TimerListener {
-    void timeData(List&lt;Long&gt; data);
-}
-public void setTimeListener(TimerListener listener)   {
-    this.mTimerListener = listener;
-}
-private void handleListTime() {
-    if (mTimeList != null) {
-        for (int x = 0; x &lt; mTimeList.size(); x++) {
-            mTimeList.set(x, mTimeList.get(x) - 1000);
-        }
-        if (mTimerListener != null) {
-            mTimerListener.timeData(mTimeList);
-        }
-    }
-}
-</code></pre><blockquote>
-<p>这里有<code>handleListTime()</code>方法主要是把集合里的数据都减去1秒后，再通过接口将此集合回调给需要更新的地方。  </p>
-</blockquote>
-<p><strong>3.提供一个方法将毫秒数转换成分和秒</strong></p>
-<pre><code>public void upDateTimeToView(final BaseAdapter.BaseViewHoder hoder, Long mTime) {
-    if (mTime / (1000 * 60) &gt;= 0) {
-        currentMinute = (int) (mTime / (1000 * 60));
-        if (String.valueOf(currentMinute).length() &lt; 2)
-            currentStringMinute = &quot;0&quot; + currentMinute;
-        else
-            currentStringMinute = currentMinute + &quot;&quot;;
-    } else
-        currentStringMinute = &quot;00&quot;;
-    if ((mTime % (1000 * 60)) / 1000 &gt;= 0) {
-        currentSecond = (int) ((mTime % (1000 * 60)) / 1000);
-        if (String.valueOf(currentSecond).length() &lt; 2)
-            currentStringSecond = &quot;0&quot; + currentSecond;
-        else
-            currentStringSecond = currentSecond + &quot;&quot;;
-    } else
-        currentStringSecond = &quot;00&quot;;
-    mContext.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            hoder.order_item_pay_timer_minute.setText(currentStringMinute);
-            hoder.order_item_pay_timer_second.setText(currentStringSecond);
-        }
-    });
-}
-</code></pre><blockquote>
-<p>这个方法使用返回值的方式，会比将view直接传过来更好。更加的通用。</p>
-</blockquote>
-<p>到这里，计时器部分的代码就已经写完了，谁需要用到倒计时，直接将要倒计时的时间传过来就可以了。</p>
-</blockquote>
-<h1 id="3-RecyclerView的Item更新部分"><a href="#3-RecyclerView的Item更新部分" class="headerlink" title="3.RecyclerView的Item更新部分"></a><strong>3.RecyclerView的Item更新部分</strong></h1><blockquote>
-<p>1.注册定时器，获取更改后的数据进行更新</p>
-<pre><code>  @Override
-public void timeData(List&lt;Long&gt; data) {        
-        mTimeList = data;
-        notifyDataSetChanged();        
-}
-</code></pre><p>通过<code>mTimeList</code>变量来记录数据，并通过<code>notifyDataSetChanged（）</code>来刷新列表<br>2.在BindViewHolder中根据holder和position来获取每个item对应的数据，并更新</p>
-<pre><code>if (mTimeList != null &amp;&amp; mTimeList.size() &gt;= position - 1)
-    mTimerUtils.upDateTimeToView(holder, mTimeList.get(position));    
-</code></pre><p>这样子，倒计时就会正确的显示在每个相对应的item上了.</p>
-</blockquote>
-<h1 id="4-优化部分"><a href="#4-优化部分" class="headerlink" title="4.优化部分"></a><strong>4.优化部分</strong></h1><blockquote>
-<p>完成上面的操作，主体功能已经大致完成了，倒计时也可以正常运转了。可是当滑动的时候，界面非常的卡顿，不应该啊，这里又没有非常复杂的ui展示，怎么会这么卡呢？原来是在滑动的过程中，我们去更新的ui。需要停止这样的操作行为 。<br>&nbsp;&nbsp;&nbsp; &nbsp;我们通过对recyclerView滑动事件进行监听，通过一个标志位来设置相应的状态，以保证只有在recyclerView处于idle状态时，才去更新时间。</p>
-<pre><code>@Override
-protected void handleScrollChanged(RecyclerView recyclerView, int newState) {
-    switch (newState) {
-        case RecyclerView.SCROLL_STATE_IDLE:
-            isIdle = true;
-            break;
-        case RecyclerView.SCROLL_STATE_DRAGGING:
-            isIdle = false;
-            break;
-        case RecyclerView.SCROLL_STATE_SETTLING:
-            isIdle = false;
-            break;
-    }
-}
+</code></pre><p>此处配置就相当于我们配置了<code>Android.mk</code>和<code>Application.mk</code>这两个文件，由<code>gradle</code>自动帮我们构建，一般情况下我们只需要配置<code>moduleName</code>和<code>abiFilters</code>两个属性就可以了，最多加一个<code>log</code>库，可以在<code>C</code>中使用<code>Anroid</code>的<code>Log</code>库来打日志，其它两项一般可能用不到。此处可以配置的属性都可以在<code>NdkOptions</code>中看到，按住<code>command</code>通过点击任意一个属性就可以进入。</p>
+<h2 id="2-在gradle-properties文件中配置"><a href="#2-在gradle-properties文件中配置" class="headerlink" title="2.在gradle.properties文件中配置"></a>2.在<code>gradle.properties</code>文件中配置</h2><p>只需要配置一个参数即可：</p>
+<pre><code>android.useDeprecatedNdk=true
+</code></pre><h1 id="2-确认项目支持ndk环境"><a href="#2-确认项目支持ndk环境" class="headerlink" title="2.确认项目支持ndk环境"></a>2.确认项目支持ndk环境</h1><p>1.在<code>project sturcture</code>中查看是否已配置ndk环境：<br><img src="../uploads/img/AndroidAdvanceDevelop/7/8.png" alt="img"></p>
+<p>2.在<code>local.properties</code>文件中查看相应配置:</p>
+<pre><code>ndk.dir=/Users/mac/Android/android-sdk-macosx/ndk-bundle
+</code></pre><p>确认这两处都有配置。</p>
+<h1 id="3-编写native方法并调用so库"><a href="#3-编写native方法并调用so库" class="headerlink" title="3.编写native方法并调用so库"></a>3.编写<code>native</code>方法并调用<code>so</code>库</h1><pre><code>public class HardControl {
+    public static native int ledOpen();
+    public static native void ledClose();
+    public static native void  ledControl(int which,int status);
 
-@Override
-public void timeData(List&lt;Long&gt; data) {
-    if (isIdle) { //如果是在idle状态 才去刷新数据
-        mTimeList = data;
-        notifyDataSetChanged();
+    static {
+         //此处加载的lib库名，需要和build.gradle中配置的moduleName一致
+        System.loadLibrary(&quot;hardcontrol&quot;);
     }
 }
-</code></pre><p>这样处理后，会发现item在滑动过程中明显顺畅了。。</p>
+</code></pre><p>上面的例子中，我们编写了三个<code>native</code>方法，都是使用静态<code>static</code>修辞的，这样子可以直接通过类名.方法名来直接调用，如果不用<code>static</code>修辞也是可以的，那就需要创建对象来访问这些方法，和其它方法访问一样。</p>
+<h1 id="4-编译并生成头文件"><a href="#4-编译并生成头文件" class="headerlink" title="4.编译并生成头文件"></a>4.编译并生成头文件</h1><p>上面的native方法编写完后，此时，我们需要先编译一下代码，使用<code>clear Project</code>或者<code>build project</code>都是可以的，目的是为了让其生成相对应的class字节码文件，然后，使用javah来生成头文件。 </p>
+<p>编译源码之后，在下面的路径中就能找到生成class字节码的文件。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/10.png" alt="img"></p>
+<p>此时，我们需要使用命令行进入到该目录，使用<code>Android Studio</code>中的<code>terminal</code>来执行操作。先用命令进行<code>debug</code>目录<br><img src="../uploads/img/AndroidAdvanceDevelop/7/11.png" alt="img"></p>
+<p>然后使用<code>javah</code>命令来生成头文件</p>
+<pre><code>javah -jni com.example.mac.testled.hardControl.HardControl
+</code></pre><p>这时需要注意的是：</p>
+<blockquote>
+<ol>
+<li>包名路径需要使用<code>.</code>而不能使用<code>/</code></li>
+<li>选择要编译含有<code>native</code>方法的<code>class</code>文件，并且在编译时，不能带<code>.class</code>后缀。</li>
+</ol>
 </blockquote>
-<p>到这里整个倒计时的处理就已经完成了。</p>
+<p>执行上面命令成功后，会在<code>debbug</code>目录下生成头文件。</p>
+<p><img src="../uploads/img/AndroidAdvanceDevelop/7/12.png" alt="img"></p>
+<h1 id="5-创建jni目录并编写native方法的c实现"><a href="#5-创建jni目录并编写native方法的c实现" class="headerlink" title="5.创建jni目录并编写native方法的c实现"></a>5.创建<code>jni</code>目录并编写<code>native</code>方法的c实现</h1><p>直接使用<code>Android Studio</code>提供的创建方式：<br><img src="../uploads/img/AndroidAdvanceDevelop/7/13.png" alt="img"><br>然后将生成的头文件拷贝到jni目录下，此头文件是可以重命名的，一般我们会和其对应的<code>c/cpp</code>文件同名。  </p>
+<p>头文件就相当于我们<code>java</code>里的接口，我们还需要对头文件里的方法进行实现。可以使用c或者cpp文件来实现。我们的<code>c</code>或者<code>cpp</code>文件的方法名可以直接拷贝我们<code>.h</code>头文件中的方法名。</p>
+<p>下面是我们的头文件中的方法声明：</p>
+<p><img src="../uploads/img/AndroidAdvanceDevelop/7/14.png" alt="img"></p>
+<p>我们可以直接把上面的三个方法声明拷贝到我们的<code>c/cpp</code>文件中，稍作修改即可。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/15.png" alt="img"></p>
+<p>接下来，我们在相应的方法体里面写入c代码即可。</p>
+<h1 id="7-测试"><a href="#7-测试" class="headerlink" title="7.测试"></a>7.测试</h1><p>我们在<code>ledOpen</code>方法中打印了<code>android</code>的<code>log</code>。现在通过调用<code>ledOpen</code>的<code>native</code>方法来验证一下其效果。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/16.png" alt="img"><br>直接调用该方法，执行后，在<code>log</code>区打印出来了相应的信息。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/17.png" alt="img"></p>
+<h1 id="8-扩展"><a href="#8-扩展" class="headerlink" title="8.扩展"></a>8.扩展</h1><h2 id="1-多文件多native方法的处理"><a href="#1-多文件多native方法的处理" class="headerlink" title="1.多文件多native方法的处理"></a>1.多文件多<code>native</code>方法的处理</h2><p>意思是有多个文件中含有<code>native</code>方法的处理</p>
+<h1 id="9-Android-Studio新特性"><a href="#9-Android-Studio新特性" class="headerlink" title="9.Android Studio新特性"></a>9.Android Studio新特性</h1><p><img src="../uploads/img/AndroidAdvanceDevelop/7/18.png" alt="img"></p>
 
       
     </div>
@@ -409,16 +373,16 @@ public void timeData(List&lt;Long&gt; data) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/02/Android实现全局弹窗的三种方式/" rel="next" title="Android实现全局弹窗的三种方式">
-                <i class="fa fa-chevron-left"></i> Android实现全局弹窗的三种方式
+              <a href="/2016/07/03/Android开发艺术探索读后重点笔记/" rel="next" title="Android开发艺术探索读后重点笔记">
+                <i class="fa fa-chevron-left"></i> Android开发艺术探索读后重点笔记
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" rel="prev" title="Retrofit+RxJava简单封装-让网络请求变得如此简单">
-                Retrofit+RxJava简单封装-让网络请求变得如此简单 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/23/Window平台下搭建git服务器实践/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -445,8 +409,8 @@ public void timeData(List&lt;Long&gt; data) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/"
-           data-title="RecyclerView每个Item展示倒计时" data-url="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/">
+      <div class="ds-thread" data-thread-key="2016/09/19/Android-Studio集成ndk流程/"
+           data-title="Android_Studio集成ndk开发流程" data-url="http://yoursite.com/2016/09/19/Android-Studio集成ndk流程/">
       </div>
     
   </div>
@@ -545,7 +509,7 @@ public void timeData(List&lt;Long&gt; data) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-需求分析"><span class="nav-text">1.需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-定时器工具类的实现"><span class="nav-text">2.定时器工具类的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-RecyclerView的Item更新部分"><span class="nav-text">3.RecyclerView的Item更新部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-优化部分"><span class="nav-text">4.优化部分</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-配置build-gradle"><span class="nav-text">1.配置build.gradle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-先在build-gradle文件中配置"><span class="nav-text">1.先在build.gradle文件中配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-在gradle-properties文件中配置"><span class="nav-text">2.在gradle.properties文件中配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-确认项目支持ndk环境"><span class="nav-text">2.确认项目支持ndk环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-编写native方法并调用so库"><span class="nav-text">3.编写native方法并调用so库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-编译并生成头文件"><span class="nav-text">4.编译并生成头文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-创建jni目录并编写native方法的c实现"><span class="nav-text">5.创建jni目录并编写native方法的c实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-测试"><span class="nav-text">7.测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-扩展"><span class="nav-text">8.扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-多文件多native方法的处理"><span class="nav-text">1.多文件多native方法的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Android-Studio新特性"><span class="nav-text">9.Android Studio新特性</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

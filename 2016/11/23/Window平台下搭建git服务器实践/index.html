@@ -57,18 +57,57 @@
 
 
 
-<meta name="description">
+<meta name="description" content="1.准备工具
+
+BvSshServer(搭建ssh服务器),下载window版本
+git客户端
+
+
+2.搭建BvSshServer
+
+安装，选择PersonEdition（个人版本），直接选是，安装成功即可.
+
+
+3.BvSshServer的配置部分(重要)使用BvSshServer最重要的就是配置部分了，接下来我们重点讲下配置部分。BvSshServer的配置主要都在setting &amp;gt; o">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RecyclerView每个Item展示倒计时">
-<meta property="og:url" content="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/index.html">
+<meta property="og:title" content="Allen'Notes">
+<meta property="og:url" content="http://yoursite.com/2016/11/23/Window平台下搭建git服务器实践/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
-<meta property="og:updated_time" content="2016-04-25T02:49:39.000Z">
+<meta property="og:description" content="1.准备工具
+
+BvSshServer(搭建ssh服务器),下载window版本
+git客户端
+
+
+2.搭建BvSshServer
+
+安装，选择PersonEdition（个人版本），直接选是，安装成功即可.
+
+
+3.BvSshServer的配置部分(重要)使用BvSshServer最重要的就是配置部分了，接下来我们重点讲下配置部分。BvSshServer的配置主要都在setting &amp;gt; o">
+<meta property="og:image" content="http://yoursite.com/window_img/2.png">
+<meta property="og:image" content="http://yoursite.com/window_img/3.png">
+<meta property="og:image" content="http://yoursite.com/window_img/4.png">
+<meta property="og:image" content="http://yoursite.com/window_img/5.png">
+<meta property="og:image" content="http://yoursite.com/window_img/6.png">
+<meta property="og:image" content="http://yoursite.com/window_img/7.png">
+<meta property="og:image" content="http://yoursite.com/window_img/8.png">
+<meta property="og:updated_time" content="2016-11-23T09:15:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RecyclerView每个Item展示倒计时">
-<meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
+<meta name="twitter:title" content="Allen'Notes">
+<meta name="twitter:description" content="1.准备工具
+
+BvSshServer(搭建ssh服务器),下载window版本
+git客户端
+
+
+2.搭建BvSshServer
+
+安装，选择PersonEdition（个人版本），直接选是，安装成功即可.
+
+
+3.BvSshServer的配置部分(重要)使用BvSshServer最重要的就是配置部分了，接下来我们重点讲下配置部分。BvSshServer的配置主要都在setting &amp;gt; o">
+<meta name="twitter:image" content="http://yoursite.com/window_img/2.png">
 
 
 
@@ -86,7 +125,7 @@
   };
 </script>
 
-  <title> RecyclerView每个Item展示倒计时 | Allen'Notes </title>
+  <title>  | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +247,7 @@
             
             
               
-                RecyclerView每个Item展示倒计时
+                
               
             
           </h1>
@@ -220,8 +259,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
-              2016-03-12
+            <time itemprop="dateCreated" datetime="2016-11-23T17:15:37+08:00" content="2016-11-23">
+              2016-11-23
             </time>
           </span>
 
@@ -231,8 +270,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
+                <a href="/2016/11/23/Window平台下搭建git服务器实践/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/23/Window平台下搭建git服务器实践/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -254,144 +293,36 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/45.png" alt="img1"></p>
-<a id="more"></a>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
+        <h1 id="1-准备工具"><a href="#1-准备工具" class="headerlink" title="1.准备工具"></a>1.准备工具</h1><blockquote>
+<ol>
+<li>BvSshServer(搭建ssh服务器),下载window版本</li>
+<li>git客户端</li>
+</ol>
 </blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
+<h1 id="2-搭建BvSshServer"><a href="#2-搭建BvSshServer" class="headerlink" title="2.搭建BvSshServer"></a>2.搭建BvSshServer</h1><blockquote>
+<ol>
+<li>安装，选择<code>PersonEdition（个人版本）</code>，直接选<code>是</code>，安装成功即可.</li>
+</ol>
+</blockquote>
+<h1 id="3-BvSshServer的配置部分-重要"><a href="#3-BvSshServer的配置部分-重要" class="headerlink" title="3.BvSshServer的配置部分(重要)"></a>3.BvSshServer的配置部分(重要)</h1><p>使用<code>BvSshServer</code>最重要的就是配置部分了，接下来我们重点讲下配置部分。<code>BvSshServer</code>的配置主要都在<code>setting &gt; open easy settings</code>里。我们先打开<code>open easy setting</code>.</p>
+<h2 id="1-配置端口和防火墙"><a href="#1-配置端口和防火墙" class="headerlink" title="1.配置端口和防火墙"></a>1.配置端口和防火墙</h2><p>关于端口号，我们使用<code>ssh</code>默认的<code>22</code>;然后防火墙的设置的话，选择对所有电脑开放访问(当然，这里也可以根据自己的需要去设置)<br><img src="window_img/2.png" alt="img"></p>
+<h2 id="2-用户的配置"><a href="#2-用户的配置" class="headerlink" title="2.用户的配置"></a>2.用户的配置</h2><p><code>BVSshServer</code>关于用户的设置，有两种设置方式，一种是直接使用<code>window</code>本身的用户来进行访问;另一种是设置虚拟用户来进行访问。<br><img src="window_img/3.png" alt="img"></p>
+<p>window帐号的设置和虚拟帐号的设置是一样的，这里只讲虚拟帐号的相关设置。<br><img src="window_img/4.png" alt="img"></p>
+<p>关于用户的配置都在上图有了说明，但是这里需要强调一下比较容易出问题的部分。</p>
 <blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
+<ol>
+<li><code>shell access type</code>选项,一定要选择<code>git access only</code>，不然，关于<code>git</code>的相关配置不会显示出来。</li>
+<li><code>git type</code>这个选项，要选择<code>msysGit or compatible</code>，不然，后面提交时，会出现找不到<code>repository</code>的问题。</li>
+<li><code>git binaries directory</code>,这里需要选择<code>git客户端</code>安装目录下的<code>mingw64</code>目录下的<code>bin</code>目录，而不是<code>git</code>安装目录下的<code>bin</code>目录。</li>
+</ol>
 </blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。</p>
-</blockquote>
-</blockquote>
-<h1 id="2-定时器工具类的实现"><a href="#2-定时器工具类的实现" class="headerlink" title="2.定时器工具类的实现"></a><strong>2.定时器工具类的实现</strong></h1><blockquote>
-<p>定时器的实现：<br><strong>1.这里我直接通过handle来写一个循环，然后，提供一个</strong><code>start()</code>方法来实现一个定时器  </p>
-<pre><code>public BackTimerUtils(Activity context, List&lt;Long&gt; data) {
-    this.mTimeList = data;
-    this.mContext = context;
-}
-private Handler handler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-        start();
-    }
-}
-public void start() {
-    handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            handler.sendEmptyMessage(0);
-            handleListTime();
-        }
-    }, 1000);
-}
-</code></pre><blockquote>
-<p>这里的  <code>List&lt;Long&gt; data（）</code>主要是需要接收一个每item剩余的时间(这里都是毫秒数)，也就是每个item从哪个时间 点开始倒计时。</p>
-</blockquote>
-<p><strong>2.写一个接口，让需要倒计时的地方来监听此定时器接收更新</strong></p>
-<pre><code>    public interface TimerListener {
-    void timeData(List&lt;Long&gt; data);
-}
-public void setTimeListener(TimerListener listener)   {
-    this.mTimerListener = listener;
-}
-private void handleListTime() {
-    if (mTimeList != null) {
-        for (int x = 0; x &lt; mTimeList.size(); x++) {
-            mTimeList.set(x, mTimeList.get(x) - 1000);
-        }
-        if (mTimerListener != null) {
-            mTimerListener.timeData(mTimeList);
-        }
-    }
-}
-</code></pre><blockquote>
-<p>这里有<code>handleListTime()</code>方法主要是把集合里的数据都减去1秒后，再通过接口将此集合回调给需要更新的地方。  </p>
-</blockquote>
-<p><strong>3.提供一个方法将毫秒数转换成分和秒</strong></p>
-<pre><code>public void upDateTimeToView(final BaseAdapter.BaseViewHoder hoder, Long mTime) {
-    if (mTime / (1000 * 60) &gt;= 0) {
-        currentMinute = (int) (mTime / (1000 * 60));
-        if (String.valueOf(currentMinute).length() &lt; 2)
-            currentStringMinute = &quot;0&quot; + currentMinute;
-        else
-            currentStringMinute = currentMinute + &quot;&quot;;
-    } else
-        currentStringMinute = &quot;00&quot;;
-    if ((mTime % (1000 * 60)) / 1000 &gt;= 0) {
-        currentSecond = (int) ((mTime % (1000 * 60)) / 1000);
-        if (String.valueOf(currentSecond).length() &lt; 2)
-            currentStringSecond = &quot;0&quot; + currentSecond;
-        else
-            currentStringSecond = currentSecond + &quot;&quot;;
-    } else
-        currentStringSecond = &quot;00&quot;;
-    mContext.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            hoder.order_item_pay_timer_minute.setText(currentStringMinute);
-            hoder.order_item_pay_timer_second.setText(currentStringSecond);
-        }
-    });
-}
-</code></pre><blockquote>
-<p>这个方法使用返回值的方式，会比将view直接传过来更好。更加的通用。</p>
-</blockquote>
-<p>到这里，计时器部分的代码就已经写完了，谁需要用到倒计时，直接将要倒计时的时间传过来就可以了。</p>
-</blockquote>
-<h1 id="3-RecyclerView的Item更新部分"><a href="#3-RecyclerView的Item更新部分" class="headerlink" title="3.RecyclerView的Item更新部分"></a><strong>3.RecyclerView的Item更新部分</strong></h1><blockquote>
-<p>1.注册定时器，获取更改后的数据进行更新</p>
-<pre><code>  @Override
-public void timeData(List&lt;Long&gt; data) {        
-        mTimeList = data;
-        notifyDataSetChanged();        
-}
-</code></pre><p>通过<code>mTimeList</code>变量来记录数据，并通过<code>notifyDataSetChanged（）</code>来刷新列表<br>2.在BindViewHolder中根据holder和position来获取每个item对应的数据，并更新</p>
-<pre><code>if (mTimeList != null &amp;&amp; mTimeList.size() &gt;= position - 1)
-    mTimerUtils.upDateTimeToView(holder, mTimeList.get(position));    
-</code></pre><p>这样子，倒计时就会正确的显示在每个相对应的item上了.</p>
-</blockquote>
-<h1 id="4-优化部分"><a href="#4-优化部分" class="headerlink" title="4.优化部分"></a><strong>4.优化部分</strong></h1><blockquote>
-<p>完成上面的操作，主体功能已经大致完成了，倒计时也可以正常运转了。可是当滑动的时候，界面非常的卡顿，不应该啊，这里又没有非常复杂的ui展示，怎么会这么卡呢？原来是在滑动的过程中，我们去更新的ui。需要停止这样的操作行为 。<br>&nbsp;&nbsp;&nbsp; &nbsp;我们通过对recyclerView滑动事件进行监听，通过一个标志位来设置相应的状态，以保证只有在recyclerView处于idle状态时，才去更新时间。</p>
-<pre><code>@Override
-protected void handleScrollChanged(RecyclerView recyclerView, int newState) {
-    switch (newState) {
-        case RecyclerView.SCROLL_STATE_IDLE:
-            isIdle = true;
-            break;
-        case RecyclerView.SCROLL_STATE_DRAGGING:
-            isIdle = false;
-            break;
-        case RecyclerView.SCROLL_STATE_SETTLING:
-            isIdle = false;
-            break;
-    }
-}
-
-@Override
-public void timeData(List&lt;Long&gt; data) {
-    if (isIdle) { //如果是在idle状态 才去刷新数据
-        mTimeList = data;
-        notifyDataSetChanged();
-    }
-}
-</code></pre><p>这样处理后，会发现item在滑动过程中明显顺畅了。。</p>
-</blockquote>
-<p>到这里整个倒计时的处理就已经完成了。</p>
+<p>配置完成后，我们需要开启<code>server</code>，点击<code>start server</code>即可。<br><img src="window_img/5.png" alt="img"><br>服务器启动后，接下来就是初始化仓库及访问仓库了。</p>
+<h1 id="4-git服务器访问"><a href="#4-git服务器访问" class="headerlink" title="4.git服务器访问"></a>4.git服务器访问</h1><h2 id="1-创建"><a href="#1-创建" class="headerlink" title="1.创建"></a>1.创建</h2><p>git服务器仓库是根据用户来进行设置的，每个用户可以指定相应的仓库。<br><img src="window_img/6.png" alt="img"><br>上面我们设置了<code>G:\GitServer\repository</code>作用<code>admin</code>用户的仓库位置。我们先在<code>repository</code>下新建一个目录用来存放项目。这里我们创建一个<code>test.git</code>的目录。接下来我们就初始化一个<code>git</code>的仓库。在<code>test.git</code>目录下点击 右键调出<code>git bash here</code>,然后使用命令：</p>
+<pre><code>git init --bare
+</code></pre><p>这样在<code>test.git</code>目录下就会生成一个<code>git</code>仓库。<br><img src="window_img/7.png" alt="img"></p>
+<h2 id="2-访问"><a href="#2-访问" class="headerlink" title="2.访问"></a>2.访问</h2><p>仓库创建完成后，此时就需要客户端来进行访问了。这里主要是说下访问的地址,一般使用<code>ssh://用户名/项目目录</code>，如:ssh://admin@192.168.1.1/test.git来进行访问就可以了。</p>
+<p>如果在访问的时候，出现如下错误:<br><img src="window_img/8.png" alt="img"><br>说明是<code>key</code>出现了问题。解决方法如下:<br>删除当前用户下的.ssh目录下的host文件即可，上图有说明。</p>
+<p>其实，也没有什么东西可写的，主要是我在配置的过程中，没有注意一些细节，导致时间上的浪费，故写成一个笔记，让自己需要的时候可以看看，少走弯路，也希望能帮助其他有需要配置的人，少踩一些坑…..that’s all</p>
 
       
     </div>
@@ -409,17 +340,13 @@ public void timeData(List&lt;Long&gt; data) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/02/Android实现全局弹窗的三种方式/" rel="next" title="Android实现全局弹窗的三种方式">
-                <i class="fa fa-chevron-left"></i> Android实现全局弹窗的三种方式
+              <a href="/2016/09/19/Android-Studio集成ndk流程/" rel="next" title="Android_Studio集成ndk开发流程">
+                <i class="fa fa-chevron-left"></i> Android_Studio集成ndk开发流程
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" rel="prev" title="Retrofit+RxJava简单封装-让网络请求变得如此简单">
-                Retrofit+RxJava简单封装-让网络请求变得如此简单 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -445,8 +372,8 @@ public void timeData(List&lt;Long&gt; data) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/"
-           data-title="RecyclerView每个Item展示倒计时" data-url="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/">
+      <div class="ds-thread" data-thread-key="2016/11/23/Window平台下搭建git服务器实践/"
+           data-title="" data-url="http://yoursite.com/2016/11/23/Window平台下搭建git服务器实践/">
       </div>
     
   </div>
@@ -545,7 +472,7 @@ public void timeData(List&lt;Long&gt; data) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-需求分析"><span class="nav-text">1.需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-定时器工具类的实现"><span class="nav-text">2.定时器工具类的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-RecyclerView的Item更新部分"><span class="nav-text">3.RecyclerView的Item更新部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-优化部分"><span class="nav-text">4.优化部分</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-准备工具"><span class="nav-text">1.准备工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-搭建BvSshServer"><span class="nav-text">2.搭建BvSshServer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-BvSshServer的配置部分-重要"><span class="nav-text">3.BvSshServer的配置部分(重要)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-配置端口和防火墙"><span class="nav-text">1.配置端口和防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-用户的配置"><span class="nav-text">2.用户的配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-git服务器访问"><span class="nav-text">4.git服务器访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建"><span class="nav-text">1.创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-访问"><span class="nav-text">2.访问</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
