@@ -263,69 +263,12 @@
 
       
         
-          
-            <p>今天来讲一下<code>Android Studio</code>集成ndk开发的流程及相应的一些配置，也算是留一个笔记，方便以后查阅。 </p>
-<p>整个流程大概分为以下几部分：</p>
-<blockquote>
-<ol>
-<li>配置<code>build.gradle</code>让其支持ndk的编译</li>
-<li>编写<code>native</code>方法及加载相应的<code>so</code>库</li>
-<li>手动编译<code>c</code>头文件</li>
-<li>实现<code>native</code>方法</li>
-<li>测试</li>
-</ol>
-</blockquote>
-<h1 id="1-配置build-gradle"><a href="#1-配置build-gradle" class="headerlink" title="1.配置build.gradle"></a>1.配置build.gradle</h1><h2 id="1-先在build-gradle文件中配置"><a href="#1-先在build-gradle文件中配置" class="headerlink" title="1.先在build.gradle文件中配置"></a>1.先在<code>build.gradle</code>文件中配置</h2><p>在<code>app</code>的<code>build.gradle</code>中的<code>defaultConfig</code>括号内添加以下代码：</p>
-<pre><code>ndk {
-    moduleName &quot;hardcontrol&quot;          //生成的so名字
-    abiFilters &quot;armeabi&quot;, &quot;armeabi-v7a&quot;, &quot;x86&quot; //指定编译的so库所支持的平台
-    ldLibs &quot;log&quot;  //配置log库
-    stl=&quot;system&quot;  //系统默认最小支持的c++运行时库
-    cFlags=&quot;-std=c++11&quot;  //标记
-}
-</code></pre><p>此处配置就相当于我们配置了<code>Android.mk</code>和<code>Application.mk</code>这两个文件，由<code>gradle</code>自动帮我们构建，一般情况下我们只需要配置<code>moduleName</code>和<code>abiFilters</code>两个属性就可以了，最多加一个<code>log</code>库，可以在<code>C</code>中使用<code>Anroid</code>的<code>Log</code>库来打日志，其它两项一般可能用不到。此处可以配置的属性都可以在<code>NdkOptions</code>中看到，按住<code>command</code>通过点击任意一个属性就可以进入。</p>
-<h2 id="2-在gradle-properties文件中配置"><a href="#2-在gradle-properties文件中配置" class="headerlink" title="2.在gradle.properties文件中配置"></a>2.在<code>gradle.properties</code>文件中配置</h2><p>只需要配置一个参数即可：</p>
-<pre><code>android.useDeprecatedNdk=true
-</code></pre><h1 id="2-确认项目支持ndk环境"><a href="#2-确认项目支持ndk环境" class="headerlink" title="2.确认项目支持ndk环境"></a>2.确认项目支持ndk环境</h1><p>1.在<code>project sturcture</code>中查看是否已配置ndk环境：<br><img src="../uploads/img/AndroidAdvanceDevelop/7/8.png" alt="img"></p>
-<p>2.在<code>local.properties</code>文件中查看相应配置:</p>
-<pre><code>ndk.dir=/Users/mac/Android/android-sdk-macosx/ndk-bundle
-</code></pre><p>确认这两处都有配置。</p>
-<h1 id="3-编写native方法并调用so库"><a href="#3-编写native方法并调用so库" class="headerlink" title="3.编写native方法并调用so库"></a>3.编写<code>native</code>方法并调用<code>so</code>库</h1><pre><code>public class HardControl {
-    public static native int ledOpen();
-    public static native void ledClose();
-    public static native void  ledControl(int which,int status);
-
-    static {
-         //此处加载的lib库名，需要和build.gradle中配置的moduleName一致
-        System.loadLibrary(&quot;hardcontrol&quot;);
-    }
-}
-</code></pre><p>上面的例子中，我们编写了三个<code>native</code>方法，都是使用静态<code>static</code>修辞的，这样子可以直接通过类名.方法名来直接调用，如果不用<code>static</code>修辞也是可以的，那就需要创建对象来访问这些方法，和其它方法访问一样。</p>
-<h1 id="4-编译并生成头文件"><a href="#4-编译并生成头文件" class="headerlink" title="4.编译并生成头文件"></a>4.编译并生成头文件</h1><p>上面的native方法编写完后，此时，我们需要先编译一下代码，使用<code>clear Project</code>或者<code>build project</code>都是可以的，目的是为了让其生成相对应的class字节码文件，然后，使用javah来生成头文件。 </p>
-<p>编译源码之后，在下面的路径中就能找到生成class字节码的文件。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/10.png" alt="img"></p>
-<p>此时，我们需要使用命令行进入到该目录，使用<code>Android Studio</code>中的<code>terminal</code>来执行操作。先用命令进行<code>debug</code>目录<br><img src="../uploads/img/AndroidAdvanceDevelop/7/11.png" alt="img"></p>
-<p>然后使用<code>javah</code>命令来生成头文件</p>
-<pre><code>javah -jni com.example.mac.testled.hardControl.HardControl
-</code></pre><p>这时需要注意的是：</p>
-<blockquote>
-<ol>
-<li>包名路径需要使用<code>.</code>而不能使用<code>/</code></li>
-<li>选择要编译含有<code>native</code>方法的<code>class</code>文件，并且在编译时，不能带<code>.class</code>后缀。</li>
-</ol>
-</blockquote>
-<p>执行上面命令成功后，会在<code>debbug</code>目录下生成头文件。</p>
-<p><img src="../uploads/img/AndroidAdvanceDevelop/7/12.png" alt="img"></p>
-<h1 id="5-创建jni目录并编写native方法的c实现"><a href="#5-创建jni目录并编写native方法的c实现" class="headerlink" title="5.创建jni目录并编写native方法的c实现"></a>5.创建<code>jni</code>目录并编写<code>native</code>方法的c实现</h1><p>直接使用<code>Android Studio</code>提供的创建方式：<br><img src="../uploads/img/AndroidAdvanceDevelop/7/13.png" alt="img"><br>然后将生成的头文件拷贝到jni目录下，此头文件是可以重命名的，一般我们会和其对应的<code>c/cpp</code>文件同名。  </p>
-<p>头文件就相当于我们<code>java</code>里的接口，我们还需要对头文件里的方法进行实现。可以使用c或者cpp文件来实现。我们的<code>c</code>或者<code>cpp</code>文件的方法名可以直接拷贝我们<code>.h</code>头文件中的方法名。</p>
-<p>下面是我们的头文件中的方法声明：</p>
-<p><img src="../uploads/img/AndroidAdvanceDevelop/7/14.png" alt="img"></p>
-<p>我们可以直接把上面的三个方法声明拷贝到我们的<code>c/cpp</code>文件中，稍作修改即可。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/15.png" alt="img"></p>
-<p>接下来，我们在相应的方法体里面写入c代码即可。</p>
-<h1 id="7-测试"><a href="#7-测试" class="headerlink" title="7.测试"></a>7.测试</h1><p>我们在<code>ledOpen</code>方法中打印了<code>android</code>的<code>log</code>。现在通过调用<code>ledOpen</code>的<code>native</code>方法来验证一下其效果。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/16.png" alt="img"><br>直接调用该方法，执行后，在<code>log</code>区打印出来了相应的信息。<br><img src="../uploads/img/AndroidAdvanceDevelop/7/17.png" alt="img"></p>
-<h1 id="8-扩展"><a href="#8-扩展" class="headerlink" title="8.扩展"></a>8.扩展</h1><h2 id="1-多文件多native方法的处理"><a href="#1-多文件多native方法的处理" class="headerlink" title="1.多文件多native方法的处理"></a>1.多文件多<code>native</code>方法的处理</h2><p>意思是有多个文件中含有<code>native</code>方法的处理</p>
-<h1 id="9-Android-Studio新特性"><a href="#9-Android-Studio新特性" class="headerlink" title="9.Android Studio新特性"></a>9.Android Studio新特性</h1><p><img src="../uploads/img/AndroidAdvanceDevelop/7/18.png" alt="img"></p>
-
-          
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/7/20.png" alt="img1"><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/19/Android-Studio集成ndk流程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
