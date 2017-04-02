@@ -69,7 +69,9 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/3.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/4.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/5.png">
-<meta property="og:updated_time" content="2017-04-02T14:42:00.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/6.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/7.png">
+<meta property="og:updated_time" content="2017-04-02T14:54:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -347,7 +349,8 @@ public class CommonUtils {
 <p>这里我主要说两个我们常用的功能，一个是<code>histogram</code>功能，还有一个就是内存对比。还是以上面<code>MainActivity</code>泄露的问题来分析。</p>
 <p>打开<code>histogram</code>功能后，就看到了下面的结果:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/4.png" alt="img"><br>像上面的东西，我们基本上是看不到任何有价值的东西的，这时，需要我们自己去搜索感兴趣的对象，看其存在的情况了。比如，我们可以搜索<code>MainActivity</code>大小写区分，来看看<code>MainActitivy</code>在内存中的存在情况。</p>
 <p><img src="/uploads/img/AndroidAdvanceDevelop/8/5.png" alt="img"></p>
-<p>图上可以看出，存在两个<code>MainActivity</code>对象，而其占用的内存大小为<code>528B</code>.</p>
+<p>图上可以看出，存在两个<code>MainActivity</code>对象，而其占用的内存大小为<code>528B</code>.接下来我们要看看是谁引用了我们的引用。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/6.png" alt="img"></p>
+<p>查看列表，我们发现<code>MainActivity</code>被<code>CommonUtils</code>中的<code>mContext</code>引用着。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/7.png" alt="img"></p>
 <h2 id="Allocation-Tracking-内存"><a href="#Allocation-Tracking-内存" class="headerlink" title="Allocation Tracking(内存)"></a>Allocation Tracking(内存)</h2>
       
     </div>
