@@ -71,7 +71,11 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/6.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/7.png">
-<meta property="og:updated_time" content="2017-04-02T14:56:26.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/9.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/10.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/11.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/12.png">
+<meta property="og:updated_time" content="2017-04-02T15:07:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -345,6 +349,9 @@ public class CommonUtils {
 <p><img src="/uploads/img/AndroidAdvanceDevelop/8/5.png" alt="img"></p>
 <p>图上可以看出，存在两个<code>MainActivity</code>对象，而其占用的内存大小为<code>528B</code>.接下来我们要看看是谁引用了我们的引用。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/6.png" alt="img"></p>
 <p>查看列表，我们发现<code>MainActivity</code>被<code>CommonUtils</code>中的<code>mContext</code>引用着。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/7.png" alt="img"></p>
+<p>我们使用<code>merge shortest path（最短路径）</code>也可以看出，其被<code>CommonUtils</code>引用着。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/9.png" alt="img"><br><img src="/uploads/img/AndroidAdvanceDevelop/8/10.png" alt="img"></p>
+<p>同样的，下面这种方式也能找到<code>MainActivity</code>被谁引用着。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/11.png" alt="img"><br><img src="/uploads/img/AndroidAdvanceDevelop/8/12.png" alt="img"></p>
+<p>下面，我们来说说，通过内存映射对比来分析其内存泄露情况。</p>
 <h2 id="Allocation-Tracking-内存"><a href="#Allocation-Tracking-内存" class="headerlink" title="Allocation Tracking(内存)"></a>Allocation Tracking(内存)</h2>
       
     </div>
