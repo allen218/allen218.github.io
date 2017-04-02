@@ -71,7 +71,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/6.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/7.png">
-<meta property="og:updated_time" content="2017-04-02T14:54:37.000Z">
+<meta property="og:updated_time" content="2017-04-02T14:56:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -262,13 +262,10 @@
 
       
         <p><img src="/uploads/img/AndroidAdvanceDevelop/8/8.jpg" alt="图1"><br><a id="more"></a><br>貌似很久很久没写博客了，<code>996</code>的生活过了太久，自己也有点颓废了，感觉这样子的状态不行，有一种莫名的负罪感。虽然中间都有断断续续的记录一些东西，学习一些东西，但都感觉还不成气候，就一直没有发到博客上来，但每次想到我的博客都难免有些难受。今天，我选择了面对，而不是逃避，刚好，最近在忙新项目的事情，也涉及到了性能优化方面的事情，就来记录一下最近又重新学习了的，和之前用过的一些经验，记录一下，整理一下。</p>
-<p>#1.内存泄露的定义</p>
-<p>所谓<code>内存泄露</code>:就是一些本该被回收的资源，被一些对象错误的引用着，而导致<code>GC</code>没有办法对这些资源进行回收，而造成的一种内存资源浪费的现象。直白的说，就是<code>GC</code>失去了对这些资源的掌控。</p>
+<h1 id="1-内存泄露的定义"><a href="#1-内存泄露的定义" class="headerlink" title="1.内存泄露的定义"></a>1.内存泄露的定义</h1><p>所谓<code>内存泄露</code>:就是一些本该被回收的资源，被一些对象错误的引用着，而导致<code>GC</code>没有办法对这些资源进行回收，而造成的一种内存资源浪费的现象。直白的说，就是<code>GC</code>失去了对这些资源的掌控。</p>
 <h2 id="为什么说被引用的对象无法被回收呢？"><a href="#为什么说被引用的对象无法被回收呢？" class="headerlink" title="为什么说被引用的对象无法被回收呢？"></a>为什么说被引用的对象无法被回收呢？</h2><p>这就要说起<code>jvm</code>的垃圾回收机制了。早前，<code>jvm</code>使用的是引用计数器的方法来判断当前对象是否需要被回收的，而这个方法会引发一个问题，就是孤岛问题，就是说，一些应该被回收的对象，相互引用着，造成对象的计数器，不为0，也就表示该对象还是被其它对象引用着，实际上这一系列对象都应该被回收。</p>
 <p>而为了解决这个问题，后面引入了<code>根搜索法(GC ROOT)</code>的方法来判断一个对象是否应该被回收，大概意思就是说，从<code>GC ROOT</code>开始将所有还用到的对象，以树的形式连接到一起，而不在这个树上面的对象，就表示为需要被<code>gc</code>回收的无用对象，从而解决了<code>孤岛问题</code>。</p>
-<p>#2.常见的内存泄露的情况 </p>
-<p>##1. 错误的Context引用(不同生命周期的对象相互引用)</p>
-<pre><code>/**
+<h1 id="2-常见的内存泄露的情况"><a href="#2-常见的内存泄露的情况" class="headerlink" title="2.常见的内存泄露的情况"></a>2.常见的内存泄露的情况</h1><h2 id="1-错误的Context引用-不同生命周期的对象相互引用"><a href="#1-错误的Context引用-不同生命周期的对象相互引用" class="headerlink" title="1.错误的Context引用(不同生命周期的对象相互引用)"></a>1.错误的Context引用(不同生命周期的对象相互引用)</h2><pre><code>/**
  * Created by allen on 17/3/26.
  */
 
@@ -295,9 +292,8 @@ public class CommonUtils {
 </code></pre><p>在<code>activity</code>中通过下列方式进行应用:</p>
 <pre><code>CommonUtils.getInstance(this);
 </code></pre><p>上面的这种情况是典型的使用场景，而上面的这种用法，就造成了内存泄漏。每一次调用<code>getInstance</code>方法的<code>activity</code>会被<code>CommonUtils</code>中的<code>Context</code>一直引用着，而当其被调用<code>onDestory</code>后，依然，无法被回收。</p>
-<p>###解决方法:</p>
-<p>使用<code>getApplicationContext</code>代替<code>Context</code>，主要是单例对象是静态对象，其生命周期和<code>Application</code>一致。</p>
-<h2 id="2-handle造成的内存泄露"><a href="#2-handle造成的内存泄露" class="headerlink" title="2. handle造成的内存泄露"></a>2. handle造成的内存泄露</h2><pre><code>public class MainActivity extends AppCompatActivity {
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><p>使用<code>getApplicationContext</code>代替<code>Context</code>，主要是单例对象是静态对象，其生命周期和<code>Application</code>一致。</p>
+<h2 id="2-handle造成的内存泄露"><a href="#2-handle造成的内存泄露" class="headerlink" title="2.handle造成的内存泄露"></a>2.handle造成的内存泄露</h2><pre><code>public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler = new Handler() {
         @Override
@@ -318,17 +314,16 @@ public class CommonUtils {
 }
 </code></pre><p>上面的代码就是<code>Handler</code>应用的典型场景。  </p>
 <p><code>handler</code>是通过<code>android</code>消息机制来进行运转的，<code>MessageQueue</code>中的每个消息都持有一个<code>Handler</code>对象的引用，而非静态内部类持有外部类的一个引用。当<code>MessageQueue</code>还有没有发送的消息时，该<code>Message</code>就持有该<code>Handler</code>的引用，而该<code>Handler</code>对外部类<code>Activity</code>也持有其引用，则此时，如果<code>Activity</code>退出时，由于被引用，而无法被回收，从而造成了内存泄露。</p>
-<p>###解决方法：<br>使用<code>static</code>来修辞<code>Handler</code>来解决内部类持有对外部类引用的问题。</p>
-<p>##3. 容器的不当使用，造成的内存泄露<br>上面的<code>MessageQueue</code>中<code>Message</code>持有对<code>Handler</code>的引用，也是因为容器不当持有需要被销毁对象的引用，而造成的内存泄露。</p>
+<h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><p>使用<code>static</code>来修辞<code>Handler</code>来解决内部类持有对外部类引用的问题。</p>
+<h2 id="3-容器的不当使用，造成的内存泄露"><a href="#3-容器的不当使用，造成的内存泄露" class="headerlink" title="3.容器的不当使用，造成的内存泄露"></a>3.容器的不当使用，造成的内存泄露</h2><p>上面的<code>MessageQueue</code>中<code>Message</code>持有对<code>Handler</code>的引用，也是因为容器不当持有需要被销毁对象的引用，而造成的内存泄露。</p>
 <p>多见于观察者模式下，没有及时移除引用的情况下，导致的内存泄露。</p>
-<p>###解决方法:<br>在相应的生命周期内移除容器内的资源。比如：在<code>onDestory</code>中，移除容器内部对该<code>Activity</code>的引用。</p>
-<p>##4. 内部类的内存泄露<br>还是同样的意思，当外部类需要被销毁时，内部类还有任务在执行，而无法被销毁时，任务引用了内部类，而内部类又引用了外部类，导致外部类无法被回收，而造成的内存泄露。</p>
-<p>###解决方法<br>将内部类使用<code>static</code>修辞。</p>
-<p>##5. 资源未正常关闭造成的内存泄露<br>对于使用了<code>BraodcastReceiver</code>，<code>ContentObserver</code>，<code>File</code>，<code>Cursor</code>，<code>Stream</code>，<code>Bitmap</code>等资源的使用，应该在Activity销毁时及时关闭或者注销，否则这些资源将不会被回收，造成内存泄漏。</p>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法:"></a>解决方法:</h3><p>在相应的生命周期内移除容器内的资源。比如：在<code>onDestory</code>中，移除容器内部对该<code>Activity</code>的引用。</p>
+<h2 id="4-内部类的内存泄露"><a href="#4-内部类的内存泄露" class="headerlink" title="4.内部类的内存泄露"></a>4.内部类的内存泄露</h2><p>还是同样的意思，当外部类需要被销毁时，内部类还有任务在执行，而无法被销毁时，任务引用了内部类，而内部类又引用了外部类，导致外部类无法被回收，而造成的内存泄露。</p>
+<h3 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h3><p>将内部类使用<code>static</code>修辞。</p>
+<h2 id="5-资源未正常关闭造成的内存泄露"><a href="#5-资源未正常关闭造成的内存泄露" class="headerlink" title="5.资源未正常关闭造成的内存泄露"></a>5.资源未正常关闭造成的内存泄露</h2><p>对于使用了<code>BraodcastReceiver</code>，<code>ContentObserver</code>，<code>File</code>，<code>Cursor</code>，<code>Stream</code>，<code>Bitmap</code>等资源的使用，应该在Activity销毁时及时关闭或者注销，否则这些资源将不会被回收，造成内存泄漏。</p>
 <p>解决方法<br>正常关闭相应资源。</p>
 <p>……</p>
-<p>#3.常用的内存泄露分析工具</p>
-<blockquote>
+<h1 id="3-常用的内存泄露分析工具"><a href="#3-常用的内存泄露分析工具" class="headerlink" title="3.常用的内存泄露分析工具"></a>3.常用的内存泄露分析工具</h1><blockquote>
 <ol>
 <li>Android Monitor</li>
 <li>MAT</li>
@@ -336,14 +331,13 @@ public class CommonUtils {
 <li>DDMS</li>
 </ol>
 </blockquote>
-<p>##Android Monitor<br><code>Android Monitor</code>是<code>Android Studio</code>中默认的性能优化工具。它提供了对<code>Memory</code>,<code>CPU</code>,<code>Network</code>,<code>GPU</code>的监视。我们今天主要是用来对<code>Memory</code>的监控。</p>
+<h2 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h2><p><code>Android Monitor</code>是<code>Android Studio</code>中默认的性能优化工具。它提供了对<code>Memory</code>,<code>CPU</code>,<code>Network</code>,<code>GPU</code>的监视。我们今天主要是用来对<code>Memory</code>的监控。</p>
 <p>以单例模式下<code>Context</code>泄漏为例子来说下其使用.</p>
 <p>多次翻转屏幕后，造成<code>MainActivity</code>的多次回收和创建，然后，按下<code>Initiate GC</code>按钮后，再按<code>dump java heap</code>按钮来观察当前<code>heap</code>中<code>MainActivity</code>的情况。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/1.png" alt="img"></p>
 <p>如图所示，上面出现了两个<code>MainActivity</code>的实例，我们都知道，如果在翻转屏幕的时候，如果没有在<code>Androidmainfest.xml</code>中配置横竖屏不敏感的话，当前<code>Activity</code>会被销毁，而新的<code>Activity</code>会被创建，也就是说，正常情况是不会出现两个<code>Activity</code>的实例的，所以，说明是出现了内存泄漏。</p>
 <p>这里可以通过包结构的方式来看相关的泄露情况，更加的直观方便。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/2.png" alt="img"><br>图上的信息是通过多次<code>GC</code>之后，再<code>dump</code>出来的。从图上可以看到存在两个<code>MainActivity</code>的对象，说明<code>MainActivity</code>存在泄露，而为什么下面会多了一个<code>MainActivity$1</code>，而且个数正好也是两个呢？</p>
 <p>其实，这里的<code>MainActivity$1</code>只是<code>MainActivity</code>对象的引用，这一个可以从<code>MainActivity$1</code>中的<code>this</code>所指向的内存地址正好是<code>MainActivity</code>的两个地址。</p>
-<p>MAT</p>
-<p><code>MAT(memory Analyzer tool)</code>:内存分析工具，这个是曾经在<code>Eclipse</code>时代，非常好用的一款内存分析工具，而且有单独版本的。我们这里就使用单独版本的来说明一下其使用方法。</p>
+<h2 id="MAT"><a href="#MAT" class="headerlink" title="MAT"></a>MAT</h2><p><code>MAT(memory Analyzer tool)</code>:内存分析工具，这个是曾经在<code>Eclipse</code>时代，非常好用的一款内存分析工具，而且有单独版本的。我们这里就使用单独版本的来说明一下其使用方法。</p>
 <p>同样的，我们使用<code>Android studio</code>中<code>dump</code>出<code>.hprof</code>格式的文件，然后使用<code>hprof-conv 源文件   目标文件</code>如:<code>hprof-conv 1.hropf  2.hprof</code>来生成<code>MAT</code>可以使用的目标文件<code>2.hprof</code>。</p>
 <p>文件转换完成后，我们导入文件，导入的时候选择内存泄露分析。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/3.png" alt="img"></p>
 <p>这里我主要说两个我们常用的功能，一个是<code>histogram</code>功能，还有一个就是内存对比。还是以上面<code>MainActivity</code>泄露的问题来分析。</p>
@@ -500,7 +494,7 @@ public class CommonUtils {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2. handle造成的内存泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocation-Tracking-内存"><span class="nav-text">Allocation Tracking(内存)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-内存泄露的定义"><span class="nav-text">1.内存泄露的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-常见的内存泄露的情况"><span class="nav-text">2.常见的内存泄露的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-错误的Context引用-不同生命周期的对象相互引用"><span class="nav-text">1.错误的Context引用(不同生命周期的对象相互引用)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2.handle造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法："><span class="nav-text">解决方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-容器的不当使用，造成的内存泄露"><span class="nav-text">3.容器的不当使用，造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-1"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-内部类的内存泄露"><span class="nav-text">4.内部类的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-2"><span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-资源未正常关闭造成的内存泄露"><span class="nav-text">5.资源未正常关闭造成的内存泄露</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-常用的内存泄露分析工具"><span class="nav-text">3.常用的内存泄露分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-Monitor"><span class="nav-text">Android Monitor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAT"><span class="nav-text">MAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocation-Tracking-内存"><span class="nav-text">Allocation Tracking(内存)</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
