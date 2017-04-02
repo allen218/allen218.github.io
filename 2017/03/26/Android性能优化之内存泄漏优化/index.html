@@ -67,7 +67,9 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/1.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/3.png">
-<meta property="og:updated_time" content="2017-04-02T14:23:59.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/5.png">
+<meta property="og:updated_time" content="2017-04-02T14:42:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -321,7 +323,7 @@ public class CommonUtils {
 <p>##4. 内部类的内存泄露<br>还是同样的意思，当外部类需要被销毁时，内部类还有任务在执行，而无法被销毁时，任务引用了内部类，而内部类又引用了外部类，导致外部类无法被回收，而造成的内存泄露。</p>
 <p>###解决方法<br>将内部类使用<code>static</code>修辞。</p>
 <p>##5. 资源未正常关闭造成的内存泄露<br>对于使用了<code>BraodcastReceiver</code>，<code>ContentObserver</code>，<code>File</code>，<code>Cursor</code>，<code>Stream</code>，<code>Bitmap</code>等资源的使用，应该在Activity销毁时及时关闭或者注销，否则这些资源将不会被回收，造成内存泄漏。</p>
-<p>###解决方法<br>正常关闭相应资源。</p>
+<p>解决方法<br>正常关闭相应资源。</p>
 <p>……</p>
 <p>#3.常用的内存泄露分析工具</p>
 <blockquote>
@@ -338,13 +340,15 @@ public class CommonUtils {
 <p>如图所示，上面出现了两个<code>MainActivity</code>的实例，我们都知道，如果在翻转屏幕的时候，如果没有在<code>Androidmainfest.xml</code>中配置横竖屏不敏感的话，当前<code>Activity</code>会被销毁，而新的<code>Activity</code>会被创建，也就是说，正常情况是不会出现两个<code>Activity</code>的实例的，所以，说明是出现了内存泄漏。</p>
 <p>这里可以通过包结构的方式来看相关的泄露情况，更加的直观方便。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/2.png" alt="img"><br>图上的信息是通过多次<code>GC</code>之后，再<code>dump</code>出来的。从图上可以看到存在两个<code>MainActivity</code>的对象，说明<code>MainActivity</code>存在泄露，而为什么下面会多了一个<code>MainActivity$1</code>，而且个数正好也是两个呢？</p>
 <p>其实，这里的<code>MainActivity$1</code>只是<code>MainActivity</code>对象的引用，这一个可以从<code>MainActivity$1</code>中的<code>this</code>所指向的内存地址正好是<code>MainActivity</code>的两个地址。</p>
-<p>##MAT</p>
+<p>MAT</p>
 <p><code>MAT(memory Analyzer tool)</code>:内存分析工具，这个是曾经在<code>Eclipse</code>时代，非常好用的一款内存分析工具，而且有单独版本的。我们这里就使用单独版本的来说明一下其使用方法。</p>
 <p>同样的，我们使用<code>Android studio</code>中<code>dump</code>出<code>.hprof</code>格式的文件，然后使用<code>hprof-conv 源文件   目标文件</code>如:<code>hprof-conv 1.hropf  2.hprof</code>来生成<code>MAT</code>可以使用的目标文件<code>2.hprof</code>。</p>
 <p>文件转换完成后，我们导入文件，导入的时候选择内存泄露分析。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/3.png" alt="img"></p>
 <p>这里我主要说两个我们常用的功能，一个是<code>histogram</code>功能，还有一个就是内存对比。还是以上面<code>MainActivity</code>泄露的问题来分析。</p>
-<p>##Allocation Tracking(内存)</p>
-
+<p>打开<code>histogram</code>功能后，就看到了下面的结果:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/4.png" alt="img"><br>像上面的东西，我们基本上是看不到任何有价值的东西的，这时，需要我们自己去搜索感兴趣的对象，看其存在的情况了。比如，我们可以搜索<code>MainActivity</code>大小写区分，来看看<code>MainActitivy</code>在内存中的存在情况。</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/8/5.png" alt="img"></p>
+<p>图上可以看出，存在两个<code>MainActivity</code>对象，而其占用的内存大小为<code>528B</code>.</p>
+<h2 id="Allocation-Tracking-内存"><a href="#Allocation-Tracking-内存" class="headerlink" title="Allocation Tracking(内存)"></a>Allocation Tracking(内存)</h2>
       
     </div>
 
@@ -493,7 +497,7 @@ public class CommonUtils {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2. handle造成的内存泄露</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2. handle造成的内存泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocation-Tracking-内存"><span class="nav-text">Allocation Tracking(内存)</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
