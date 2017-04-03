@@ -78,8 +78,9 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/13.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/14.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/15.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/15.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/16.png">
-<meta property="og:updated_time" content="2017-04-02T15:19:32.000Z">
+<meta property="og:updated_time" content="2017-04-03T03:11:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -357,7 +358,8 @@ public class CommonUtils {
 <p>同样的，下面这种方式也能找到<code>MainActivity</code>被谁引用着。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/11.png" alt="img"><img src="/uploads/img/AndroidAdvanceDevelop/8/12.png" alt="img"></p>
 <p>下面，我们来说说，通过内存映射对比来分析其内存泄露情况。<br>分别打开<code>new27</code>和<code>new28</code>两个<code>.hprof</code>文件，然后，分别打开<code>histogram</code>功能。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/13.png" alt="img"></p>
 <p>分别将<code>histogram</code>添加到<code>basket</code>中。<br><img src="/uploads/img/AndroidAdvanceDevelop/8/14.png" alt="img"></p>
-<p>添加完成后，会看到下面的内存对比的情况，这里<code>new27</code>和<code>new28</code>分别表示无内存泄露和内存泄露。<img src="/uploads/img/AndroidAdvanceDevelop/8/15.png" alt="img"></p>
+<p>添加完成后，要点击一下执行结果，才会出现对比的结果。<img src="/uploads/img/AndroidAdvanceDevelop/8/15.png" alt="img"></p>
+<p>看到下面的内存对比的情况，这里<code>new27</code>和<code>new28</code>分别表示无内存泄露和内存泄露。<img src="/uploads/img/AndroidAdvanceDevelop/8/15.png" alt="img"></p>
 <p>通过搜索<code>MainActivity</code>，我们可以看出#0出现了内存泄露的情况。<img src="/uploads/img/AndroidAdvanceDevelop/8/16.png" alt="img"></p>
 <h2 id="Allocation-Tracking-内存"><a href="#Allocation-Tracking-内存" class="headerlink" title="Allocation Tracking(内存)"></a>Allocation Tracking(内存)</h2>
       
