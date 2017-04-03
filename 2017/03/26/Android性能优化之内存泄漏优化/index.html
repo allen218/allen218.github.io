@@ -82,7 +82,10 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/16.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/18.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/19.png">
-<meta property="og:updated_time" content="2017-04-03T03:34:12.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/20.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/21.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/22.png">
+<meta property="og:updated_time" content="2017-04-03T04:13:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之内存泄漏优化">
 <meta name="twitter:description">
@@ -339,7 +342,7 @@ public class CommonUtils {
 <li>Android Monitor</li>
 <li>MAT</li>
 <li>LeakCanary</li>
-<li>DDMS</li>
+<li>Allocation tracking</li>
 </ol>
 </blockquote>
 <h2 id="Android-Monitor"><a href="#Android-Monitor" class="headerlink" title="Android Monitor"></a>Android Monitor</h2><p><code>Android Monitor</code>是<code>Android Studio</code>中默认的性能优化工具。它提供了对<code>Memory</code>,<code>CPU</code>,<code>Network</code>,<code>GPU</code>的监视。我们今天主要是用来对<code>Memory</code>的监控。</p>
@@ -366,6 +369,22 @@ public class CommonUtils {
 <h2 id="Allocation-Tracking-分配内存追踪"><a href="#Allocation-Tracking-分配内存追踪" class="headerlink" title="Allocation Tracking(分配内存追踪)"></a>Allocation Tracking(分配内存追踪)</h2><p>这个工具主要是用来分析内存的变化情况，比如：你打开了一个新的页面，此时，新的页面创建了多少对象，哪些对象被创建了多少次都会被追踪到，但如果调用<code>gc</code>，被回收的对象，也会显示在内存变化中，也就是它关心的是这段时间内，内存的变化，只做加法，也就是只记录最大的变化数，而被回收的对象，也会显示在列表中。这个工具不能直接发现内存泄露，而是作用辅助工具使用，关注内存的变化，可以和<code>hprof</code>配合使用。</p>
 <p>这里我们还是以<code>MainActivity</code>泄露为例，先点击<code>start allocation tracking</code>，然后将手机屏幕翻转三次，再调用<code>gc</code>后的内存变化。<img src="/uploads/img/AndroidAdvanceDevelop/8/18.png" alt="img"><img src="/uploads/img/AndroidAdvanceDevelop/8/19.png" alt="img"></p>
 <p>从图上可以看出，在翻转了三次屏幕后，<code>MainActivity</code>被创建了三次，而当我们调用了<code>GC</code>后，也是如此，也就说明了，<code>allocation tracking</code>只关注内存的一个最大变化。此时，我们就可以结合<code>MAT</code>来关注<code>MainActivity</code>的内存泄露情况了。</p>
+<p>在<code>Android Device Monitor</code>中的<code>Allocation Tracker</code>也是同样的效果，不同的只是操作上，以及展示的信息。<img src="/uploads/img/AndroidAdvanceDevelop/8/20.png" alt="img"></p>
+<h2 id="LeakCanary"><a href="#LeakCanary" class="headerlink" title="LeakCanary"></a>LeakCanary</h2><p><code>leakCanary</code>是<code>square</code>开源的一款用于集成手机端来提醒内存泄漏的框架，只能用于观察<code>Activity</code>的泄露情况，会自动在消息通知栏，给出提示。</p>
+<p>集成进app非常简单,先添加依赖：</p>
+<pre><code>debugCompile &apos;com.squareup.leakcanary:leakcanary-android:1.5&apos;
+releaseCompile &apos;com.squareup.leakcanary:leakcanary-android-no-op:1.5&apos;
+testCompile &apos;com.squareup.leakcanary:leakcanary-android-no-op:1.5&apos;
+</code></pre><p>这里的<code>no-op</code>版本，说的是在测试编译或者正式版本编译不会被引入项目。</p>
+<p>然后在<code>Application</code>中添加初始化，就开始正常工作了。</p>
+<pre><code>public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LeakCanary.install(this);
+    }
+}
+</code></pre><p>当我翻转了两次屏幕后，就接收到了内存泄露的提示信息了，非常的好用。<img src="/uploads/img/AndroidAdvanceDevelop/8/21.png" alt="img"><img src="/uploads/img/AndroidAdvanceDevelop/8/22.png" alt="img"></p>
 
       
     </div>
@@ -515,7 +534,7 @@ public class CommonUtils {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-内存泄露的定义"><span class="nav-text">1.内存泄露的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-常见的内存泄露的情况"><span class="nav-text">2.常见的内存泄露的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-错误的Context引用-不同生命周期的对象相互引用"><span class="nav-text">1.错误的Context引用(不同生命周期的对象相互引用)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2.handle造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法："><span class="nav-text">解决方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-容器的不当使用，造成的内存泄露"><span class="nav-text">3.容器的不当使用，造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-1"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-内部类的内存泄露"><span class="nav-text">4.内部类的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-2"><span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-资源未正常关闭造成的内存泄露"><span class="nav-text">5.资源未正常关闭造成的内存泄露</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-常用的内存泄露分析工具"><span class="nav-text">3.常用的内存泄露分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-Monitor"><span class="nav-text">Android Monitor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAT"><span class="nav-text">MAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocation-Tracking-分配内存追踪"><span class="nav-text">Allocation Tracking(分配内存追踪)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-内存泄露的定义"><span class="nav-text">1.内存泄露的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说被引用的对象无法被回收呢？"><span class="nav-text">为什么说被引用的对象无法被回收呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-常见的内存泄露的情况"><span class="nav-text">2.常见的内存泄露的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-错误的Context引用-不同生命周期的对象相互引用"><span class="nav-text">1.错误的Context引用(不同生命周期的对象相互引用)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-handle造成的内存泄露"><span class="nav-text">2.handle造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法："><span class="nav-text">解决方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-容器的不当使用，造成的内存泄露"><span class="nav-text">3.容器的不当使用，造成的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-1"><span class="nav-text">解决方法:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-内部类的内存泄露"><span class="nav-text">4.内部类的内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法-2"><span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-资源未正常关闭造成的内存泄露"><span class="nav-text">5.资源未正常关闭造成的内存泄露</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-常用的内存泄露分析工具"><span class="nav-text">3.常用的内存泄露分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-Monitor"><span class="nav-text">Android Monitor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAT"><span class="nav-text">MAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allocation-Tracking-分配内存追踪"><span class="nav-text">Allocation Tracking(分配内存追踪)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeakCanary"><span class="nav-text">LeakCanary</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
