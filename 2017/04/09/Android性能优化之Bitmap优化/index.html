@@ -57,22 +57,20 @@
 
 
 
-<meta name="description" content="今天我们来讲讲关于Bitmap相关的优化。通常在开发中，Bitmap都是让人头痛的问题，它是内存消耗大户，经常会由于Bitmap的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  
-鉴于Bitmap在开发都带来的种种棘手的问题，就迫使我们在做">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android性能优化之Bitmap优化">
 <meta property="og:url" content="http://yoursite.com/2017/04/09/Android性能优化之Bitmap优化/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="今天我们来讲讲关于Bitmap相关的优化。通常在开发中，Bitmap都是让人头痛的问题，它是内存消耗大户，经常会由于Bitmap的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  
-鉴于Bitmap在开发都带来的种种棘手的问题，就迫使我们在做">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T05:07:40.000Z">
+<meta property="og:updated_time" content="2017-04-09T05:20:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之Bitmap优化">
-<meta name="twitter:description" content="今天我们来讲讲关于Bitmap相关的优化。通常在开发中，Bitmap都是让人头痛的问题，它是内存消耗大户，经常会由于Bitmap的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  
-鉴于Bitmap在开发都带来的种种棘手的问题，就迫使我们在做">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
 
 
 
@@ -258,7 +256,7 @@
       
 
       
-        <p>今天我们来讲讲关于<code>Bitmap</code>相关的优化。通常在开发中，<code>Bitmap</code>都是让人头痛的问题，它是内存消耗大户，经常会由于<code>Bitmap</code>的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  </p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/25.png" alt="img"><br><a id="more"></a><br>今天我们来讲讲关于<code>Bitmap</code>相关的优化。通常在开发中，<code>Bitmap</code>都是让人头痛的问题，它是内存消耗大户，经常会由于<code>Bitmap</code>的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  </p>
 <p>鉴于<code>Bitmap</code>在开发都带来的种种棘手的问题，就迫使我们在做性能优化时，不得不考虑<code>Bitmap</code>的优化。今天，我们会从<code>质量压缩</code>、<code>尺寸压缩</code>、<code>采样率压缩</code>以及<code>终极压缩</code>等方面来对<code>Bitmap</code>来进行优化。</p>
 <h1 id="质量压缩优化"><a href="#质量压缩优化" class="headerlink" title="质量压缩优化"></a>质量压缩优化</h1><p>在质量压缩优化里，主要用到的就是我们<code>Bitmap</code>自带的<code>compress(CompressFormat format, int quality, OutputStream stream)</code>里的参数<code>quality</code>，这个参数的值为<code>0~100</code>。</p>
 <p>质量压缩并没有改变像素的多少，也就是说质量压缩并不会减少像素，而在内存里，<code>Bitmap</code>所占用的内存大小，是与我们图片像素的多少密切相关的。所以，质量压缩改变的只是保存到本地时，实际图片的大小，而对内存这一块并没有改变什么。</p>
