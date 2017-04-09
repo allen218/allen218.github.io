@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T06:19:08.000Z">
+<meta property="og:updated_time" content="2017-04-09T14:46:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之Bitmap优化">
 <meta name="twitter:description">
@@ -309,6 +309,9 @@
 <p>而相比完整版的<code>SKIA</code>,阉割版的去除了哈夫曼编码。哈夫曼编码最大的特点是可变字长编码，通过对要编码的图片进行大量运算后，根据字符出现的概率进行编码，得到最佳编码。</p>
 <p>而为什么<code>Android</code>没有采用<code>Huffman</code>编码呢？原因主要是，最初的<code>Android</code>设备配置差，不适合进行大量的cpu运算，被迫使用其他算法。而现在的<code>Android</code>设备的配置已经非常的高，完全可以引入哈夫曼编码来减小图片的存储大小。</p>
 <p>目前，在微信中就用到了此编码。来解决图片传输过程中过大的问题。我们要解决的也就是绕过<code>Bitmap API</code>层，来自己编码实现，使用哈夫曼编码。</p>
+<p>我们使用一个大神编译好的<code>so</code>库来演示一下效果吧。由于是别人编译的库，所以，<code>Native</code>方法所在的包名不能更改，因为<code>so</code>里面的<code>jni</code>接口已经在编译时被写死了。  </p>
+<p>项目地址:</p>
+<p><a href="https://github.com/allen218/BitmapCompress" target="_blank" rel="external">https://github.com/allen218/BitmapCompress</a></p>
 
       
     </div>
