@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T05:20:49.000Z">
+<meta property="og:updated_time" content="2017-04-09T06:01:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之Bitmap优化">
 <meta name="twitter:description">
@@ -278,11 +278,33 @@
 }
 </code></pre><p>原图<code>3.7M</code>，通过<code>quality=20</code>质量压缩后，剩下<code>270k</code>.这里的原图指的是加载到内存后的<code>Bitmap</code>的大小。</p>
 <p>我们都知道，像<code>jpg</code>这样的图片都是图片压缩算法后的图片，所以，我把<code>jpg</code>的图片加载到内存后，通过<code>quality=100</code>，将其变成原图后输出，而直接从网上下载下来的<code>jpg</code>文件，原本只有<code>167k</code>。</p>
-<h1 id="尺寸压缩"><a href="#尺寸压缩" class="headerlink" title="尺寸压缩"></a>尺寸压缩</h1><p>尺寸压缩主要是通过改变图片像素来达到减少图片占用内存的大小。这里我们一般会创建一个空的<code>bitmap</code>,这个空的<code>bitmap</code>的宽和高都是通过比例压缩后的宽和高。然后，通过<code>Canvas</code>将原<code>bitmap</code>画到新的<code>Bitmap</code>上，而由于宽和高都是经过比例缩放后的值，所以，也就减小了<code>Bitmap</code>实际占用的内存大小。</p>
+<h1 id="尺寸压缩优化"><a href="#尺寸压缩优化" class="headerlink" title="尺寸压缩优化"></a>尺寸压缩优化</h1><p>尺寸压缩主要是通过改变图片像素来达到减少图片占用内存的大小。这里我们一般会创建一个空的<code>bitmap</code>,这个空的<code>bitmap</code>的宽和高都是通过比例压缩后的宽和高。然后，通过<code>Canvas</code>将原<code>bitmap</code>画到新的<code>Bitmap</code>上，而由于宽和高都是经过比例缩放后的值，所以，也就减小了<code>Bitmap</code>实际占用的内存大小。</p>
 <p>原图的分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/23.png" alt="img"></p>
 <p>而经过尺寸压缩后的图片分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/24.png" alt="img"></p>
 <p>也就是宽和高分别减少为原来的1/4.而大小也从<code>3.7M</code>就了<code>396K</code>.注意了，这里的压缩不仅仅是占用的内存被压缩了，实际存储到本地的图片也被压缩了。</p>
+<h1 id="采样率压缩优化"><a href="#采样率压缩优化" class="headerlink" title="采样率压缩优化"></a>采样率压缩优化</h1><p>采样率压缩主要是使用<code>BitmapFactory.options</code>的<code>inSampleSize</code>来做的。这个其实有点类似于尺寸压缩，都是通过缩小图片的宽和高来减少像素达到减少内存占用和减少本地存储占用。但有点区别的是，尺寸可以针对宽和高分别进行设置缩放比例，而采样率压缩是对宽和高同时做等比例缩放。</p>
+<p>使用采样率压缩，同时也要使用到<code>BitmapFactory.options</code>中的另外一个参数<code>inJustDecodeBounds=true</code>来在不加载图片到内存的情况下获取图片的宽高情况，然后通过原图的宽高和目标宽高得出一个比例值，用于<code>inSampleSize</code>来作用采样率来对图片进行缩放。</p>
+<pre><code>private void sampleSizeCompress() {
+    int inSampleSize = 8;
+    BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = false;
+    options.inSampleSize = inSampleSize;
+    Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image, options);
 
+    //输出经过采样率优化后的图片
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+    File file = new File(&quot;/sdcard/img/&quot;, &quot;采样率.jpg&quot;);
+    try {
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(outputStream.toByteArray());
+        fileOutputStream.flush();
+        fileOutputStream.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
       
     </div>
 
@@ -431,7 +453,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩"><span class="nav-text">尺寸压缩</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩优化"><span class="nav-text">尺寸压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采样率压缩优化"><span class="nav-text">采样率压缩优化</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
