@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T06:01:07.000Z">
+<meta property="og:updated_time" content="2017-04-09T06:19:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化之Bitmap优化">
 <meta name="twitter:description">
@@ -304,7 +304,12 @@
         e.printStackTrace();
     }
 }
-</code></pre>
+</code></pre><h1 id="终极压缩优化"><a href="#终极压缩优化" class="headerlink" title="终极压缩优化"></a>终极压缩优化</h1><p>这里主要会用于<code>ndk</code>相关的东西了。这里主要是跟<code>Android</code>系统采用的图片算法有关。</p>
+<p><code>Android</code>使用的是第二代<code>JPEG</code>图片算法引擎<code>SKIA</code>的阉割版，采用的是定长编码的方式来对图片进行编码，而这样处理的好处就是，消耗的资源比较少，不需要经过cpu大量的计算；缺点就是：因为使用的是定长编码，占用的空间就会比较大，同样的质量的图片需要更大的空间来存储。</p>
+<p>而相比完整版的<code>SKIA</code>,阉割版的去除了哈夫曼编码。哈夫曼编码最大的特点是可变字长编码，通过对要编码的图片进行大量运算后，根据字符出现的概率进行编码，得到最佳编码。</p>
+<p>而为什么<code>Android</code>没有采用<code>Huffman</code>编码呢？原因主要是，最初的<code>Android</code>设备配置差，不适合进行大量的cpu运算，被迫使用其他算法。而现在的<code>Android</code>设备的配置已经非常的高，完全可以引入哈夫曼编码来减小图片的存储大小。</p>
+<p>目前，在微信中就用到了此编码。来解决图片传输过程中过大的问题。我们要解决的也就是绕过<code>Bitmap API</code>层，来自己编码实现，使用哈夫曼编码。</p>
+
       
     </div>
 
@@ -453,7 +458,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩优化"><span class="nav-text">尺寸压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采样率压缩优化"><span class="nav-text">采样率压缩优化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩优化"><span class="nav-text">尺寸压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采样率压缩优化"><span class="nav-text">采样率压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终极压缩优化"><span class="nav-text">终极压缩优化</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
