@@ -214,6 +214,127 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/09/Android性能优化之Bitmap优化/" itemprop="url">
+                  Android性能优化之Bitmap优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-09T11:06:31+08:00" content="2017-04-09">
+              2017-04-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/09/Android性能优化之Bitmap优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/09/Android性能优化之Bitmap优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天我们来讲讲关于<code>Bitmap</code>相关的优化。通常在开发中，<code>Bitmap</code>都是让人头痛的问题，它是内存消耗大户，经常会由于<code>Bitmap</code>的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  </p>
+<p>鉴于<code>Bitmap</code>在开发都带来的种种棘手的问题，就迫使我们在做性能优化时，不得不考虑<code>Bitmap</code>的优化。今天，我们会从<code>质量压缩</code>、<code>尺寸压缩</code>、<code>采样率压缩</code>以及<code>终极压缩</code>等方面来对<code>Bitmap</code>来进行优化。</p>
+<h1 id="质量压缩优化"><a href="#质量压缩优化" class="headerlink" title="质量压缩优化"></a>质量压缩优化</h1><p>在质量压缩优化里，主要用到的就是我们<code>Bitmap</code>自带的<code>compress(CompressFormat format, int quality, OutputStream stream)</code>里的参数<code>quality</code>，这个参数的值为<code>0~100</code>。</p>
+<p>质量压缩并没有改变像素的多少，也就是说质量压缩并不会减少像素，而在内存里，<code>Bitmap</code>所占用的内存大小，是与我们图片像素的多少密切相关的。所以，质量压缩改变的只是保存到本地时，实际图片的大小，而对内存这一块并没有改变什么。</p>
+<pre><code>private void qualityCompress(Bitmap bitmap) {
+    try {
+        int quality = 20;
+        File file = new File(&quot;/sdcard/img/&quot;, &quot;质量压缩.jpg&quot;);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(baos.toByteArray());
+        fileOutputStream.flush();
+        fileOutputStream.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>原图<code>3.7M</code>，通过<code>quality=20</code>质量压缩后，剩下<code>270k</code>.这里的原图指的是加载到内存后的<code>Bitmap</code>的大小。</p>
+<p>我们都知道，像<code>jpg</code>这样的图片都是图片压缩算法后的图片，所以，我把<code>jpg</code>的图片加载到内存后，通过<code>quality=100</code>，将其变成原图后输出，而直接从网上下载下来的<code>jpg</code>文件，原本只有<code>167k</code>。</p>
+<h1 id="尺寸压缩"><a href="#尺寸压缩" class="headerlink" title="尺寸压缩"></a>尺寸压缩</h1><p>尺寸压缩主要是通过改变图片像素来达到减少图片占用内存的大小。这里我们一般会创建一个空的<code>bitmap</code>,这个空的<code>bitmap</code>的宽和高都是通过比例压缩后的宽和高。然后，通过<code>Canvas</code>将原<code>bitmap</code>画到新的<code>Bitmap</code>上，而由于宽和高都是经过比例缩放后的值，所以，也就减小了<code>Bitmap</code>实际占用的内存大小。</p>
+<p>原图的分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/23.png" alt="img"></p>
+<p>而经过尺寸压缩后的图片分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/24.png" alt="img"></p>
+<p>也就是宽和高分别减少为原来的1/4.而大小也从<code>3.7M</code>就了<code>396K</code>.注意了，这里的压缩不仅仅是占用的内存被压缩了，实际存储到本地的图片也被压缩了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/26/Android性能优化之内存泄漏优化/" itemprop="url">
                   Android性能优化之内存泄漏优化
                 </a>
@@ -1072,104 +1193,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/" itemprop="url">
-                  Android开发进阶_创建丰富多彩的View读后笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-04T10:36:17+08:00" content="2016-04-04">
-              2016-04-04
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/3/18.jpg" alt="图1"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/04/Android开发进阶-创建丰富多彩的View读后笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1216,7 +1239,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
