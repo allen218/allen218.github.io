@@ -66,7 +66,9 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/28.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/26.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/27.png">
-<meta property="og:updated_time" content="2017-05-21T13:18:01.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/29.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/30.png">
+<meta property="og:updated_time" content="2017-05-21T15:12:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之工厂模式">
 <meta name="twitter:description">
@@ -346,7 +348,7 @@ Banana is harvested
 <li>对于扩展不太友好，如果增加了一个新的水果，工厂中的静态方法就需要被修改，而这违背了开闭原则，对扩展开放，对修改关闭。</li>
 </ol>
 </blockquote>
-<h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><p>工厂方法可以说是对简单工厂缺点的一个修复，在工厂中引入了抽象方法，具体的实现由各个具体产品的工厂来实现。这样一来，在新增同类产品时，就需要对抽象方法进行扩展。</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>工厂方法可以说是对简单工厂缺点的一个修复，在工厂中引入了抽象方法，具体的实现由各个具体产品的工厂来实现。这样一来，在新增同类产品时，就需要对抽象方法进行扩展。</p>
 <p><strong>工厂方法模式UML图:</strong><br><img src="/uploads/img/AndroidAdvanceDevelop/8/27.png" alt="img1"></p>
 <h3 id="工厂方法定义"><a href="#工厂方法定义" class="headerlink" title="工厂方法定义"></a>工厂方法定义</h3><pre><code>定义一个创建对象的接口，由子类决定实例化哪个类。
 工厂方法使对象的实例化延迟到了子类。
@@ -407,11 +409,24 @@ public class Orange implements Fruit {
         System.out.println(&quot;orange is harvested&quot;);
     }
 }
-</code></pre><h3 id="工厂方法存在的问题"><a href="#工厂方法存在的问题" class="headerlink" title="工厂方法存在的问题"></a>工厂方法存在的问题</h3><h3 id="工厂方法的优点"><a href="#工厂方法的优点" class="headerlink" title="工厂方法的优点"></a>工厂方法的优点</h3><blockquote>
+</code></pre><h3 id="工厂方法存在的问题"><a href="#工厂方法存在的问题" class="headerlink" title="工厂方法存在的问题"></a>工厂方法存在的问题</h3><p>当工厂方法创建的不是一类产品，而是多类产品时，我们的工厂类的数量会成倍的增加，也就是会有多类产品的工厂等级结构。多类工厂来解决多类产品对象的创建问题，这样，显然是比较臃肿的，而好的解决此类问题的方式，是一类工厂来解决多类产品对象的创建，这个就需要使用抽象工厂模式来解决了。</p>
+<h3 id="工厂方法的优点"><a href="#工厂方法的优点" class="headerlink" title="工厂方法的优点"></a>工厂方法的优点</h3><blockquote>
 <ol>
 <li>解决了简单工厂需要修改原有代码的问题，更方便于扩展。</li>
+<li>屏蔽具体的产品实现类，使用者只需要关注产品的接口，只要接口保持不变，系统的上层调用就保持不变。</li>
 </ol>
 </blockquote>
+<h3 id="工厂方法的缺点"><a href="#工厂方法的缺点" class="headerlink" title="工厂方法的缺点"></a>工厂方法的缺点</h3><blockquote>
+<ol>
+<li>当要为多类产品创建对象时，(比如上面的例子中我们添加一个颜色作为一类新的产品，现在的水果有很多种颜色嘛。也就是说水果和颜色是两类不同的产品，但是从横向看，它们是一系列相关的产品，可以组成产品簇)。使用工厂方法就会显得非常的臃肿，代码量大增，而且不利于扩展。</li>
+</ol>
+</blockquote>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><h3 id="产品簇"><a href="#产品簇" class="headerlink" title="产品簇"></a>产品簇</h3><p>要理解抽象工厂模式，首先需要理解产品簇的概念。那什么是产品簇呢？产品簇就在不同的产品等级结构中，功能相关联的产品所组成的家族。这个要怎么理解呢？需要从横向和纵向两个维度来理解产品簇的概念。</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/8/29.png" alt="img1"><br>横向的表示产品等级结构，表示同类的产品；纵向的表示产品簇。只要为一个产品指明它所对应的产品簇及其对应的层级结构中，就可以唯一的确定这个产品。</p>
+<h3 id="抽象工厂模式定义"><a href="#抽象工厂模式定义" class="headerlink" title="抽象工厂模式定义"></a>抽象工厂模式定义</h3><pre><code>为创建一组相关或者相互依赖的对象提供一个接口，并且不用指定它们的具体实现。
+</code></pre><p><strong>抽象工厂的UML图:</strong>  </p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/8/30.png" alt="img1"></p>
+<p>这里引入了颜色作为一类产品，也就是uml图里除了有水果的层级结构外，多了一类颜色的层级结构。而由一类工厂的层级结构来解决两类层级结构的问题。每一个具体的工厂，分别由两个方法组成，而这两个方法分别为两个不同类的层级结构创建对象，而组成产品簇。也就是具体的工厂，实际上负责一类产品簇对象的创建。</p>
 
       
     </div>
@@ -561,7 +576,7 @@ public class Orange implements Fruit {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的扩展"><span class="nav-text">简单工厂的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法定义"><span class="nav-text">工厂方法定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的扩展"><span class="nav-text">工厂方法的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法存在的问题"><span class="nav-text">工厂方法存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的优点"><span class="nav-text">工厂方法的优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的扩展"><span class="nav-text">简单工厂的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法定义"><span class="nav-text">工厂方法定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的扩展"><span class="nav-text">工厂方法的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法存在的问题"><span class="nav-text">工厂方法存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的优点"><span class="nav-text">工厂方法的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的缺点"><span class="nav-text">工厂方法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产品簇"><span class="nav-text">产品簇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂模式定义"><span class="nav-text">抽象工厂模式定义</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
