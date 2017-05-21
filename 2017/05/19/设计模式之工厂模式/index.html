@@ -57,22 +57,20 @@
 
 
 
-<meta name="description" content="工厂模式是23种设计模式中比较基础的设计模式，属于创建型的设计模式。主要分为简单工厂设计模式，工厂方法和抽象工厂设计模式三类。
-简单工厂模式简单工厂模式又称为静态工厂方法模式，主要用于创建同一类产品的设计模式，何为同一类产品？也就是实现了同一接口的具体产品都属于同一类产品。一般只有一个工厂类，该工厂类提供一个静态创建产品的方法，根据约定的类型或者直接根据具体产品的类名来生产相应的产品实例。使用者只">
+<meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式之工厂模式">
 <meta property="og:url" content="http://yoursite.com/2017/05/19/设计模式之工厂模式/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description" content="工厂模式是23种设计模式中比较基础的设计模式，属于创建型的设计模式。主要分为简单工厂设计模式，工厂方法和抽象工厂设计模式三类。
-简单工厂模式简单工厂模式又称为静态工厂方法模式，主要用于创建同一类产品的设计模式，何为同一类产品？也就是实现了同一接口的具体产品都属于同一类产品。一般只有一个工厂类，该工厂类提供一个静态创建产品的方法，根据约定的类型或者直接根据具体产品的类名来生产相应的产品实例。使用者只">
+<meta property="og:description">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/28.jpg">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/26.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/27.png">
-<meta property="og:updated_time" content="2017-05-21T08:16:58.000Z">
+<meta property="og:updated_time" content="2017-05-21T13:11:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之工厂模式">
-<meta name="twitter:description" content="工厂模式是23种设计模式中比较基础的设计模式，属于创建型的设计模式。主要分为简单工厂设计模式，工厂方法和抽象工厂设计模式三类。
-简单工厂模式简单工厂模式又称为静态工厂方法模式，主要用于创建同一类产品的设计模式，何为同一类产品？也就是实现了同一接口的具体产品都属于同一类产品。一般只有一个工厂类，该工厂类提供一个静态创建产品的方法，根据约定的类型或者直接根据具体产品的类名来生产相应的产品实例。使用者只">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/26.png">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/28.jpg">
 
 
 
@@ -258,8 +256,9 @@
       
 
       
-        <p>工厂模式是23种设计模式中比较基础的设计模式，属于创建型的设计模式。主要分为简单工厂设计模式，工厂方法和抽象工厂设计模式三类。</p>
-<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><p>简单工厂模式又称为静态工厂方法模式，主要用于创建同一类产品的设计模式，何为同一类产品？也就是实现了同一接口的具体产品都属于同一类产品。一般只有一个工厂类，该工厂类提供一个静态创建产品的方法，根据约定的类型或者直接根据具体产品的类名来生产相应的产品实例。使用者只需要告诉工厂类创建什么样的产品就行，而不需要关注具体的产品实现，具体的产品实现交由工厂类来完成。</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/28.jpg" alt="图1"><br><a id="more"></a></p>
+<p>工厂模式是23种设计模式中比较基础的设计模式，属于创建型的设计模式。主要分为简单工厂设计模式，工厂方法和抽象工厂设计模式三类。</p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>简单工厂模式又称为静态工厂方法模式，主要用于创建同一类产品的设计模式，何为同一类产品？也就是实现了同一接口的具体产品都属于同一类产品。一般只有一个工厂类，该工厂类提供一个静态创建产品的方法，根据约定的类型或者直接根据具体产品的类名来生产相应的产品实例。使用者只需要告诉工厂类创建什么样的产品就行，而不需要关注具体的产品实现，具体的产品实现交由工厂类来完成。</p>
 <p><strong>简单工厂模式的UML图:</strong><br><img src="/uploads/img/AndroidAdvanceDevelop/8/26.png" alt="img1"></p>
 <p>简单工厂类的实现：</p>
 <pre><code>public class FruitFactory {
@@ -309,7 +308,7 @@ Pear is growing
 Pear is harvested
 Banana is growing
 Banana is harvested
-</code></pre><p>##简单工厂的扩展<br>简单工厂还可以对所要创建的对象进行管理，比如，对所创建的对象进行缓存，从而达到单例的效果。</p>
+</code></pre><h3 id="简单工厂的扩展"><a href="#简单工厂的扩展" class="headerlink" title="简单工厂的扩展"></a>简单工厂的扩展</h3><p>简单工厂还可以对所要创建的对象进行管理，比如，对所创建的对象进行缓存，从而达到单例的效果。</p>
 <p><strong>工厂模式实现单例的代码示例:</strong></p>
 <pre><code>public class FruitFactory3 {
     private static Map&lt;Integer, Fruit&gt; fruitObj = new HashMap&lt;&gt;();
@@ -336,19 +335,81 @@ Banana is harvested
         return fruit;
     }
 }
-</code></pre><h2 id="简单工厂的优点"><a href="#简单工厂的优点" class="headerlink" title="简单工厂的优点"></a>简单工厂的优点</h2><blockquote>
+</code></pre><h3 id="简单工厂的优点"><a href="#简单工厂的优点" class="headerlink" title="简单工厂的优点"></a>简单工厂的优点</h3><blockquote>
 <ol>
 <li>工厂的使用者不需要关心具体对象的创建过程，符合迪米特的最少知道原则；同时，由于只关心接口而不关注具体的实现类，符合依赖倒置原则；又使用父类（这里指接口）的地方，可以无缝的替换成子类，符合里氏替换原则。</li>
 <li>工厂可以非常灵活的对所要创建的对象进行管理，可以方便的对所创建对象的数量进行控制，比如：对多对象实现单例。</li>
 </ol>
 </blockquote>
-<h2 id="简单工厂的缺点"><a href="#简单工厂的缺点" class="headerlink" title="简单工厂的缺点"></a>简单工厂的缺点</h2><blockquote>
+<h3 id="简单工厂的缺点"><a href="#简单工厂的缺点" class="headerlink" title="简单工厂的缺点"></a>简单工厂的缺点</h3><blockquote>
 <ol>
 <li>对于扩展不太友好，如果增加了一个新的水果，工厂中的静态方法就需要被修改，而这违背了开闭原则，对扩展开放，对修改关闭。</li>
 </ol>
 </blockquote>
 <h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><p>工厂方法可以说是对简单工厂缺点的一个修复，在工厂中引入了抽象方法，具体的实现由各个具体产品的工厂来实现。这样一来，在新增同类产品时，就需要对抽象方法进行扩展。</p>
 <p><strong>工厂方法模式UML图:</strong><br><img src="/uploads/img/AndroidAdvanceDevelop/8/27.png" alt="img1"></p>
+<p>工厂方法抽象类:</p>
+<pre><code>public abstract class AbstractFactory {
+    protected abstract Fruit createFruit();
+}
+</code></pre><p>相对应的具体工厂的实现:</p>
+<pre><code>public class AppleFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Apple();
+    }
+}
+
+
+public class PearFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Pear();
+    }
+}
+
+public class BananaFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Banana();
+    }
+}
+</code></pre><p><strong>工厂类的使用者:</strong></p>
+<pre><code>public class client {
+    public static void main(String[] args) {
+
+        AppleFactory appleFactory = new AppleFactory();
+        Fruit fruit = appleFactory.createFruit();
+        fruit.grow();
+        fruit.harvest();
+    }
+}
+</code></pre><p>需要创建哪一类的水果就使用与之相对应的工厂类来进行创建。然后，调用相应的方法即可。</p>
+<h3 id="工厂方法的扩展"><a href="#工厂方法的扩展" class="headerlink" title="工厂方法的扩展"></a>工厂方法的扩展</h3><p>当我们增加了一种新的水果橙子，我们只需要创建一个橙子类来实现产品接口，同时创建一个生产橙子的工厂实现抽象工厂中的方法即可。</p>
+<pre><code>public class OrangeFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Orange();
+    }
+}
+
+
+public class Orange implements Fruit {
+    @Override
+    public void grow() {
+        System.out.println(&quot;orange is growing&quot;);
+    }
+
+    @Override
+    public void harvest() {
+        System.out.println(&quot;orange is harvested&quot;);
+    }
+}
+</code></pre><h3 id="工厂方法存在的问题"><a href="#工厂方法存在的问题" class="headerlink" title="工厂方法存在的问题"></a>工厂方法存在的问题</h3><h3 id="工厂方法的优点"><a href="#工厂方法的优点" class="headerlink" title="工厂方法的优点"></a>工厂方法的优点</h3><blockquote>
+<ol>
+<li>解决了简单工厂需要修改原有代码的问题，更方便于扩展。</li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -498,7 +559,7 @@ Banana is harvested
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的扩展"><span class="nav-text">简单工厂的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的扩展"><span class="nav-text">工厂方法的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法存在的问题"><span class="nav-text">工厂方法存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的优点"><span class="nav-text">工厂方法的优点</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
