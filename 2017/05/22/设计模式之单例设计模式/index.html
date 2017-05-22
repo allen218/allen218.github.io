@@ -59,16 +59,16 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RecyclerView每个Item展示倒计时">
-<meta property="og:url" content="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/index.html">
+<meta property="og:title" content="设计模式之单例设计模式">
+<meta property="og:url" content="http://yoursite.com/2017/05/22/设计模式之单例设计模式/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
-<meta property="og:updated_time" content="2016-04-25T02:49:39.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
+<meta property="og:updated_time" content="2017-05-22T15:15:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RecyclerView每个Item展示倒计时">
+<meta name="twitter:title" content="设计模式之单例设计模式">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/4/45.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
 
 
 
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title> RecyclerView每个Item展示倒计时 | Allen'Notes </title>
+  <title> 设计模式之单例设计模式 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +208,7 @@
             
             
               
-                RecyclerView每个Item展示倒计时
+                设计模式之单例设计模式
               
             
           </h1>
@@ -220,8 +220,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-12T14:19:59+08:00" content="2016-03-12">
-              2016-03-12
+            <time itemprop="dateCreated" datetime="2017-05-22T23:09:55+08:00" content="2017-05-22">
+              2017-05-22
             </time>
           </span>
 
@@ -231,8 +231,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/12/RecyclerView每个Item展示倒计时/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/" itemprop="commentsCount"></span>
+                <a href="/2017/05/22/设计模式之单例设计模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/22/设计模式之单例设计模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -254,144 +254,7 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/4/45.png" alt="img1"></p>
-<a id="more"></a>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><blockquote>
-<p>今天的需求是要在RecyclerView里的每个Item上展示一个倒计时的操作，主要是用来提醒用户当前订单还有多长时间就会被自动取消，从而来提醒用户尽快支付。 </p>
-</blockquote>
-<h1 id="1-需求分析"><a href="#1-需求分析" class="headerlink" title="1.需求分析"></a><strong>1.需求分析</strong></h1><blockquote>
-<p><strong>这里有几个问题需要解决?</strong>  </p>
-<p>1.首先是计时器的问题，是每个item使用一个计时器还是共用一个講器？</p>
-<blockquote>
-<p>这里我选择了共用一个计时器，这里主要有两点：1.多个计时器性能上会有问题，会带来很大的开销;2.多个计时器维护起来非常的麻烦。很容易错乱。  </p>
-</blockquote>
-<p>2.以什么方式来进行item时间的更新？  </p>
-<blockquote>
-<p>把计时器独立出来，写成一个公共的方法，只处理倒计时的工作，谁要使用，我并不关心，使用观察者模式来通知需要倒计时的地方。当然这里同时只会有一个地方需要更新，所以，这里就只是通过写接口的方式来通知。</p>
-</blockquote>
-<p>3.由于item的复用，怎么去更新时间，而又不会重复显示？  </p>
-<blockquote>
-<p>这里为了避免item的错乱，显然要将holder和position进行绑定，只有对应上，才不会导致item的错乱。这里直接用notifyDataChanged()来刷新数据，也就是当时间每过去一秒就是刷新一次，来更新每个item上的数据</p>
-</blockquote>
-<p>4.性能优化问题？</p>
-<blockquote>
-<p>这里主要是说更新的问题，使用<code>notifyDataChanged()</code>来每次都更新数据，当在滑动的时候就会导致页面的卡顿，这是因为滑动的时候，数据同时也在刷新。解决方法：只有当页面处于idle时才会去更新时间。</p>
-</blockquote>
-</blockquote>
-<h1 id="2-定时器工具类的实现"><a href="#2-定时器工具类的实现" class="headerlink" title="2.定时器工具类的实现"></a><strong>2.定时器工具类的实现</strong></h1><blockquote>
-<p>定时器的实现：<br><strong>1.这里我直接通过handle来写一个循环，然后，提供一个</strong><code>start()</code>方法来实现一个定时器  </p>
-<pre><code>public BackTimerUtils(Activity context, List&lt;Long&gt; data) {
-    this.mTimeList = data;
-    this.mContext = context;
-}
-private Handler handler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
-        start();
-    }
-}
-public void start() {
-    handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            handler.sendEmptyMessage(0);
-            handleListTime();
-        }
-    }, 1000);
-}
-</code></pre><blockquote>
-<p>这里的  <code>List&lt;Long&gt; data（）</code>主要是需要接收一个每item剩余的时间(这里都是毫秒数)，也就是每个item从哪个时间 点开始倒计时。</p>
-</blockquote>
-<p><strong>2.写一个接口，让需要倒计时的地方来监听此定时器接收更新</strong></p>
-<pre><code>    public interface TimerListener {
-    void timeData(List&lt;Long&gt; data);
-}
-public void setTimeListener(TimerListener listener)   {
-    this.mTimerListener = listener;
-}
-private void handleListTime() {
-    if (mTimeList != null) {
-        for (int x = 0; x &lt; mTimeList.size(); x++) {
-            mTimeList.set(x, mTimeList.get(x) - 1000);
-        }
-        if (mTimerListener != null) {
-            mTimerListener.timeData(mTimeList);
-        }
-    }
-}
-</code></pre><blockquote>
-<p>这里有<code>handleListTime()</code>方法主要是把集合里的数据都减去1秒后，再通过接口将此集合回调给需要更新的地方。  </p>
-</blockquote>
-<p><strong>3.提供一个方法将毫秒数转换成分和秒</strong></p>
-<pre><code>public void upDateTimeToView(final BaseAdapter.BaseViewHoder hoder, Long mTime) {
-    if (mTime / (1000 * 60) &gt;= 0) {
-        currentMinute = (int) (mTime / (1000 * 60));
-        if (String.valueOf(currentMinute).length() &lt; 2)
-            currentStringMinute = &quot;0&quot; + currentMinute;
-        else
-            currentStringMinute = currentMinute + &quot;&quot;;
-    } else
-        currentStringMinute = &quot;00&quot;;
-    if ((mTime % (1000 * 60)) / 1000 &gt;= 0) {
-        currentSecond = (int) ((mTime % (1000 * 60)) / 1000);
-        if (String.valueOf(currentSecond).length() &lt; 2)
-            currentStringSecond = &quot;0&quot; + currentSecond;
-        else
-            currentStringSecond = currentSecond + &quot;&quot;;
-    } else
-        currentStringSecond = &quot;00&quot;;
-    mContext.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            hoder.order_item_pay_timer_minute.setText(currentStringMinute);
-            hoder.order_item_pay_timer_second.setText(currentStringSecond);
-        }
-    });
-}
-</code></pre><blockquote>
-<p>这个方法使用返回值的方式，会比将view直接传过来更好。更加的通用。</p>
-</blockquote>
-<p>到这里，计时器部分的代码就已经写完了，谁需要用到倒计时，直接将要倒计时的时间传过来就可以了。</p>
-</blockquote>
-<h1 id="3-RecyclerView的Item更新部分"><a href="#3-RecyclerView的Item更新部分" class="headerlink" title="3.RecyclerView的Item更新部分"></a><strong>3.RecyclerView的Item更新部分</strong></h1><blockquote>
-<p>1.注册定时器，获取更改后的数据进行更新</p>
-<pre><code>  @Override
-public void timeData(List&lt;Long&gt; data) {        
-        mTimeList = data;
-        notifyDataSetChanged();        
-}
-</code></pre><p>通过<code>mTimeList</code>变量来记录数据，并通过<code>notifyDataSetChanged（）</code>来刷新列表<br>2.在BindViewHolder中根据holder和position来获取每个item对应的数据，并更新</p>
-<pre><code>if (mTimeList != null &amp;&amp; mTimeList.size() &gt;= position - 1)
-    mTimerUtils.upDateTimeToView(holder, mTimeList.get(position));    
-</code></pre><p>这样子，倒计时就会正确的显示在每个相对应的item上了.</p>
-</blockquote>
-<h1 id="4-优化部分"><a href="#4-优化部分" class="headerlink" title="4.优化部分"></a><strong>4.优化部分</strong></h1><blockquote>
-<p>完成上面的操作，主体功能已经大致完成了，倒计时也可以正常运转了。可是当滑动的时候，界面非常的卡顿，不应该啊，这里又没有非常复杂的ui展示，怎么会这么卡呢？原来是在滑动的过程中，我们去更新的ui。需要停止这样的操作行为 。<br>&nbsp;&nbsp;&nbsp; &nbsp;我们通过对recyclerView滑动事件进行监听，通过一个标志位来设置相应的状态，以保证只有在recyclerView处于idle状态时，才去更新时间。</p>
-<pre><code>@Override
-protected void handleScrollChanged(RecyclerView recyclerView, int newState) {
-    switch (newState) {
-        case RecyclerView.SCROLL_STATE_IDLE:
-            isIdle = true;
-            break;
-        case RecyclerView.SCROLL_STATE_DRAGGING:
-            isIdle = false;
-            break;
-        case RecyclerView.SCROLL_STATE_SETTLING:
-            isIdle = false;
-            break;
-    }
-}
-
-@Override
-public void timeData(List&lt;Long&gt; data) {
-    if (isIdle) { //如果是在idle状态 才去刷新数据
-        mTimeList = data;
-        notifyDataSetChanged();
-    }
-}
-</code></pre><p>这样处理后，会发现item在滑动过程中明显顺畅了。。</p>
-</blockquote>
-<p>到这里整个倒计时的处理就已经完成了。</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/31.png" alt="图1"><br><a id="more"></a></p>
 
       
     </div>
@@ -409,17 +272,13 @@ public void timeData(List&lt;Long&gt; data) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/02/Android实现全局弹窗的三种方式/" rel="next" title="Android实现全局弹窗的三种方式">
-                <i class="fa fa-chevron-left"></i> Android实现全局弹窗的三种方式
+              <a href="/2017/05/19/设计模式之工厂模式/" rel="next" title="设计模式之工厂模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之工厂模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/17/Retrofit-RxJava简单封装-让网络请求变得如此简单/" rel="prev" title="Retrofit+RxJava简单封装-让网络请求变得如此简单">
-                Retrofit+RxJava简单封装-让网络请求变得如此简单 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -445,8 +304,8 @@ public void timeData(List&lt;Long&gt; data) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/12/RecyclerView每个Item展示倒计时/"
-           data-title="RecyclerView每个Item展示倒计时" data-url="http://yoursite.com/2016/03/12/RecyclerView每个Item展示倒计时/">
+      <div class="ds-thread" data-thread-key="2017/05/22/设计模式之单例设计模式/"
+           data-title="设计模式之单例设计模式" data-url="http://yoursite.com/2017/05/22/设计模式之单例设计模式/">
       </div>
     
   </div>
@@ -545,7 +404,7 @@ public void timeData(List&lt;Long&gt; data) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-需求分析"><span class="nav-text">1.需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-定时器工具类的实现"><span class="nav-text">2.定时器工具类的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-RecyclerView的Item更新部分"><span class="nav-text">3.RecyclerView的Item更新部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-优化部分"><span class="nav-text">4.优化部分</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
