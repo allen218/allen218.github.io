@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/27.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/29.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/30.png">
-<meta property="og:updated_time" content="2017-05-21T15:12:31.000Z">
+<meta property="og:updated_time" content="2017-05-22T15:01:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之工厂模式">
 <meta name="twitter:description">
@@ -427,6 +427,102 @@ public class Orange implements Fruit {
 </code></pre><p><strong>抽象工厂的UML图:</strong>  </p>
 <p><img src="/uploads/img/AndroidAdvanceDevelop/8/30.png" alt="img1"></p>
 <p>这里引入了颜色作为一类产品，也就是uml图里除了有水果的层级结构外，多了一类颜色的层级结构。而由一类工厂的层级结构来解决两类层级结构的问题。每一个具体的工厂，分别由两个方法组成，而这两个方法分别为两个不同类的层级结构创建对象，而组成产品簇。也就是具体的工厂，实际上负责一类产品簇对象的创建。</p>
+<p>新增加的颜色类的代码结构为:</p>
+<pre><code>public interface Color {
+    void currentColor();
+}
+
+public class GreenColor implements Color {
+    @Override
+    public void currentColor() {
+        System.out.println(&quot;Green color&quot;);
+    }
+}
+
+
+public class RedColor implements Color {
+    @Override
+    public void currentColor() {
+        System.out.println(&quot;red color&quot;);
+    }
+}
+
+
+public class YellowColor implements Color {
+    @Override
+    public void currentColor() {
+        System.out.println(&quot;Yellow color&quot;);
+    }
+}
+</code></pre><p>对应的工厂的代码为:</p>
+<pre><code>public abstract class AbstractFactory {
+    protected abstract Fruit createFruit();
+
+    protected abstract Color getColor();
+}
+
+public class GreenPearFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Pear();
+    }
+
+    @Override
+    protected Color getColor() {
+        return new GreenColor();
+    }
+}
+
+public class RedAppleFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Apple();
+    }
+
+    @Override
+    protected Color getColor() {
+        return new RedColor();
+    }
+}
+
+public class YellowBananaFactory extends AbstractFactory {
+    @Override
+    protected Fruit createFruit() {
+        return new Banana();
+    }
+
+    @Override
+    protected Color getColor() {
+        return new YellowColor();
+    }
+}
+</code></pre><p>最终使用工厂的场景类为:</p>
+<pre><code>public class Client {
+    public static void main(String[] args) {
+        RedAppleFactory redAppleFactory = new RedAppleFactory();
+        Fruit fruit = redAppleFactory.createFruit();
+        fruit.grow();
+        fruit.harvest();
+
+        Color appColor = redAppleFactory.getColor();
+        appColor.currentColor();
+    }
+}
+</code></pre><p>打印结果为:</p>
+<pre><code>apple is growing
+apple is harvested
+red color
+</code></pre><p>到这里，我们就完成了使用一个层级结构的工厂类解决了两种不同类型，各自拥有其特定层级结构的类创建包含特定关系的一组对象。</p>
+<h3 id="抽象工厂的优点"><a href="#抽象工厂的优点" class="headerlink" title="抽象工厂的优点"></a>抽象工厂的优点</h3><blockquote>
+<ol>
+<li>使得纵向扩展变得容易，如果添加一种水果或者颜色，只需要创建一个颜色和水果组成的工厂类继承自抽象工厂，就完成了对象的新增。</li>
+</ol>
+</blockquote>
+<h3 id="抽象工厂的缺点"><a href="#抽象工厂的缺点" class="headerlink" title="抽象工厂的缺点"></a>抽象工厂的缺点</h3><blockquote>
+<ol>
+<li>如果需要横向再多扩展一个新的类型，那么，就需要扩展一个新的类型，并修改抽象工厂里的方法，这样就违反了开闭原则，而且，代码量也成倍增加。</li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -576,7 +672,7 @@ public class Orange implements Fruit {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的扩展"><span class="nav-text">简单工厂的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法定义"><span class="nav-text">工厂方法定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的扩展"><span class="nav-text">工厂方法的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法存在的问题"><span class="nav-text">工厂方法存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的优点"><span class="nav-text">工厂方法的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的缺点"><span class="nav-text">工厂方法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产品簇"><span class="nav-text">产品簇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂模式定义"><span class="nav-text">抽象工厂模式定义</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的扩展"><span class="nav-text">简单工厂的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的优点"><span class="nav-text">简单工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂的缺点"><span class="nav-text">简单工厂的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂方法模式"><span class="nav-text">工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法定义"><span class="nav-text">工厂方法定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的扩展"><span class="nav-text">工厂方法的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法存在的问题"><span class="nav-text">工厂方法存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的优点"><span class="nav-text">工厂方法的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法的缺点"><span class="nav-text">工厂方法的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产品簇"><span class="nav-text">产品簇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂模式定义"><span class="nav-text">抽象工厂模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂的优点"><span class="nav-text">抽象工厂的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂的缺点"><span class="nav-text">抽象工厂的缺点</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
