@@ -59,16 +59,16 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式之单例设计模式">
-<meta property="og:url" content="http://yoursite.com/2017/05/22/设计模式之单例设计模式/index.html">
+<meta property="og:title" content="AOP之AspectJ在Android中的使用">
+<meta property="og:url" content="http://yoursite.com/2017/05/30/AOP之AspectJ在Android中的使用/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
-<meta property="og:updated_time" content="2017-05-30T07:18:23.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/32.png">
+<meta property="og:updated_time" content="2017-05-30T07:31:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式之单例设计模式">
+<meta name="twitter:title" content="AOP之AspectJ在Android中的使用">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/32.png">
 
 
 
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title> 设计模式之单例设计模式 | Allen'Notes </title>
+  <title> AOP之AspectJ在Android中的使用 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +208,7 @@
             
             
               
-                设计模式之单例设计模式
+                AOP之AspectJ在Android中的使用
               
             
           </h1>
@@ -220,8 +220,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-22T23:09:55+08:00" content="2017-05-22">
-              2017-05-22
+            <time itemprop="dateCreated" datetime="2017-05-30T15:29:11+08:00" content="2017-05-30">
+              2017-05-30
             </time>
           </span>
 
@@ -231,8 +231,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/05/22/设计模式之单例设计模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/22/设计模式之单例设计模式/" itemprop="commentsCount"></span>
+                <a href="/2017/05/30/AOP之AspectJ在Android中的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/AOP之AspectJ在Android中的使用/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -254,151 +254,8 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/31.png" alt="图1"><br><a id="more"></a></p>
-<p>单例模式可以说是我们开发中用得最多的一种创建型设计模式了。当我们想控制某个类在内存中存在对象的个数；一个系统可以同时存在多个打印的任务，但是同时只能有一个对象被打印；一个系统只能有一个窗口或者一个资源管理器；一个程序只能有一个计数器时….我们都需要使用单例模式来解决这类问题。</p>
-<p>我们常用的单例有饿汉式，懒汉式，DCL(双重效验锁)，枚举实现和静态内部类这5种实现方式。</p>
-<h2 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h2><p>饿汉式，故名思义，因为饿嘛，所以在类被加载到内存的时候，对象就已经被创建好了，而不管是否马上需要使用它。其生命周期与类保持一致。</p>
-<h3 id="饿汉式通用写法"><a href="#饿汉式通用写法" class="headerlink" title="饿汉式通用写法"></a>饿汉式通用写法</h3><p>下面是饿汉式的通用写法:</p>
-<pre><code>public class SingleTon {
-    public static final SingleTon single = new SingleTon();
-
-    private SingleTon() {
-    }
-
-    public static SingleTon getInstance() {
-        return single;
-    }
-}
-</code></pre><h3 id="饿汉式的缺点"><a href="#饿汉式的缺点" class="headerlink" title="饿汉式的缺点"></a>饿汉式的缺点</h3><blockquote>
-<ol>
-<li>在类加载时，完成了对象的初始化，所以类的加载稍慢，但对象的加载是非常快的，是一个以空间换时间的做法。</li>
-<li>当类加载完成时，对象也就被创建并缓存在内存里了，不管是否需要使用，不满足按需使用的原则。</li>
-</ol>
-</blockquote>
-<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><p>懒汉式，因为它懒，所以，在类被加载的时候，并没有立刻创建对象，而是当需要时，调用相应方法时，才会创建对象，与饿汉式刚好相反。类的加载比较快，而对象的加载会慢点，因为要在调用方法时，才会去new对象。</p>
-<h3 id="懒汉式的通用写法"><a href="#懒汉式的通用写法" class="headerlink" title="懒汉式的通用写法"></a>懒汉式的通用写法</h3><pre><code>public class SingleTon {
-    public static SingleTon single = null;
-
-    private SingleTon() {
-    }
-
-    public static SingleTon getInstance() {
-        if (single == null) {
-            single = new SingleTon();
-        }
-        return single;
-    }
-}
-</code></pre><h3 id="懒汉式的缺点"><a href="#懒汉式的缺点" class="headerlink" title="懒汉式的缺点"></a>懒汉式的缺点</h3><blockquote>
-<ol>
-<li>懒汉式是以时间换空间的一种做法，真正需要的时候，才去创建对象，创建对象也是需要时间的，所以，会比饿汉式获取对象的时候稍慢。</li>
-<li>多线程访问是不安全的，因为创建对象时需要时间的，正在创建对象的时候，如果有其它线程也执行了<code>getInstance</code>方法，而对象还没有创建成功的话，上面的判断就失去了作用，而让其它线程也创建了该类的实现。</li>
-<li>对于2的做法可以对方法使用<code>synchronized</code>方法同步的方式，来做线程同步，而这样做，效率比较低。</li>
-</ol>
-</blockquote>
-<h2 id="DCL-双重效验锁机制"><a href="#DCL-双重效验锁机制" class="headerlink" title="DCL(双重效验锁机制)"></a>DCL(双重效验锁机制)</h2><p>在懒汉式的基础上做了对多线程的支持，通过两重判断和同步代码块来保证多线程的同步问题。99.99%的多线程环境下，都不会有问题。而如果出现问题，也是很难重现，以及排查错误的。</p>
-<h3 id="DCL的通用写法"><a href="#DCL的通用写法" class="headerlink" title="DCL的通用写法"></a>DCL的通用写法</h3><pre><code>public class SingleTon {
-    public static SingleTon single = null;
-
-    private SingleTon() {
-    }
-
-    public static SingleTon getInstance() {
-        if (single == null) {
-            synchronized (SingleTon.class) {
-                if (single == null) {
-                    single = new SingleTon();
-                }
-            }
-        }
-        return single;
-    }
-}
-</code></pre><p>这里的两层判断分别代码的意思:</p>
-<blockquote>
-<ol>
-<li>第一层判断主要是为了避免不必要的同步。也就是说当对象已经创建了，就不必再执行同步代码块来消耗不必要的时间了。</li>
-<li>第二层主要是为了当对象为null时创建该对象的实例。</li>
-</ol>
-</blockquote>
-<h3 id="DCL的缺点"><a href="#DCL的缺点" class="headerlink" title="DCL的缺点"></a>DCL的缺点</h3><blockquote>
-<ol>
-<li>DCL并没有明显的缺点，它是一个综合的结果。但是在高并发的情况下，会有一定机率出现问题。</li>
-</ol>
-</blockquote>
-<h3 id="为什么DCL的写法存在问题"><a href="#为什么DCL的写法存在问题" class="headerlink" title="为什么DCL的写法存在问题"></a>为什么DCL的写法存在问题</h3><p>我们先来说说创建对象时，jvm的大致工作。</p>
-<blockquote>
-<ol>
-<li>给SingleTon的实例分配内存。</li>
-<li>初始化SingleTon的构造器。</li>
-<li>将instance对象指向分配的内存空间</li>
-</ol>
-</blockquote>
-<p>由于<code>java</code>编译器允许处理器乱序执行(out-of-order)，以及JDK1.5之前<code>JMM(java memory model)</code>中<code>Cache</code>、寄存器到主内存回写的顺序，上面的第二点和第三点无法得到保证。好就是说，有可能执行的顺序是123，或者132。而如果是执行132的话，当一个线程执行的顺序是132时，当它执行到了3，这时，instance对象已经指定了1中分配的地址，已经不为null了，而此时另一个线程正好执行同样的代码时，因为<code>instance</code>已经不为<code>null</code>了，所以，就直接使用了此对象，结果，因为此对象根本还未创建完毕，而导致报错。</p>
-<p>这样的问题是很难被发现的。实际上在<code>java1.5</code>之后，调整了<code>JMM</code>,具体化的<code>volatile</code>关键字。因此只要在<code>java1.5</code>之后，将<code>instance</code>定义成<code>private volatile static SingleTon singleTon = null</code>.就可以保证每次获取<code>instance</code>都去主内存里读取，就可以解决<code>DCL</code>带来的问题。</p>
-<h3 id="优化后的DCL代码"><a href="#优化后的DCL代码" class="headerlink" title="优化后的DCL代码"></a>优化后的DCL代码</h3><pre><code>public class SingleTon {
-    public volatile static SingleTon single = null;
-
-    private SingleTon() {
-    }
-
-    public static SingleTon getInstance() {
-        if (single == null) {
-            synchronized (SingleTon.class) {
-                if (single == null) {
-                    single = new SingleTon();
-                }
-            }
-        }
-        return single;
-    }
-}
-</code></pre><h2 id="静态内部类实现"><a href="#静态内部类实现" class="headerlink" title="静态内部类实现"></a>静态内部类实现</h2><p>静态内部类的实现，实际上是对<code>DCL</code>的另一种写法，它规避了<code>DCL</code>可能带来的潜在麻烦，而又拥有<code>DCL</code>按需加载，以及多线程安全的优点。是一种比<code>DCL</code>更好的实现方式。一般会推荐此写法。</p>
-<h3 id="静态内部类通用写法"><a href="#静态内部类通用写法" class="headerlink" title="静态内部类通用写法"></a>静态内部类通用写法</h3><pre><code>public class SingleTon {
-
-    private static class Inner {
-        public static final SingleTon single = new SingleTon();
-    }
-
-    private SingleTon() {
-    }
-
-    public static SingleTon getInstance() {
-
-        return Inner.single;
-    }
-}
-</code></pre><h3 id="静态内部类的缺点"><a href="#静态内部类的缺点" class="headerlink" title="静态内部类的缺点"></a>静态内部类的缺点</h3><blockquote>
-<p>无</p>
-</blockquote>
-<h2 id="反射的问题"><a href="#反射的问题" class="headerlink" title="反射的问题"></a>反射的问题</h2><p>以上几种实现，实际上都不能保证对象在内存中的唯一性，因为有反射的存在。当使用反射时，上面的实现都将失去其作用。</p>
-<p>如果使用上面的方法使用单例，只能靠代码规范来约束使用者了。而如果只在内部使用的话，我们通过代码规范一般是可行的。但如果是对外的第三方接入系统的话，可能有一定机率出现问题。</p>
-<p>那有没有一种真正的能保证内存中单一实例的实现方式呢？有，使用枚举。</p>
-<h2 id="枚举实现单例"><a href="#枚举实现单例" class="headerlink" title="枚举实现单例"></a>枚举实现单例</h2><p>由于枚举的实现问题，造就了其天然支持多线程并发的特性，我们用其来实现单例是最好不过的事情了。</p>
-<pre><code>public enum SingleEnum {
-    SingleTon {
-        private int a = 0;
-
-        @Override
-        public SingleEnum getSingleTon() {
-            return SingleTon;
-        }
-
-
-        /**
-         * 测试方法
-         */
-        public void testMethod() {
-        }
-    };
-
-    public abstract SingleEnum getSingleTon();
-
-    private SingleEnum() {
-    }
-}
-</code></pre><p>每一个枚举变量，实际上都是由类所组成的。而每个类里面即可以写变量，也可以写方法。所以，使用枚举来实现单例，也是一个不错的做法。</p>
-<p>关于单例这种设计模式的几种写法，就写到这里了，在这里我推荐使用第四种静态内部类的方式来实现单例，而高并发的极端情况，如果不嫌麻烦，也可以使用枚举的方式来实现。</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/32.png" alt="图1"></p>
+<a id="more"></a>
 
       
     </div>
@@ -416,17 +273,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/19/设计模式之工厂模式/" rel="next" title="设计模式之工厂模式">
-                <i class="fa fa-chevron-left"></i> 设计模式之工厂模式
+              <a href="/2017/05/22/设计模式之单例设计模式/" rel="next" title="设计模式之单例设计模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之单例设计模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/30/AOP之AspectJ在Android中的使用/" rel="prev" title="AOP之AspectJ在Android中的使用">
-                AOP之AspectJ在Android中的使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -452,8 +305,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/22/设计模式之单例设计模式/"
-           data-title="设计模式之单例设计模式" data-url="http://yoursite.com/2017/05/22/设计模式之单例设计模式/">
+      <div class="ds-thread" data-thread-key="2017/05/30/AOP之AspectJ在Android中的使用/"
+           data-title="AOP之AspectJ在Android中的使用" data-url="http://yoursite.com/2017/05/30/AOP之AspectJ在Android中的使用/">
       </div>
     
   </div>
@@ -552,7 +405,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-text">饿汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式通用写法"><span class="nav-text">饿汉式通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式的缺点"><span class="nav-text">饿汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-text">懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的通用写法"><span class="nav-text">懒汉式的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的缺点"><span class="nav-text">懒汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL-双重效验锁机制"><span class="nav-text">DCL(双重效验锁机制)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的通用写法"><span class="nav-text">DCL的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的缺点"><span class="nav-text">DCL的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么DCL的写法存在问题"><span class="nav-text">为什么DCL的写法存在问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化后的DCL代码"><span class="nav-text">优化后的DCL代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类实现"><span class="nav-text">静态内部类实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类通用写法"><span class="nav-text">静态内部类通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类的缺点"><span class="nav-text">静态内部类的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的问题"><span class="nav-text">反射的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举实现单例"><span class="nav-text">枚举实现单例</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
