@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
-<meta property="og:updated_time" content="2017-05-30T05:55:03.000Z">
+<meta property="og:updated_time" content="2017-05-30T06:29:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例设计模式">
 <meta name="twitter:description">
@@ -269,7 +269,7 @@
         return single;
     }
 }
-</code></pre><h3 id="饿汉式的缺点"><a href="#饿汉式的缺点" class="headerlink" title="饿汉式的缺点:"></a>饿汉式的缺点:</h3><blockquote>
+</code></pre><h3 id="饿汉式的缺点"><a href="#饿汉式的缺点" class="headerlink" title="饿汉式的缺点"></a>饿汉式的缺点</h3><blockquote>
 <ol>
 <li>在类加载时，完成了对象的初始化，所以类的加载稍慢，但对象的加载是非常快的，是一个以空间换时间的做法。</li>
 <li>当类加载完成时，对象也就被创建并缓存在内存里了，不管是否需要使用，不满足按需使用的原则。</li>
@@ -296,7 +296,64 @@
 <li>对于2的做法可以对方法使用<code>synchronized</code>方法同步的方式，来做线程同步，而这样做，效率比较低。</li>
 </ol>
 </blockquote>
+<h2 id="DCL-双重效验锁机制"><a href="#DCL-双重效验锁机制" class="headerlink" title="DCL(双重效验锁机制)"></a>DCL(双重效验锁机制)</h2><p>在懒汉式的基础上做了对多线程的支持，通过两重判断和同步代码块来保证多线程的同步问题。99.99%的多线程环境下，都不会有问题。而如果出现问题，也是很难重现，以及排查错误的。</p>
+<h3 id="DCL的通用写法"><a href="#DCL的通用写法" class="headerlink" title="DCL的通用写法"></a>DCL的通用写法</h3><pre><code>public class SingleTon {
+    public static SingleTon single = null;
 
+    private SingleTon() {
+    }
+
+    public static SingleTon getInstance() {
+        if (single == null) {
+            synchronized (SingleTon.class) {
+                if (single == null) {
+                    single = new SingleTon();
+                }
+            }
+        }
+        return single;
+    }
+}
+</code></pre><p>这里的两层判断分别代码的意思:</p>
+<blockquote>
+<ol>
+<li>第一层判断主要是为了避免不必要的同步。也就是说当对象已经创建了，就不必再执行同步代码块来消耗不必要的时间了。</li>
+<li>第二层主要是为了当对象为null时创建该对象的实例。</li>
+</ol>
+</blockquote>
+<h3 id="DCL的缺点"><a href="#DCL的缺点" class="headerlink" title="DCL的缺点:"></a>DCL的缺点:</h3><blockquote>
+<ol>
+<li>DCL并没有明显的缺点，它是一个综合的结果。但是在高并发的情况下，会有一定机率出现问题。</li>
+</ol>
+</blockquote>
+<h3 id="为什么DCL的写法存在问题"><a href="#为什么DCL的写法存在问题" class="headerlink" title="为什么DCL的写法存在问题"></a>为什么DCL的写法存在问题</h3><p>我们先来说说创建对象时，jvm的大致工作。</p>
+<blockquote>
+<ol>
+<li>给SingleTon的实例分配内存。</li>
+<li>初始化SingleTon的构造器。</li>
+<li>将instance对象指向分配的内存空间</li>
+</ol>
+</blockquote>
+<p>由于<code>java</code>编译器允许处理器乱序执行(out-of-order)，以及JDK1.5之前<code>JMM(java memory model)</code>中<code>Cache</code>、寄存器到主内存回写的顺序，上面的第二点和第三点无法得到保证。好就是说，有可能执行的顺序是123，或者132。而如果是执行132的话，当一个线程执行的顺序是132时，当它执行到了3，这时，instance对象已经指定了1中分配的地址，已经不为null了，而此时另一个线程正好执行同样的代码时，因为<code>instance</code>已经不为<code>null</code>了，所以，就直接使用了此对象，结果，因为此对象根本还未创建完毕，而导致报错。</p>
+<p>这样的问题是很难被发现的。实际上在<code>java1.5</code>之后，调整了<code>JMM</code>,具体化的<code>volatile</code>关键字。因此只要在<code>java1.5</code>之后，将<code>instance</code>定义成<code>private volatile static SingleTon singleTon = null</code>.就可以保证每次获取<code>instance</code>都去主内存里读取，就可以解决<code>DCL</code>带来的问题。</p>
+<h3 id="优化后的DCL代码"><a href="#优化后的DCL代码" class="headerlink" title="优化后的DCL代码"></a>优化后的DCL代码</h3><pre><code>public class SingleTon {
+    public volatile static SingleTon single = null;
+
+    private SingleTon() {
+    }
+
+    public static SingleTon getInstance() {
+        if (single == null) {
+            synchronized (SingleTon.class) {
+                if (single == null) {
+                    single = new SingleTon();
+                }
+            }
+        }
+        return single;
+    }
+}
+</code></pre>
       
     </div>
 
@@ -445,7 +502,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-text">饿汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式通用写法"><span class="nav-text">饿汉式通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式的缺点"><span class="nav-text">饿汉式的缺点:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-text">懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的通用写法"><span class="nav-text">懒汉式的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的缺点"><span class="nav-text">懒汉式的缺点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-text">饿汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式通用写法"><span class="nav-text">饿汉式通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式的缺点"><span class="nav-text">饿汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-text">懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的通用写法"><span class="nav-text">懒汉式的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的缺点"><span class="nav-text">懒汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL-双重效验锁机制"><span class="nav-text">DCL(双重效验锁机制)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的通用写法"><span class="nav-text">DCL的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的缺点"><span class="nav-text">DCL的缺点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么DCL的写法存在问题"><span class="nav-text">为什么DCL的写法存在问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化后的DCL代码"><span class="nav-text">优化后的DCL代码</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
