@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/31.png">
-<meta property="og:updated_time" content="2017-05-30T06:29:35.000Z">
+<meta property="og:updated_time" content="2017-05-30T07:18:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例设计模式">
 <meta name="twitter:description">
@@ -321,7 +321,7 @@
 <li>第二层主要是为了当对象为null时创建该对象的实例。</li>
 </ol>
 </blockquote>
-<h3 id="DCL的缺点"><a href="#DCL的缺点" class="headerlink" title="DCL的缺点:"></a>DCL的缺点:</h3><blockquote>
+<h3 id="DCL的缺点"><a href="#DCL的缺点" class="headerlink" title="DCL的缺点"></a>DCL的缺点</h3><blockquote>
 <ol>
 <li>DCL并没有明显的缺点，它是一个综合的结果。但是在高并发的情况下，会有一定机率出现问题。</li>
 </ol>
@@ -353,7 +353,53 @@
         return single;
     }
 }
-</code></pre>
+</code></pre><h2 id="静态内部类实现"><a href="#静态内部类实现" class="headerlink" title="静态内部类实现"></a>静态内部类实现</h2><p>静态内部类的实现，实际上是对<code>DCL</code>的另一种写法，它规避了<code>DCL</code>可能带来的潜在麻烦，而又拥有<code>DCL</code>按需加载，以及多线程安全的优点。是一种比<code>DCL</code>更好的实现方式。一般会推荐此写法。</p>
+<h3 id="静态内部类通用写法"><a href="#静态内部类通用写法" class="headerlink" title="静态内部类通用写法"></a>静态内部类通用写法</h3><pre><code>public class SingleTon {
+
+    private static class Inner {
+        public static final SingleTon single = new SingleTon();
+    }
+
+    private SingleTon() {
+    }
+
+    public static SingleTon getInstance() {
+
+        return Inner.single;
+    }
+}
+</code></pre><h3 id="静态内部类的缺点"><a href="#静态内部类的缺点" class="headerlink" title="静态内部类的缺点"></a>静态内部类的缺点</h3><blockquote>
+<p>无</p>
+</blockquote>
+<h2 id="反射的问题"><a href="#反射的问题" class="headerlink" title="反射的问题"></a>反射的问题</h2><p>以上几种实现，实际上都不能保证对象在内存中的唯一性，因为有反射的存在。当使用反射时，上面的实现都将失去其作用。</p>
+<p>如果使用上面的方法使用单例，只能靠代码规范来约束使用者了。而如果只在内部使用的话，我们通过代码规范一般是可行的。但如果是对外的第三方接入系统的话，可能有一定机率出现问题。</p>
+<p>那有没有一种真正的能保证内存中单一实例的实现方式呢？有，使用枚举。</p>
+<h2 id="枚举实现单例"><a href="#枚举实现单例" class="headerlink" title="枚举实现单例"></a>枚举实现单例</h2><p>由于枚举的实现问题，造就了其天然支持多线程并发的特性，我们用其来实现单例是最好不过的事情了。</p>
+<pre><code>public enum SingleEnum {
+    SingleTon {
+        private int a = 0;
+
+        @Override
+        public SingleEnum getSingleTon() {
+            return SingleTon;
+        }
+
+
+        /**
+         * 测试方法
+         */
+        public void testMethod() {
+        }
+    };
+
+    public abstract SingleEnum getSingleTon();
+
+    private SingleEnum() {
+    }
+}
+</code></pre><p>每一个枚举变量，实际上都是由类所组成的。而每个类里面即可以写变量，也可以写方法。所以，使用枚举来实现单例，也是一个不错的做法。</p>
+<p>关于单例这种设计模式的几种写法，就写到这里了，在这里我推荐使用第四种静态内部类的方式来实现单例，而高并发的极端情况，如果不嫌麻烦，也可以使用枚举的方式来实现。</p>
+
       
     </div>
 
@@ -502,7 +548,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-text">饿汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式通用写法"><span class="nav-text">饿汉式通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式的缺点"><span class="nav-text">饿汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-text">懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的通用写法"><span class="nav-text">懒汉式的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的缺点"><span class="nav-text">懒汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL-双重效验锁机制"><span class="nav-text">DCL(双重效验锁机制)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的通用写法"><span class="nav-text">DCL的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的缺点"><span class="nav-text">DCL的缺点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么DCL的写法存在问题"><span class="nav-text">为什么DCL的写法存在问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化后的DCL代码"><span class="nav-text">优化后的DCL代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式"><span class="nav-text">饿汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式通用写法"><span class="nav-text">饿汉式通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉式的缺点"><span class="nav-text">饿汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式"><span class="nav-text">懒汉式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的通用写法"><span class="nav-text">懒汉式的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉式的缺点"><span class="nav-text">懒汉式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL-双重效验锁机制"><span class="nav-text">DCL(双重效验锁机制)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的通用写法"><span class="nav-text">DCL的通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL的缺点"><span class="nav-text">DCL的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么DCL的写法存在问题"><span class="nav-text">为什么DCL的写法存在问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化后的DCL代码"><span class="nav-text">优化后的DCL代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类实现"><span class="nav-text">静态内部类实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类通用写法"><span class="nav-text">静态内部类通用写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类的缺点"><span class="nav-text">静态内部类的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的问题"><span class="nav-text">反射的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举实现单例"><span class="nav-text">枚举实现单例</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
