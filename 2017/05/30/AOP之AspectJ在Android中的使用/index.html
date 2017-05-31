@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/33.png">
-<meta property="og:updated_time" content="2017-05-30T11:04:30.000Z">
+<meta property="og:updated_time" content="2017-05-31T16:06:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AOP之AspectJ在Android中的使用">
 <meta name="twitter:description">
@@ -261,13 +261,122 @@
 <p>使用<code>AOP</code>语法，我们能够很容易的写出<code>AOP</code>相关的代码；同时，<code>AspectJ</code>支持<code>android</code>.当然这种支持并不是官方的，只是网上有大牛基于<code>gradle</code>编写了一些脚本，让其可以运行在<code>gradle</code>管理的<code>android</code>项目中。<code>github</code>上也有相应的开源库可以直接引用，相当的方便。</p>
 <h2 id="AspectJ的术语"><a href="#AspectJ的术语" class="headerlink" title="AspectJ的术语"></a>AspectJ的术语</h2><blockquote>
 <ol>
-<li>joinPoint:执行点，一个类中并不是所有的地方都是可以被当作切面来插入代码的，那些可以被当作切面插入代码的地方，就称之为执行点。比如：调用方法前，调用方法后，或者方法执行前，方法执行后以及获取某个变量或者设置某个变量都是可以称为程序的执行点的。</li>
-<li>pointcut:切入点,是一个基于正则表达式的表达式，其本身是一个表达式，只是通过这个表达式，可以选取程序中我们感兴趣的执行点或者程序执行点的集合。</li>
+<li>joinPoint: 执行点，一个类中并不是所有的地方都是可以被当作切面来插入代码的，那些可以被当作切面插入代码的地方，就称之为执行点。比如：调用方法前，调用方法后，或者方法执行前，方法执行后以及获取某个变量或者设置某个变量都是可以称为程序的执行点的。</li>
+<li>pointcut: 切入点,是一个基于正则表达式的表达式，其本身是一个表达式，只是通过这个表达式，可以选取程序中我们感兴趣的执行点或者程序执行点的集合。</li>
 <li>advice:在通过<code>pointcut</code>选取出来的执行点上要执行的操作，逻辑。<code>advice</code>只是一个泛称，它具体所指的主要是<code>Before</code>、<code>After</code>、<code>AfterReturning</code>、<code>AfterThrowing</code>、<code>Around</code>等5类通知对象。</li>
-<li>aspect</li>
-<li>target</li>
 </ol>
 </blockquote>
+<h2 id="Advice通知类型的说明"><a href="#Advice通知类型的说明" class="headerlink" title="Advice通知类型的说明"></a>Advice通知类型的说明</h2><blockquote>
+<ol>
+<li>Before: 在方法执行之前执行要插入的代码</li>
+<li>After:  在方法执行之后执行要插入的代码</li>
+<li><p>AfterReturning: 在方法执行后，返回一个结果再执行，如果没结果，用此修辞符修辞是不会执行的。</p>
+<pre><code>@AfterReturning(value = &quot;debugTraceMethod()&quot;, returning = &quot;result&quot;)
+    public void callMethod(JoinPoint joinPoint, Object result) {
+        Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;-------&quot; + joinPoint.getTarget() + &quot;-------returnValue:&quot; + result);
+    }
+</code></pre></li>
+<li><p>AfterThrowing:  在方法执行过程中抛出异常后执行，也就是方法执行过程中，如果抛出异常后，才会执行此切面方法。</p>
+<pre><code>@AfterThrowing(value = &quot;debugTraceMethod()&quot;)
+public void callMethod(JoinPoint joinPoint) {
+    Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;-------&quot; + joinPoint.getTarget());
+}
+</code></pre></li>
+<li><p>Around:  在方法执行前后和抛出异常时执行（前面几种通知的综合）</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="call和execution的说明"><a href="#call和execution的说明" class="headerlink" title="call和execution的说明"></a>call和execution的说明</h2><p>call是在方法被调用前后执行切面的代码,而execution是在方法执行前后执行切面的代码。一个是在方法外执行，一个是在方法内部执行。</p>
+<h2 id="Pointcut切点语法"><a href="#Pointcut切点语法" class="headerlink" title="Pointcut切点语法"></a>Pointcut切点语法</h2><pre><code>@Pointcut(&quot;execution(int com.winbons.sanbot.testaspectj.MainActivity.handleClick(..))&quot;)
+public void callMethod() {
+
+}
+</code></pre><p>上面的代码中,分别有下面意思:</p>
+<pre><code>@pointcut:代表选取执行点的规则表达式
+execution:表示切面代码会在方法执行前后被调用
+int:表示方法的返回值类型  一般使用``*``表示任意返回类型
+com.winbons.sanbot.testaspectj.MainActivity:指定执行点的位置，可以使用正则进行匹配
+.handleClick(..):表示需要执行切面代码的方法名,``(..)``表示参数，这里的点表示任意参数
+</code></pre><h2 id="AspectJ简单示例"><a href="#AspectJ简单示例" class="headerlink" title="AspectJ简单示例"></a>AspectJ简单示例</h2><p>创建一个简单的<code>AspectJ</code>需要做两件事情。</p>
+<blockquote>
+<ol>
+<li>编写<code>pointcut</code>表达式来选取执行点。 </li>
+<li>编写需要插入执行点的切面代码。</li>
+</ol>
+</blockquote>
+<h4 id="1-编写pointcut表达式选取执行点"><a href="#1-编写pointcut表达式选取执行点" class="headerlink" title="1.编写pointcut表达式选取执行点"></a>1.编写<code>pointcut</code>表达式选取执行点</h4><pre><code>@Pointcut(&quot;execution(* com.allen.testaspectj.MainActivity.handleClick(..))&quot;)
+public void methodAspect() {
+
+}
+</code></pre><p>这里选取的是<code>MainActivity</code>中的<code>handleClick</code>带任意参数的方法。</p>
+<pre><code>private void handleClick() {
+    Log.d(&quot;tag&quot;, &quot;onclick&quot;);
+}
+</code></pre><h4 id="2-编写需要插入执行点的切面代码"><a href="#2-编写需要插入执行点的切面代码" class="headerlink" title="2. 编写需要插入执行点的切面代码"></a>2. 编写需要插入执行点的切面代码</h4><pre><code>@Before(&quot;methodAspect()&quot;)
+public void callMethod(JoinPoint joinPoint) {
+    Log.d(&quot;tag&quot;, joinPoint.getTarget() + &quot;-----&quot; + joinPoint.getSignature());
+}
+</code></pre><p>这里使用的<code>Advice</code>类型为<code>Before</code>，也就是在方法执行前先执行切面的代码。这里的打印结果为:</p>
+<pre><code>05-31 11:25:30.065 2564-2564/com.allen.testaspectj D/tag: com.allen.testaspectj.MainActivity@21ef237b-----void com.allen.testaspectj.MainActivity.handleClick()
+05-31 11:25:30.065 2564-2564/com.allen.testaspectj D/tag: onclick
+</code></pre><h4 id="3-精简综合"><a href="#3-精简综合" class="headerlink" title="3. 精简综合"></a>3. 精简综合</h4><p>上面的两个步骤，实际上可以写成下面的一步即可完成执行点的选取和切面代码的编写。</p>
+<pre><code>@Before(&quot;execution(* com.allen.testaspectj.MainActivity.handleClick(..))&quot;)
+public void callMethod(JoinPoint joinPoint) {
+    Log.d(&quot;tag&quot;, joinPoint.getTarget() + &quot;-----&quot; + joinPoint.getSignature());
+}
+</code></pre><p>去看<code>@pointcut</code>，而直接将表达式写在了<code>Advice</code>中的方式也是可行的，而且代码更加的精简。</p>
+<h2 id="自定义PointCut"><a href="#自定义PointCut" class="headerlink" title="自定义PointCut"></a>自定义PointCut</h2><p>除了直接指定路径来选取相应的方法来作为执行点，我们还可以通过自定义的方式来通过写自定义注解的方式来标注<code>JoinPoint</code>。具体的做法分为三步:</p>
+<blockquote>
+<ol>
+<li>写自定义注解</li>
+<li>写切面代码及选取执行点</li>
+<li>在需要植入切面代码的地方使用注解标注</li>
+</ol>
+</blockquote>
+<h4 id="1-写自定义注解"><a href="#1-写自定义注解" class="headerlink" title="1. 写自定义注解"></a>1. 写自定义注解</h4><pre><code>@Retention(RetentionPolicy.CLASS)
+@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+public @interface DebugMethod {
+}
+</code></pre><p>这里主要定义了注解被保留在编译时和此注解的使用目标为构造方法和普通方法。</p>
+<h4 id="2-写切面代码及选取执行点"><a href="#2-写切面代码及选取执行点" class="headerlink" title="2. 写切面代码及选取执行点"></a>2. 写切面代码及选取执行点</h4><pre><code>@Aspect
+public class CustomAspect {
+    @Pointcut(&quot;execution(@com.allen.testaspectj.DebugMethod * *(..))&quot;)
+    public void methodAspect() {
+
+    }
+
+    @Before(&quot;methodAspect()&quot;)
+    public void aspect(JoinPoint joinPoint) {
+        Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;----&quot; + joinPoint.getTarget());
+    }
+}
+</code></pre><p>这里做了两个操作，一个是选取了执行点，这里和简单示例中表达式的不同之处在于:</p>
+<blockquote>
+<ol>
+<li>自定义的pointcut不选取具体的方法，而是直接选择注解类。<code>@com.allen.testaspectj.DebugMethod</code></li>
+<li><code>* *(..)</code>第一个<code>*</code>代表的是方法的返回值为任意类型  第二个<code>*</code>代表方法名为任意类型  <code>(..)</code>代表参数为任意参数即<code>0~n</code>个参数.</li>
+</ol>
+</blockquote>
+<p>另一个操作也就是写了相应的切面代码。</p>
+<h4 id="使用注解进行标注"><a href="#使用注解进行标注" class="headerlink" title="使用注解进行标注"></a>使用注解进行标注</h4><pre><code>@DebugMethod
+private void handleClick() {
+    Log.d(&quot;tag&quot;, &quot;onclick&quot;);
+}
+</code></pre><p>这里直接使用注解标注到需要插入切面代码的方法上即可完成标注。</p>
+<p>运行的结果为:</p>
+<pre><code>05-31 11:49:58.169 24871-24871/com.allen.testaspectj D/tag: void com.allen.testaspectj.MainActivity.handleClick()----com.allen.testaspectj.MainActivity@21ef237b
+05-31 11:49:58.169 24871-24871/com.allen.testaspectj D/tag: onclick
+</code></pre><h2 id="AOP应用"><a href="#AOP应用" class="headerlink" title="AOP应用"></a>AOP应用</h2><blockquote>
+<ol>
+<li>日志</li>
+<li>性能监控</li>
+<li>埋点</li>
+<li>持久化</li>
+<li>数据校验</li>
+<li>缓存</li>
+</ol>
+</blockquote>
+<p>到这里,<code>AspectJ</code>的一般用法已经讲完了。</p>
 
       
     </div>
@@ -417,7 +526,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AOP"><span class="nav-text">什么是AOP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AspectJ"><span class="nav-text">什么是AspectJ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ的术语"><span class="nav-text">AspectJ的术语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AOP"><span class="nav-text">什么是AOP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AspectJ"><span class="nav-text">什么是AspectJ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ的术语"><span class="nav-text">AspectJ的术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advice通知类型的说明"><span class="nav-text">Advice通知类型的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call和execution的说明"><span class="nav-text">call和execution的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointcut切点语法"><span class="nav-text">Pointcut切点语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ简单示例"><span class="nav-text">AspectJ简单示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-编写pointcut表达式选取执行点"><span class="nav-text">1.编写pointcut表达式选取执行点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-编写需要插入执行点的切面代码"><span class="nav-text">2. 编写需要插入执行点的切面代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-精简综合"><span class="nav-text">3. 精简综合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义PointCut"><span class="nav-text">自定义PointCut</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-写自定义注解"><span class="nav-text">1. 写自定义注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-写切面代码及选取执行点"><span class="nav-text">2. 写切面代码及选取执行点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用注解进行标注"><span class="nav-text">使用注解进行标注</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP应用"><span class="nav-text">AOP应用</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
