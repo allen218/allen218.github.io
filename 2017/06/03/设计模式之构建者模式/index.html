@@ -64,8 +64,8 @@
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
-<meta property="og:image" content="http://yoursite.com/../uploads/img/AndroidAdvanceDevelop/8/34.png">
-<meta property="og:updated_time" content="2017-06-01T15:02:04.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/34.png">
+<meta property="og:updated_time" content="2017-06-01T15:11:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之构建者模式">
 <meta name="twitter:description">
@@ -259,7 +259,7 @@
 <a id="more"></a>
 <h2 id="构建者模式说明"><a href="#构建者模式说明" class="headerlink" title="构建者模式说明"></a>构建者模式说明</h2><p>构建者模式，也称生成器模式，是一种创建型的设计模式。将一个复杂对象的具体创建过程与其表示进行分离，客户端只需要知道具体的构建者类型，而无需知道具体的构建过程;同时支持链式调用也是构建者模式的一个优点。  </p>
 <p>一个标准的构建者模式由<code>Director（指挥者）</code>、<code>abstractBuilder(抽象构建者)</code>、<code>concreteBuilder（具体构建者）</code>和<code>Product（产品）</code>四个角色组成。</p>
-<h2 id="构建者模式的UML图"><a href="#构建者模式的UML图" class="headerlink" title="构建者模式的UML图"></a>构建者模式的UML图</h2><p><img src="../uploads/img/AndroidAdvanceDevelop/8/34.png" alt="img"></p>
+<h2 id="构建者模式的UML图"><a href="#构建者模式的UML图" class="headerlink" title="构建者模式的UML图"></a>构建者模式的UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/34.png" alt="img"></p>
 <p>图中几种角色的说明:</p>
 <blockquote>
 <ol>
@@ -271,8 +271,7 @@
 </ol>
 </blockquote>
 <h2 id="构建者模式的示例"><a href="#构建者模式的示例" class="headerlink" title="构建者模式的示例"></a>构建者模式的示例</h2><p>通过代码实现一个标准的构建者模式的示例，这个例子通过构建一台小汽车的方式来对构建者模式进行说明。</p>
-<p>####　Product类的实现</p>
-<p>public class Car {<br>    private String wheel;  //轮子<br>    private String circle;  //方向盘<br>    private String engine;  //发动机<br>}</p>
+<h4 id="Product类的实现"><a href="#Product类的实现" class="headerlink" title="Product类的实现"></a>Product类的实现</h4><p>public class Car {<br>    private String wheel;  //轮子<br>    private String circle;  //方向盘<br>    private String engine;  //发动机<br>}</p>
 <p>这里的产品为一台汽车的构造。假设这个汽车主要由轮子、方向盘、发动机三部分组成。</p>
 <h4 id="AbstractBuilder抽象构建者的实现"><a href="#AbstractBuilder抽象构建者的实现" class="headerlink" title="AbstractBuilder抽象构建者的实现"></a>AbstractBuilder抽象构建者的实现</h4><pre><code>public abstract class AbstractBuilder {
     protected abstract void buildWheel();
@@ -592,7 +591,7 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式说明"><span class="nav-text">构建者模式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的UML图"><span class="nav-text">构建者模式的UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的示例"><span class="nav-text">构建者模式的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractBuilder抽象构建者的实现"><span class="nav-text">AbstractBuilder抽象构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteBuilder具体构建者的实现"><span class="nav-text">ConcreteBuilder具体构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Director-指挥者-的实现"><span class="nav-text">Director(指挥者)的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-场景类-的实现"><span class="nav-text">Client(场景类)的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化后的AbstractBuilder"><span class="nav-text">优化后的AbstractBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终极构建者模式"><span class="nav-text">终极构建者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的总结"><span class="nav-text">构建者模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-text">应用场景</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式说明"><span class="nav-text">构建者模式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的UML图"><span class="nav-text">构建者模式的UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的示例"><span class="nav-text">构建者模式的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Product类的实现"><span class="nav-text">Product类的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractBuilder抽象构建者的实现"><span class="nav-text">AbstractBuilder抽象构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteBuilder具体构建者的实现"><span class="nav-text">ConcreteBuilder具体构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Director-指挥者-的实现"><span class="nav-text">Director(指挥者)的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-场景类-的实现"><span class="nav-text">Client(场景类)的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化后的AbstractBuilder"><span class="nav-text">优化后的AbstractBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终极构建者模式"><span class="nav-text">终极构建者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的总结"><span class="nav-text">构建者模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-text">应用场景</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
