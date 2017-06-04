@@ -59,17 +59,17 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式之构建者模式">
-<meta property="og:url" content="http://yoursite.com/2017/06/03/设计模式之构建者模式/index.html">
+<meta property="og:title" content="设计模式之责任链模式">
+<meta property="og:url" content="http://yoursite.com/2017/06/05/设计模式之责任链模式/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/34.png">
-<meta property="og:updated_time" content="2017-06-01T15:11:06.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/37.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/36.png">
+<meta property="og:updated_time" content="2017-06-04T02:21:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式之构建者模式">
+<meta name="twitter:title" content="设计模式之责任链模式">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/37.png">
 
 
 
@@ -87,7 +87,7 @@
   };
 </script>
 
-  <title> 设计模式之构建者模式 | Allen'Notes </title>
+  <title> 设计模式之责任链模式 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -209,7 +209,7 @@
             
             
               
-                设计模式之构建者模式
+                设计模式之责任链模式
               
             
           </h1>
@@ -221,8 +221,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-03T19:29:11+08:00" content="2017-06-03">
-              2017-06-03
+            <time itemprop="dateCreated" datetime="2017-06-05T10:21:25+08:00" content="2017-06-05">
+              2017-06-05
             </time>
           </span>
 
@@ -232,8 +232,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/06/03/设计模式之构建者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/设计模式之构建者模式/" itemprop="commentsCount"></span>
+                <a href="/2017/06/05/设计模式之责任链模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/05/设计模式之责任链模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -255,191 +255,136 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/35.png" alt="图1"></p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/37.png" alt="图1"></p>
 <a id="more"></a>
-<h2 id="构建者模式说明"><a href="#构建者模式说明" class="headerlink" title="构建者模式说明"></a>构建者模式说明</h2><p>构建者模式，也称生成器模式，是一种创建型的设计模式。将一个复杂对象的具体创建过程与其表示进行分离，客户端只需要知道具体的构建者类型，而无需知道具体的构建过程;同时支持链式调用也是构建者模式的一个优点。  </p>
-<p>一个标准的构建者模式由<code>Director（指挥者）</code>、<code>abstractBuilder(抽象构建者)</code>、<code>concreteBuilder（具体构建者）</code>和<code>Product（产品）</code>四个角色组成。</p>
-<h2 id="构建者模式的UML图"><a href="#构建者模式的UML图" class="headerlink" title="构建者模式的UML图"></a>构建者模式的UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/34.png" alt="img"></p>
-<p>图中几种角色的说明:</p>
+<h2 id="责任链模式的说明"><a href="#责任链模式的说明" class="headerlink" title="责任链模式的说明"></a>责任链模式的说明</h2><p>责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。</p>
+<p>责任链解决了请求任务端和具体解决任务端的耦合问题，请求任务端只需要将任务请求发送出去，而不关心具体是谁处理的。同时，责任链的成员关系也非常的灵活，新增和删除相应的成员，改变成员的层级结构也都是可以的。</p>
+<h2 id="责任链模式UML图"><a href="#责任链模式UML图" class="headerlink" title="责任链模式UML图"></a>责任链模式UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/36.png" alt="img"></p>
+<p>这里的结构相对简单，一个<code>Handler</code>（抽象责任链对象）,若干个具体的责任链对象和一个发起事件处理请求的客户端三个角色组成。角色之间的关系有:</p>
 <blockquote>
 <ol>
-<li>Director(指挥者): 指挥者的主要作用是控制对象创建的次序，这里主要为<code>constroctor()</code>的实现。由于具体的实现是由构建者完成的，所以，指挥者需要持有构建者的实例。</li>
-<li>AbstractBuilder(抽象构建者): 该抽象对象可以由抽象类或者接口来完成。主要是定义创建设置复杂对象各个部件的方法和提供一个返回复杂对象的方法。</li>
-<li>ConcreteBuilder(具体构建者): 主要是实现抽象构建者中的方法，因为是由其直接接触产品来进行各属性的设置，所以，需要持有具体产品的引用。</li>
-<li>Product（产品类）: 就是需要创建的复杂对象，而复杂对象的各个部件实际上就是其各个属性。</li>
-<li>client(场景类): 测试类，在此对象中我们需要创建指挥者，并为指挥者指定具体的构造器。</li>
+<li>抽象责任链对象会接收客户端传来的事件处理请求，来让链条动起来。</li>
+<li>抽象责任链对象中的<code>handleRequest</code>会处理具体的业务逻辑，由它决定任务由谁处理，且链条的递归逻辑也是在此完成的。</li>
+<li>具体责任链对象主要是完成具体接收到事件后的处理方式。</li>
+<li>客户端需要将各个具体的责任对象组成一条链，并创建需要处理的事件，调用<code>handleRequest</code>让链条动起来。</li>
 </ol>
 </blockquote>
-<h2 id="构建者模式的示例"><a href="#构建者模式的示例" class="headerlink" title="构建者模式的示例"></a>构建者模式的示例</h2><p>通过代码实现一个标准的构建者模式的示例，这个例子通过构建一台小汽车的方式来对构建者模式进行说明。</p>
-<h4 id="Product类的实现"><a href="#Product类的实现" class="headerlink" title="Product类的实现"></a>Product类的实现</h4><p>public class Car {<br>    private String wheel;  //轮子<br>    private String circle;  //方向盘<br>    private String engine;  //发动机<br>}</p>
-<p>这里的产品为一台汽车的构造。假设这个汽车主要由轮子、方向盘、发动机三部分组成。</p>
-<h4 id="AbstractBuilder抽象构建者的实现"><a href="#AbstractBuilder抽象构建者的实现" class="headerlink" title="AbstractBuilder抽象构建者的实现"></a>AbstractBuilder抽象构建者的实现</h4><pre><code>public abstract class AbstractBuilder {
-    protected abstract void buildWheel();
+<h4 id="Handler-抽象责任对象"><a href="#Handler-抽象责任对象" class="headerlink" title="Handler(抽象责任对象)"></a>Handler(抽象责任对象)</h4><p>此对象为抽象类，此对象会持有下一个责任对象的引用;一般都会有一个处理事件的方法<code>handleRequest(Request request)</code>，接收一个事件对象。对于<code>handleRequest</code>内逻辑的处理一般有两种方式，一种会统一由父类来进行处理，提供相应的抽象方法让子类去实现即可。这种由父类来控制逻辑的方式，是结合了模板方法的扩展。另一种方式是整个方法由子类去实现 ，父类不负责逻辑的控制。</p>
+<pre><code>public abstract class Handler {
+    private Handler nextHandler;
 
-    protected abstract void buildCircle();
+    public void handleRequest(Request request) {
+        if (request != null) {
+            if (canLeaveDay() &gt;= request.getLeaveDay()) {
+                handle(request);
+            } else {
+                if (nextHandler != null) {
+                    nextHandler.handleRequest(request);
+                } else {
+                    System.out.println(&quot;请假天数太长，原则上是不能通过的&quot;);
+                }
+            }
+        }
+    }
 
-    protected abstract void buildEngine();
+    protected abstract void handle(Request request);
 
-    protected abstract Car build();
+    /**
+     * 能批准几天的假期
+     *
+     * @return
+     */
+    protected abstract int canLeaveDay();
 }
-</code></pre><p>这里主要是定义了相关部件的创建方法及产品对象的创建方法。由具体的实现类去实现相应的方法。</p>
-<h4 id="ConcreteBuilder具体构建者的实现"><a href="#ConcreteBuilder具体构建者的实现" class="headerlink" title="ConcreteBuilder具体构建者的实现"></a>ConcreteBuilder具体构建者的实现</h4><pre><code>public class ConcreteBuilder extends AbstractBuilder {
-    private Car car = new Car();
+</code></pre><p>这里采用的是第一种处理的方式，父类控制了业务逻辑，子类的实现相对就比较简单，只需要实现业务逻辑内必要的方法即可。</p>
+<h4 id="ConcreteHandler-具体责任对象"><a href="#ConcreteHandler-具体责任对象" class="headerlink" title="ConcreteHandler(具体责任对象)"></a>ConcreteHandler(具体责任对象)</h4><p>具体责任对象，只需实现抽象类中的方法即可。</p>
+<pre><code>public class HeadMan extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【组长】给批准了&quot;);
+    }
 
     @Override
-    protected void buildWheel() {
-        car.setWheel(&quot;benz wheel&quot;);
+    protected int canLeaveDay() {
+        return 2;
+    }
+}
+
+public class HeadManager extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【总经理】给批准了&quot;);
     }
 
     @Override
-    protected void buildCircle() {
-        car.setCircle(&quot;benz circle&quot;);
+    protected int canLeaveDay() {
+        return 10;
+    }
+}
+
+
+public class DepartManager extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【部门经理】给批准了&quot;);
     }
 
     @Override
-    protected void buildEngine() {
-        car.setEngine(&quot;benz engine&quot;);
-    }
-
-    @Override
-    protected Car build() {
-        return car;
+    protected int canLeaveDay() {
+        return 5;
     }
 }
-</code></pre><p>具体构建者通过成员变量的方式持有产品对象的实例。并实现了相应的构建方法来对产品的各部件进行构建，并返回了该构建的产品对象。</p>
-<h4 id="Director-指挥者-的实现"><a href="#Director-指挥者-的实现" class="headerlink" title="Director(指挥者)的实现"></a>Director(指挥者)的实现</h4><pre><code>public class Director {
-    private AbstractBuilder builder;
+</code></pre><p>这里定义了三个具体的责任对象，按照不同的职位，等级对在职责内的请假事件进行了处理。</p>
+<h4 id="Request事件对象"><a href="#Request事件对象" class="headerlink" title="Request事件对象"></a>Request事件对象</h4><p>这个对象是对需要处理事件的包装。</p>
+<pre><code>public class Request {
+    private String name;  //姓名
+    private int leaveDay;  //请假天数
 
-    public Director(AbstractBuilder builder) {
-        this.builder = builder;
+    public Request(String name, int leaveDay) {
+        this.name = name;
+        this.leaveDay = leaveDay;
     }
+ }
+</code></pre><p>这里主要使用请假天数来决定由哪个领导来进行批假。</p>
+<h4 id="client场景类"><a href="#client场景类" class="headerlink" title="client场景类"></a>client场景类</h4><p>使用者的主要任务是创建相应的责任对象，然后将其串进来。</p>
+<pre><code>public static void main(String[] args) {
+    Handler headMan = new HeadMan();
+    Handler departManager = new DepartManager();
+    Handler headManager = new HeadManager();
 
-    public Car constructor() {
-        builder.buildWheel();
-        builder.buildCircle();
-        builder.buildEngine();
-        return builder.build();
-    }
+    headMan.setNextHandler(departManager);
+    departManager.setNextHandler(headManager);
+
+    Request threeReq = new Request(&quot;zp&quot;, 3);
+    headMan.handleRequest(threeReq);
+
+    Request fiveReq = new Request(&quot;simon&quot;, 5);
+    headMan.handleRequest(fiveReq);
+
+    Request elevenReq = new Request(&quot;allen&quot;, 11);
+    headMan.handleRequest(elevenReq);
 }
-</code></pre><p>指挥者通过构造函数注入的方式，将具体的构建者传递了进来;然后，通过<code>constructor()</code>方法来指定各部分的创建次序，构建完成后，直接返回已经构建好了的对象。</p>
-<h4 id="Client-场景类-的实现"><a href="#Client-场景类-的实现" class="headerlink" title="Client(场景类)的实现"></a>Client(场景类)的实现</h4><pre><code>public class Client {
-    public static void main(String[] args) {
-        AbstractBuilder builder = new ConcreteBuilder();
-        Director director = new Director(builder);
-        director.constructor();
-    }
-}
-</code></pre><p>client(f场景类)主要指的就是使用者，使用者只需要创建相应的<code>Director</code>对象，并传入具体的构建者，调用相应的<code>Director</code>方法即可完成复杂对象的创建。</p>
-<p>到这里，一个标准的构建者模式的示例就编写完成了。大家有没有觉得哪儿有点多余？或者说和平时见到的构建者有什么不同？实际上，这里确实是有一点繁琐，完全可以把指挥者所做的事情，交由抽象构建者来完成。这里和模板方法结合了。在抽象构建者中定义了算法的骨架。</p>
-<h2 id="优化后的AbstractBuilder"><a href="#优化后的AbstractBuilder" class="headerlink" title="优化后的AbstractBuilder"></a>优化后的AbstractBuilder</h2><pre><code>public abstract class AbstractBuilder {
-    protected Car car = new Car();
-
-    protected abstract void buildWheel();
-
-    protected abstract void buildCircle();
-
-    protected abstract void buildEngine();
-
-    protected Car build() {
-        buildWheel();
-        buildCircle();
-        buildEngine();
-        return car;
-    }
-}
-</code></pre><p>这里主要做了两点优化:</p>
-<blockquote>
+</code></pre><p>这里创建了三个具体的责任对象，然后将其以一定的方式串连在一起，并创建了三组请求来分别验证责任链上的处理流程。下面是执行后的结果:</p>
+<pre><code>zp3天的假期已经被【部门经理】给批准了
+simon5天的假期已经被【部门经理】给批准了
+请假天数太长，原则上是不能通过的
+</code></pre><p>到这里，一个标准的责任链例子就处理完成了。</p>
+<h2 id="责任链模式的总结"><a href="#责任链模式的总结" class="headerlink" title="责任链模式的总结"></a>责任链模式的总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
 <ol>
-<li>将产品对象由子类提取到了父类</li>
-<li>定义了算法的骨架，在build中定义了产品的创建顺序并返回了产品。</li>
-</ol>
-</blockquote>
-<p>改造后的代码比之前的标准的格式精简了不少，可是总感觉和平时见的构建者模式还是有些许不同。嗯！实际上我们一般在使用构建者模式时，一般是在复杂产品的内部创建一个内部类，然后，设置相应的属性，最后提供一个<code>build</code>方法来创建具体的产品对象。</p>
-<p>也就是说我们可以将生成器模式的代码写在同一个类里面。呵呵，是不是更精简了。</p>
-<h2 id="终极构建者模式"><a href="#终极构建者模式" class="headerlink" title="终极构建者模式"></a>终极构建者模式</h2><pre><code>public class Car {
-    private String wheel;  //轮子
-    private String circle;  //方向盘
-    private String engine;  //发动机
-
-    public Car(Builder builder) {
-        wheel = builder.wheel;
-        circle = builder.circle;
-        engine = builder.engine;
-    }
-
-
-    public String getWheel() {
-        return wheel;
-    }
-
-    public void setWheel(String wheel) {
-        this.wheel = wheel;
-    }
-
-    public String getCircle() {
-        return circle;
-    }
-
-    public void setCircle(String circle) {
-        this.circle = circle;
-    }
-
-    public String getEngine() {
-        return engine;
-    }
-
-    public void setEngine(String engine) {
-        this.engine = engine;
-    }
-
-    public static class Builder {
-        private String wheel;  //轮子
-        private String circle;  //方向盘
-        private String engine;  //发动机
-
-        public Builder setWheel(String wheel) {
-            this.wheel = wheel;
-            return this;
-        }
-
-        public Builder setCircle(String circle) {
-            this.circle = circle;
-            return this;
-        }
-
-        public Builder setEngine(String engine) {
-            this.engine = engine;
-            return this;
-        }
-
-        public Car build() {
-            return new Car(this);
-        }
-    }
-}
-</code></pre><p>场景类的调用方式:</p>
-<pre><code>Car.Builder builder = new Car.Builder();
-Car car = builder.setCircle(&quot;benz circle&quot;)
-        .setWheel(&quot;benz wheel&quot;)
-        .setEngine(&quot;benz engine&quot;)
-        .build();
-</code></pre><p>上面就是调用终极构建者的代码，通过链式调用的方式代码非常的简洁。</p>
-<h2 id="构建者模式的总结"><a href="#构建者模式的总结" class="headerlink" title="构建者模式的总结"></a>构建者模式的总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
-<ol>
-<li>构建者模式将复杂对象的创建与表示分离，客户端不需要知道复杂对象的组成细节，使得相同的构造过程可以创建出不同的产品对象。</li>
-<li>具体的构建者相互独立，在新增构建者或者替换构建者都不会对代码造成影响，易于扩展，符合开闭原则。</li>
+<li>使用者与事件具体的执行者解耦，使用者只需要关心责任对象之间的关系，而不需要关心每个责任对象内部的实现逻辑。</li>
+<li>责任链上的对象新增或者移除都不影响责任链逻辑的执行。扩展性强。</li>
 </ol>
 </blockquote>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
 <ol>
-<li>构建者模式创建的产品对象特性大多相似，如果产品之前差异较大，则不适合使用构建者模式。</li>
+<li>处理具体事件的对象增多，原来只需要在一个对象里写的逻辑分散到了多个责任对象中，每个责任对象处理了一部分的事件。</li>
+<li>事件有可能不会被处理</li>
 </ol>
 </blockquote>
-<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><blockquote>
+<h4 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h4><blockquote>
 <ol>
-<li>需要生成的产品内部相对复杂，该对象由多个属性组成。</li>
-<li>需要生成的产品相互关联，创建产品时有一定的顺序</li>
-<li>将对象的创建过程与对象的表示分离</li>
+<li>有多个对象可以处理同一个事件，但具体由谁来处理是不确定的情况。</li>
+<li>当不确定将由谁来处理，需要交由任意一个对象都能够处理时。</li>
 </ol>
 </blockquote>
 
@@ -459,17 +404,13 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/30/AOP之AspectJ在Android中的使用/" rel="next" title="AOP之AspectJ在Android中的使用">
-                <i class="fa fa-chevron-left"></i> AOP之AspectJ在Android中的使用
+              <a href="/2017/06/03/设计模式之构建者模式/" rel="next" title="设计模式之构建者模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之构建者模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/05/设计模式之责任链模式/" rel="prev" title="设计模式之责任链模式">
-                设计模式之责任链模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -495,8 +436,8 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/03/设计模式之构建者模式/"
-           data-title="设计模式之构建者模式" data-url="http://yoursite.com/2017/06/03/设计模式之构建者模式/">
+      <div class="ds-thread" data-thread-key="2017/06/05/设计模式之责任链模式/"
+           data-title="设计模式之责任链模式" data-url="http://yoursite.com/2017/06/05/设计模式之责任链模式/">
       </div>
     
   </div>
@@ -595,7 +536,7 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式说明"><span class="nav-text">构建者模式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的UML图"><span class="nav-text">构建者模式的UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的示例"><span class="nav-text">构建者模式的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Product类的实现"><span class="nav-text">Product类的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractBuilder抽象构建者的实现"><span class="nav-text">AbstractBuilder抽象构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteBuilder具体构建者的实现"><span class="nav-text">ConcreteBuilder具体构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Director-指挥者-的实现"><span class="nav-text">Director(指挥者)的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-场景类-的实现"><span class="nav-text">Client(场景类)的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化后的AbstractBuilder"><span class="nav-text">优化后的AbstractBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终极构建者模式"><span class="nav-text">终极构建者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的总结"><span class="nav-text">构建者模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-text">应用场景</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式的说明"><span class="nav-text">责任链模式的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式UML图"><span class="nav-text">责任链模式UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler-抽象责任对象"><span class="nav-text">Handler(抽象责任对象)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteHandler-具体责任对象"><span class="nav-text">ConcreteHandler(具体责任对象)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Request事件对象"><span class="nav-text">Request事件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#client场景类"><span class="nav-text">client场景类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式的总结"><span class="nav-text">责任链模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适合场景"><span class="nav-text">适合场景</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

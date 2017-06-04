@@ -214,8 +214,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/04/设计模式之责任链模式/" itemprop="url">
-                  未命名
+                <a class="post-title-link" href="/2017/06/05/设计模式之责任链模式/" itemprop="url">
+                  设计模式之责任链模式
                 </a>
               
             
@@ -228,8 +228,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-04T10:13:21+08:00" content="2017-06-04">
-              2017-06-04
+            <time itemprop="dateCreated" datetime="2017-06-05T10:21:25+08:00" content="2017-06-05">
+              2017-06-05
             </time>
           </span>
 
@@ -239,8 +239,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/06/04/设计模式之责任链模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/04/设计模式之责任链模式/" itemprop="commentsCount"></span>
+                <a href="/2017/06/05/设计模式之责任链模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/05/设计模式之责任链模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -263,139 +263,12 @@
 
       
         
-          
-            <h2 id="责任链模式的说明"><a href="#责任链模式的说明" class="headerlink" title="责任链模式的说明"></a>责任链模式的说明</h2><p>责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。</p>
-<p>责任链解决了请求任务端和具体解决任务端的耦合问题，请求任务端只需要将任务请求发送出去，而不关心具体是谁处理的。同时，责任链的成员关系也非常的灵活，新增和删除相应的成员，改变成员的层级结构也都是可以的。</p>
-<h2 id="责任链模式UML图"><a href="#责任链模式UML图" class="headerlink" title="责任链模式UML图"></a>责任链模式UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/36.png" alt="img"></p>
-<p>这里的结构相对简单，一个<code>Handler</code>（抽象责任链对象）,若干个具体的责任链对象和一个发起事件处理请求的客户端三个角色组成。角色之间的关系有:</p>
-<blockquote>
-<ol>
-<li>抽象责任链对象会接收客户端传来的事件处理请求，来让链条动起来。</li>
-<li>抽象责任链对象中的<code>handleRequest</code>会处理具体的业务逻辑，由它决定任务由谁处理，且链条的递归逻辑也是在此完成的。</li>
-<li>具体责任链对象主要是完成具体接收到事件后的处理方式。</li>
-<li>客户端需要将各个具体的责任对象组成一条链，并创建需要处理的事件，调用<code>handleRequest</code>让链条动起来。</li>
-</ol>
-</blockquote>
-<h4 id="Handler-抽象责任对象"><a href="#Handler-抽象责任对象" class="headerlink" title="Handler(抽象责任对象)"></a>Handler(抽象责任对象)</h4><p>此对象为抽象类，此对象会持有下一个责任对象的引用;一般都会有一个处理事件的方法<code>handleRequest(Request request)</code>，接收一个事件对象。对于<code>handleRequest</code>内逻辑的处理一般有两种方式，一种会统一由父类来进行处理，提供相应的抽象方法让子类去实现即可。这种由父类来控制逻辑的方式，是结合了模板方法的扩展。另一种方式是整个方法由子类去实现 ，父类不负责逻辑的控制。</p>
-<pre><code>public abstract class Handler {
-    private Handler nextHandler;
-
-    public void handleRequest(Request request) {
-        if (request != null) {
-            if (canLeaveDay() &gt;= request.getLeaveDay()) {
-                handle(request);
-            } else {
-                if (nextHandler != null) {
-                    nextHandler.handleRequest(request);
-                } else {
-                    System.out.println(&quot;请假天数太长，原则上是不能通过的&quot;);
-                }
-            }
-        }
-    }
-
-    protected abstract void handle(Request request);
-
-    /**
-     * 能批准几天的假期
-     *
-     * @return
-     */
-    protected abstract int canLeaveDay();
-}
-</code></pre><p>这里采用的是第一种处理的方式，父类控制了业务逻辑，子类的实现相对就比较简单，只需要实现业务逻辑内必要的方法即可。</p>
-<h4 id="ConcreteHandler-具体责任对象"><a href="#ConcreteHandler-具体责任对象" class="headerlink" title="ConcreteHandler(具体责任对象)"></a>ConcreteHandler(具体责任对象)</h4><p>具体责任对象，只需实现抽象类中的方法即可。</p>
-<pre><code>public class HeadMan extends Handler {
-    @Override
-    protected void handle(Request request) {
-        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【组长】给批准了&quot;);
-    }
-
-    @Override
-    protected int canLeaveDay() {
-        return 2;
-    }
-}
-
-public class HeadManager extends Handler {
-    @Override
-    protected void handle(Request request) {
-        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【总经理】给批准了&quot;);
-    }
-
-    @Override
-    protected int canLeaveDay() {
-        return 10;
-    }
-}
-
-
-public class DepartManager extends Handler {
-    @Override
-    protected void handle(Request request) {
-        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【部门经理】给批准了&quot;);
-    }
-
-    @Override
-    protected int canLeaveDay() {
-        return 5;
-    }
-}
-</code></pre><p>这里定义了三个具体的责任对象，按照不同的职位，等级对在职责内的请假事件进行了处理。</p>
-<h4 id="Request事件对象"><a href="#Request事件对象" class="headerlink" title="Request事件对象"></a>Request事件对象</h4><p>这个对象是对需要处理事件的包装。</p>
-<pre><code>public class Request {
-    private String name;  //姓名
-    private int leaveDay;  //请假天数
-
-    public Request(String name, int leaveDay) {
-        this.name = name;
-        this.leaveDay = leaveDay;
-    }
- }
-</code></pre><p>这里主要使用请假天数来决定由哪个领导来进行批假。</p>
-<h4 id="client场景类"><a href="#client场景类" class="headerlink" title="client场景类"></a>client场景类</h4><p>使用者的主要任务是创建相应的责任对象，然后将其串进来。</p>
-<pre><code>public static void main(String[] args) {
-    Handler headMan = new HeadMan();
-    Handler departManager = new DepartManager();
-    Handler headManager = new HeadManager();
-
-    headMan.setNextHandler(departManager);
-    departManager.setNextHandler(headManager);
-
-    Request threeReq = new Request(&quot;zp&quot;, 3);
-    headMan.handleRequest(threeReq);
-
-    Request fiveReq = new Request(&quot;simon&quot;, 5);
-    headMan.handleRequest(fiveReq);
-
-    Request elevenReq = new Request(&quot;allen&quot;, 11);
-    headMan.handleRequest(elevenReq);
-}
-</code></pre><p>这里创建了三个具体的责任对象，然后将其以一定的方式串连在一起，并创建了三组请求来分别验证责任链上的处理流程。下面是执行后的结果:</p>
-<pre><code>zp3天的假期已经被【部门经理】给批准了
-simon5天的假期已经被【部门经理】给批准了
-请假天数太长，原则上是不能通过的
-</code></pre><p>到这里，一个标准的责任链例子就处理完成了。</p>
-<h2 id="责任链模式的总结"><a href="#责任链模式的总结" class="headerlink" title="责任链模式的总结"></a>责任链模式的总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
-<ol>
-<li>使用者与事件具体的执行者解耦，使用者只需要关心责任对象之间的关系，而不需要关心每个责任对象内部的实现逻辑。</li>
-<li>责任链上的对象新增或者移除都不影响责任链逻辑的执行。扩展性强。</li>
-</ol>
-</blockquote>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
-<ol>
-<li>处理具体事件的对象增多，原来只需要在一个对象里写的逻辑分散到了多个责任对象中，每个责任对象处理了一部分的事件。</li>
-<li>事件有可能不会被处理</li>
-</ol>
-</blockquote>
-<h4 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h4><blockquote>
-<ol>
-<li>有多个对象可以处理同一个事件，但具体由谁来处理是不确定的情况。</li>
-<li>当不确定将由谁来处理，需要交由任意一个对象都能够处理时。</li>
-</ol>
-</blockquote>
-
-          
+          <p><img src="/uploads/img/AndroidAdvanceDevelop/8/37.png" alt="图1"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/06/05/设计模式之责任链模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
