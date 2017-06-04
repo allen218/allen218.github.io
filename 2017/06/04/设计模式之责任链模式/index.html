@@ -57,18 +57,21 @@
 
 
 
-<meta name="description">
+<meta name="description" content="责任链模式的说明责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。
+责">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AOP之AspectJ在Android中的使用">
-<meta property="og:url" content="http://yoursite.com/2017/05/30/AOP之AspectJ在Android中的使用/index.html">
+<meta property="og:title" content="Allen'Notes">
+<meta property="og:url" content="http://yoursite.com/2017/06/04/设计模式之责任链模式/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/33.png">
-<meta property="og:updated_time" content="2017-05-31T16:06:23.000Z">
+<meta property="og:description" content="责任链模式的说明责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。
+责">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/36.png">
+<meta property="og:updated_time" content="2017-06-04T02:13:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AOP之AspectJ在Android中的使用">
-<meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/33.png">
+<meta name="twitter:title" content="Allen'Notes">
+<meta name="twitter:description" content="责任链模式的说明责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。
+责">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/36.png">
 
 
 
@@ -86,7 +89,7 @@
   };
 </script>
 
-  <title> AOP之AspectJ在Android中的使用 | Allen'Notes </title>
+  <title>  | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +211,7 @@
             
             
               
-                AOP之AspectJ在Android中的使用
+                
               
             
           </h1>
@@ -220,8 +223,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-30T15:29:11+08:00" content="2017-05-30">
-              2017-05-30
+            <time itemprop="dateCreated" datetime="2017-06-04T10:13:21+08:00" content="2017-06-04">
+              2017-06-04
             </time>
           </span>
 
@@ -231,8 +234,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/05/30/AOP之AspectJ在Android中的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/AOP之AspectJ在Android中的使用/" itemprop="commentsCount"></span>
+                <a href="/2017/06/04/设计模式之责任链模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/04/设计模式之责任链模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -254,129 +257,136 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/33.png" alt="图1"></p>
-<a id="more"></a>
-<h2 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP?"></a>什么是AOP?</h2><p><code>AOP</code>:(Aspect Oriented Programming)面向切面编程，通过预编译的方式和运行期动态代理实现程序功能的统一维护的一种技术。也就是在不改变现有代码业务逻辑的基础上，通过注解或者动态代理的方式来将新的逻辑代码通过预编译的方式添加到原来的业务代码中。而在代码层面上原有的业务逻辑是不发生变化的。</p>
-<h2 id="什么是AspectJ"><a href="#什么是AspectJ" class="headerlink" title="什么是AspectJ?"></a>什么是AspectJ?</h2><p><code>AspectJ</code>:是一个面向切面的框架，它扩展了<code>java</code>语言。<code>AspectJ</code>定义了<code>AOP</code>的语法，它有一个专门的编译器用来生成遵守<code>java</code>字节码规范的<code>Class</code>文件。</p>
-<p>使用<code>AOP</code>语法，我们能够很容易的写出<code>AOP</code>相关的代码；同时，<code>AspectJ</code>支持<code>android</code>.当然这种支持并不是官方的，只是网上有大牛基于<code>gradle</code>编写了一些脚本，让其可以运行在<code>gradle</code>管理的<code>android</code>项目中。<code>github</code>上也有相应的开源库可以直接引用，相当的方便。</p>
-<h2 id="AspectJ的术语"><a href="#AspectJ的术语" class="headerlink" title="AspectJ的术语"></a>AspectJ的术语</h2><blockquote>
-<ol>
-<li>joinPoint: 执行点，一个类中并不是所有的地方都是可以被当作切面来插入代码的，那些可以被当作切面插入代码的地方，就称之为执行点。比如：调用方法前，调用方法后，或者方法执行前，方法执行后以及获取某个变量或者设置某个变量都是可以称为程序的执行点的。</li>
-<li>pointcut: 切入点,是一个基于正则表达式的表达式，其本身是一个表达式，只是通过这个表达式，可以选取程序中我们感兴趣的执行点或者程序执行点的集合。</li>
-<li>advice:在通过<code>pointcut</code>选取出来的执行点上要执行的操作，逻辑。<code>advice</code>只是一个泛称，它具体所指的主要是<code>Before</code>、<code>After</code>、<code>AfterReturning</code>、<code>AfterThrowing</code>、<code>Around</code>等5类通知对象。</li>
-</ol>
-</blockquote>
-<h2 id="Advice通知类型的说明"><a href="#Advice通知类型的说明" class="headerlink" title="Advice通知类型的说明"></a>Advice通知类型的说明</h2><blockquote>
-<ol>
-<li>Before: 在方法执行之前执行要插入的代码</li>
-<li>After:  在方法执行之后执行要插入的代码</li>
-<li><p>AfterReturning: 在方法执行后，返回一个结果再执行，如果没结果，用此修辞符修辞是不会执行的。</p>
-<pre><code>@AfterReturning(value = &quot;debugTraceMethod()&quot;, returning = &quot;result&quot;)
-    public void callMethod(JoinPoint joinPoint, Object result) {
-        Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;-------&quot; + joinPoint.getTarget() + &quot;-------returnValue:&quot; + result);
-    }
-</code></pre></li>
-<li><p>AfterThrowing:  在方法执行过程中抛出异常后执行，也就是方法执行过程中，如果抛出异常后，才会执行此切面方法。</p>
-<pre><code>@AfterThrowing(value = &quot;debugTraceMethod()&quot;)
-public void callMethod(JoinPoint joinPoint) {
-    Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;-------&quot; + joinPoint.getTarget());
-}
-</code></pre></li>
-<li><p>Around:  在方法执行前后和抛出异常时执行（前面几种通知的综合）</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="call和execution的说明"><a href="#call和execution的说明" class="headerlink" title="call和execution的说明"></a>call和execution的说明</h2><p>call是在方法被调用前后执行切面的代码,而execution是在方法执行前后执行切面的代码。一个是在方法外执行，一个是在方法内部执行。</p>
-<h2 id="Pointcut切点语法"><a href="#Pointcut切点语法" class="headerlink" title="Pointcut切点语法"></a>Pointcut切点语法</h2><pre><code>@Pointcut(&quot;execution(int com.winbons.sanbot.testaspectj.MainActivity.handleClick(..))&quot;)
-public void callMethod() {
-
-}
-</code></pre><p>上面的代码中,分别有下面意思:</p>
-<pre><code>@pointcut:代表选取执行点的规则表达式
-execution:表示切面代码会在方法执行前后被调用
-int:表示方法的返回值类型  一般使用``*``表示任意返回类型
-com.winbons.sanbot.testaspectj.MainActivity:指定执行点的位置，可以使用正则进行匹配
-.handleClick(..):表示需要执行切面代码的方法名,``(..)``表示参数，这里的点表示任意参数
-</code></pre><h2 id="AspectJ简单示例"><a href="#AspectJ简单示例" class="headerlink" title="AspectJ简单示例"></a>AspectJ简单示例</h2><p>创建一个简单的<code>AspectJ</code>需要做两件事情。</p>
+        <h2 id="责任链模式的说明"><a href="#责任链模式的说明" class="headerlink" title="责任链模式的说明"></a>责任链模式的说明</h2><p>责任链模式:(chain of responsibility)也称职责链模式,是同一件事情交由多人去处理，多人按照一定的顺序组成一条链，这条链上的所有人都可以对事件进行拦截，直接处理事件，不再往下传递;如果有返回值，而会按照反向的过程来将返回值向上传递。责任链中的每一个成员有两个选择，要么对事件进行处理，要么把事件交由自己的下家来进行处理，而不能自己处理了一半，再将由下家处理。</p>
+<p>责任链解决了请求任务端和具体解决任务端的耦合问题，请求任务端只需要将任务请求发送出去，而不关心具体是谁处理的。同时，责任链的成员关系也非常的灵活，新增和删除相应的成员，改变成员的层级结构也都是可以的。</p>
+<h2 id="责任链模式UML图"><a href="#责任链模式UML图" class="headerlink" title="责任链模式UML图"></a>责任链模式UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/36.png" alt="img"></p>
+<p>这里的结构相对简单，一个<code>Handler</code>（抽象责任链对象）,若干个具体的责任链对象和一个发起事件处理请求的客户端三个角色组成。角色之间的关系有:</p>
 <blockquote>
 <ol>
-<li>编写<code>pointcut</code>表达式来选取执行点。 </li>
-<li>编写需要插入执行点的切面代码。</li>
+<li>抽象责任链对象会接收客户端传来的事件处理请求，来让链条动起来。</li>
+<li>抽象责任链对象中的<code>handleRequest</code>会处理具体的业务逻辑，由它决定任务由谁处理，且链条的递归逻辑也是在此完成的。</li>
+<li>具体责任链对象主要是完成具体接收到事件后的处理方式。</li>
+<li>客户端需要将各个具体的责任对象组成一条链，并创建需要处理的事件，调用<code>handleRequest</code>让链条动起来。</li>
 </ol>
 </blockquote>
-<h4 id="1-编写pointcut表达式选取执行点"><a href="#1-编写pointcut表达式选取执行点" class="headerlink" title="1.编写pointcut表达式选取执行点"></a>1.编写<code>pointcut</code>表达式选取执行点</h4><pre><code>@Pointcut(&quot;execution(* com.allen.testaspectj.MainActivity.handleClick(..))&quot;)
-public void methodAspect() {
+<h4 id="Handler-抽象责任对象"><a href="#Handler-抽象责任对象" class="headerlink" title="Handler(抽象责任对象)"></a>Handler(抽象责任对象)</h4><p>此对象为抽象类，此对象会持有下一个责任对象的引用;一般都会有一个处理事件的方法<code>handleRequest(Request request)</code>，接收一个事件对象。对于<code>handleRequest</code>内逻辑的处理一般有两种方式，一种会统一由父类来进行处理，提供相应的抽象方法让子类去实现即可。这种由父类来控制逻辑的方式，是结合了模板方法的扩展。另一种方式是整个方法由子类去实现 ，父类不负责逻辑的控制。</p>
+<pre><code>public abstract class Handler {
+    private Handler nextHandler;
 
-}
-</code></pre><p>这里选取的是<code>MainActivity</code>中的<code>handleClick</code>带任意参数的方法。</p>
-<pre><code>private void handleClick() {
-    Log.d(&quot;tag&quot;, &quot;onclick&quot;);
-}
-</code></pre><h4 id="2-编写需要插入执行点的切面代码"><a href="#2-编写需要插入执行点的切面代码" class="headerlink" title="2. 编写需要插入执行点的切面代码"></a>2. 编写需要插入执行点的切面代码</h4><pre><code>@Before(&quot;methodAspect()&quot;)
-public void callMethod(JoinPoint joinPoint) {
-    Log.d(&quot;tag&quot;, joinPoint.getTarget() + &quot;-----&quot; + joinPoint.getSignature());
-}
-</code></pre><p>这里使用的<code>Advice</code>类型为<code>Before</code>，也就是在方法执行前先执行切面的代码。这里的打印结果为:</p>
-<pre><code>05-31 11:25:30.065 2564-2564/com.allen.testaspectj D/tag: com.allen.testaspectj.MainActivity@21ef237b-----void com.allen.testaspectj.MainActivity.handleClick()
-05-31 11:25:30.065 2564-2564/com.allen.testaspectj D/tag: onclick
-</code></pre><h4 id="3-精简综合"><a href="#3-精简综合" class="headerlink" title="3. 精简综合"></a>3. 精简综合</h4><p>上面的两个步骤，实际上可以写成下面的一步即可完成执行点的选取和切面代码的编写。</p>
-<pre><code>@Before(&quot;execution(* com.allen.testaspectj.MainActivity.handleClick(..))&quot;)
-public void callMethod(JoinPoint joinPoint) {
-    Log.d(&quot;tag&quot;, joinPoint.getTarget() + &quot;-----&quot; + joinPoint.getSignature());
-}
-</code></pre><p>去看<code>@pointcut</code>，而直接将表达式写在了<code>Advice</code>中的方式也是可行的，而且代码更加的精简。</p>
-<h2 id="自定义PointCut"><a href="#自定义PointCut" class="headerlink" title="自定义PointCut"></a>自定义PointCut</h2><p>除了直接指定路径来选取相应的方法来作为执行点，我们还可以通过自定义的方式来通过写自定义注解的方式来标注<code>JoinPoint</code>。具体的做法分为三步:</p>
-<blockquote>
-<ol>
-<li>写自定义注解</li>
-<li>写切面代码及选取执行点</li>
-<li>在需要植入切面代码的地方使用注解标注</li>
-</ol>
-</blockquote>
-<h4 id="1-写自定义注解"><a href="#1-写自定义注解" class="headerlink" title="1. 写自定义注解"></a>1. 写自定义注解</h4><pre><code>@Retention(RetentionPolicy.CLASS)
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
-public @interface DebugMethod {
-}
-</code></pre><p>这里主要定义了注解被保留在编译时和此注解的使用目标为构造方法和普通方法。</p>
-<h4 id="2-写切面代码及选取执行点"><a href="#2-写切面代码及选取执行点" class="headerlink" title="2. 写切面代码及选取执行点"></a>2. 写切面代码及选取执行点</h4><pre><code>@Aspect
-public class CustomAspect {
-    @Pointcut(&quot;execution(@com.allen.testaspectj.DebugMethod * *(..))&quot;)
-    public void methodAspect() {
-
+    public void handleRequest(Request request) {
+        if (request != null) {
+            if (canLeaveDay() &gt;= request.getLeaveDay()) {
+                handle(request);
+            } else {
+                if (nextHandler != null) {
+                    nextHandler.handleRequest(request);
+                } else {
+                    System.out.println(&quot;请假天数太长，原则上是不能通过的&quot;);
+                }
+            }
+        }
     }
 
-    @Before(&quot;methodAspect()&quot;)
-    public void aspect(JoinPoint joinPoint) {
-        Log.d(&quot;tag&quot;, joinPoint.getSignature() + &quot;----&quot; + joinPoint.getTarget());
+    protected abstract void handle(Request request);
+
+    /**
+     * 能批准几天的假期
+     *
+     * @return
+     */
+    protected abstract int canLeaveDay();
+}
+</code></pre><p>这里采用的是第一种处理的方式，父类控制了业务逻辑，子类的实现相对就比较简单，只需要实现业务逻辑内必要的方法即可。</p>
+<h4 id="ConcreteHandler-具体责任对象"><a href="#ConcreteHandler-具体责任对象" class="headerlink" title="ConcreteHandler(具体责任对象)"></a>ConcreteHandler(具体责任对象)</h4><p>具体责任对象，只需实现抽象类中的方法即可。</p>
+<pre><code>public class HeadMan extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【组长】给批准了&quot;);
+    }
+
+    @Override
+    protected int canLeaveDay() {
+        return 2;
     }
 }
-</code></pre><p>这里做了两个操作，一个是选取了执行点，这里和简单示例中表达式的不同之处在于:</p>
-<blockquote>
-<ol>
-<li>自定义的pointcut不选取具体的方法，而是直接选择注解类。<code>@com.allen.testaspectj.DebugMethod</code></li>
-<li><code>* *(..)</code>第一个<code>*</code>代表的是方法的返回值为任意类型  第二个<code>*</code>代表方法名为任意类型  <code>(..)</code>代表参数为任意参数即<code>0~n</code>个参数.</li>
-</ol>
-</blockquote>
-<p>另一个操作也就是写了相应的切面代码。</p>
-<h4 id="使用注解进行标注"><a href="#使用注解进行标注" class="headerlink" title="使用注解进行标注"></a>使用注解进行标注</h4><pre><code>@DebugMethod
-private void handleClick() {
-    Log.d(&quot;tag&quot;, &quot;onclick&quot;);
+
+public class HeadManager extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【总经理】给批准了&quot;);
+    }
+
+    @Override
+    protected int canLeaveDay() {
+        return 10;
+    }
 }
-</code></pre><p>这里直接使用注解标注到需要插入切面代码的方法上即可完成标注。</p>
-<p>运行的结果为:</p>
-<pre><code>05-31 11:49:58.169 24871-24871/com.allen.testaspectj D/tag: void com.allen.testaspectj.MainActivity.handleClick()----com.allen.testaspectj.MainActivity@21ef237b
-05-31 11:49:58.169 24871-24871/com.allen.testaspectj D/tag: onclick
-</code></pre><h2 id="AOP应用"><a href="#AOP应用" class="headerlink" title="AOP应用"></a>AOP应用</h2><blockquote>
+
+
+public class DepartManager extends Handler {
+    @Override
+    protected void handle(Request request) {
+        System.out.println(request.getName() + request.getLeaveDay() + &quot;天的假期已经被【部门经理】给批准了&quot;);
+    }
+
+    @Override
+    protected int canLeaveDay() {
+        return 5;
+    }
+}
+</code></pre><p>这里定义了三个具体的责任对象，按照不同的职位，等级对在职责内的请假事件进行了处理。</p>
+<h4 id="Request事件对象"><a href="#Request事件对象" class="headerlink" title="Request事件对象"></a>Request事件对象</h4><p>这个对象是对需要处理事件的包装。</p>
+<pre><code>public class Request {
+    private String name;  //姓名
+    private int leaveDay;  //请假天数
+
+    public Request(String name, int leaveDay) {
+        this.name = name;
+        this.leaveDay = leaveDay;
+    }
+ }
+</code></pre><p>这里主要使用请假天数来决定由哪个领导来进行批假。</p>
+<h4 id="client场景类"><a href="#client场景类" class="headerlink" title="client场景类"></a>client场景类</h4><p>使用者的主要任务是创建相应的责任对象，然后将其串进来。</p>
+<pre><code>public static void main(String[] args) {
+    Handler headMan = new HeadMan();
+    Handler departManager = new DepartManager();
+    Handler headManager = new HeadManager();
+
+    headMan.setNextHandler(departManager);
+    departManager.setNextHandler(headManager);
+
+    Request threeReq = new Request(&quot;zp&quot;, 3);
+    headMan.handleRequest(threeReq);
+
+    Request fiveReq = new Request(&quot;simon&quot;, 5);
+    headMan.handleRequest(fiveReq);
+
+    Request elevenReq = new Request(&quot;allen&quot;, 11);
+    headMan.handleRequest(elevenReq);
+}
+</code></pre><p>这里创建了三个具体的责任对象，然后将其以一定的方式串连在一起，并创建了三组请求来分别验证责任链上的处理流程。下面是执行后的结果:</p>
+<pre><code>zp3天的假期已经被【部门经理】给批准了
+simon5天的假期已经被【部门经理】给批准了
+请假天数太长，原则上是不能通过的
+</code></pre><p>到这里，一个标准的责任链例子就处理完成了。</p>
+<h2 id="责任链模式的总结"><a href="#责任链模式的总结" class="headerlink" title="责任链模式的总结"></a>责任链模式的总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
 <ol>
-<li>日志</li>
-<li>性能监控</li>
-<li>埋点</li>
-<li>持久化</li>
-<li>数据校验</li>
-<li>缓存</li>
+<li>使用者与事件具体的执行者解耦，使用者只需要关心责任对象之间的关系，而不需要关心每个责任对象内部的实现逻辑。</li>
+<li>责任链上的对象新增或者移除都不影响责任链逻辑的执行。扩展性强。</li>
 </ol>
 </blockquote>
-<p>到这里,<code>AspectJ</code>的一般用法已经讲完了。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
+<ol>
+<li>处理具体事件的对象增多，原来只需要在一个对象里写的逻辑分散到了多个责任对象中，每个责任对象处理了一部分的事件。</li>
+<li>事件有可能不会被处理</li>
+</ol>
+</blockquote>
+<h4 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h4><blockquote>
+<ol>
+<li>有多个对象可以处理同一个事件，但具体由谁来处理是不确定的情况。</li>
+<li>当不确定将由谁来处理，需要交由任意一个对象都能够处理时。</li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -394,17 +404,13 @@ private void handleClick() {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/22/设计模式之单例设计模式/" rel="next" title="设计模式之单例设计模式">
-                <i class="fa fa-chevron-left"></i> 设计模式之单例设计模式
+              <a href="/2017/06/03/设计模式之构建者模式/" rel="next" title="设计模式之构建者模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之构建者模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/03/设计模式之构建者模式/" rel="prev" title="设计模式之构建者模式">
-                设计模式之构建者模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,8 +436,8 @@ private void handleClick() {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/30/AOP之AspectJ在Android中的使用/"
-           data-title="AOP之AspectJ在Android中的使用" data-url="http://yoursite.com/2017/05/30/AOP之AspectJ在Android中的使用/">
+      <div class="ds-thread" data-thread-key="2017/06/04/设计模式之责任链模式/"
+           data-title="" data-url="http://yoursite.com/2017/06/04/设计模式之责任链模式/">
       </div>
     
   </div>
@@ -530,7 +536,7 @@ private void handleClick() {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AOP"><span class="nav-text">什么是AOP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AspectJ"><span class="nav-text">什么是AspectJ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ的术语"><span class="nav-text">AspectJ的术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advice通知类型的说明"><span class="nav-text">Advice通知类型的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call和execution的说明"><span class="nav-text">call和execution的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointcut切点语法"><span class="nav-text">Pointcut切点语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ简单示例"><span class="nav-text">AspectJ简单示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-编写pointcut表达式选取执行点"><span class="nav-text">1.编写pointcut表达式选取执行点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-编写需要插入执行点的切面代码"><span class="nav-text">2. 编写需要插入执行点的切面代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-精简综合"><span class="nav-text">3. 精简综合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义PointCut"><span class="nav-text">自定义PointCut</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-写自定义注解"><span class="nav-text">1. 写自定义注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-写切面代码及选取执行点"><span class="nav-text">2. 写切面代码及选取执行点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用注解进行标注"><span class="nav-text">使用注解进行标注</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP应用"><span class="nav-text">AOP应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式的说明"><span class="nav-text">责任链模式的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式UML图"><span class="nav-text">责任链模式UML图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler-抽象责任对象"><span class="nav-text">Handler(抽象责任对象)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteHandler-具体责任对象"><span class="nav-text">ConcreteHandler(具体责任对象)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Request事件对象"><span class="nav-text">Request事件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#client场景类"><span class="nav-text">client场景类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#责任链模式的总结"><span class="nav-text">责任链模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适合场景"><span class="nav-text">适合场景</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
