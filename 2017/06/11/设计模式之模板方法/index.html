@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/40.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/38.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/39.png">
-<meta property="og:updated_time" content="2017-06-11T12:52:40.000Z">
+<meta property="og:updated_time" content="2017-06-11T12:56:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之模板方法">
 <meta name="twitter:description">
@@ -306,6 +306,7 @@
     }
 }
 </code></pre><p>魂半罗类和此类是类似的代码，就不贴了，这里分别针对不同的游戏来做出了相应的实现。</p>
+<hr>
 <h2 id="模板方法的扩展"><a href="#模板方法的扩展" class="headerlink" title="模板方法的扩展"></a>模板方法的扩展</h2><p>当在使用模板方法的时候，根据实际情况，我们可以在抽象类中，给相应的方法以默认的实现，可以是空实现或者是一个默认的实现。如果子类 有特殊的需求，可以通过覆盖相对应的方法来更改其实现。 比如:我们在写<code>ListView</code>的<code>adapter</code>时，如果继承自<code>BaseAdapter</code>时，其中的<code>getItemViewType</code>和<code>getViewTypeCount</code>都是有默认的实现，而如果我们需要在<code>listView</code>中使用多种类型的<code>item</code>的话，就需要覆写这两个方法，来替换父类中的默认实现。</p>
 <p><img src="/uploads/img/AndroidAdvanceDevelop/8/39.png" alt="图1"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
