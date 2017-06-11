@@ -65,7 +65,7 @@
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/34.png">
-<meta property="og:updated_time" content="2017-06-01T15:11:06.000Z">
+<meta property="og:updated_time" content="2017-06-11T13:12:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之构建者模式">
 <meta name="twitter:description">
@@ -257,9 +257,9 @@
       
         <p><img src="/uploads/img/AndroidAdvanceDevelop/8/35.png" alt="图1"></p>
 <a id="more"></a>
-<h2 id="构建者模式说明"><a href="#构建者模式说明" class="headerlink" title="构建者模式说明"></a>构建者模式说明</h2><p>构建者模式，也称生成器模式，是一种创建型的设计模式。将一个复杂对象的具体创建过程与其表示进行分离，客户端只需要知道具体的构建者类型，而无需知道具体的构建过程;同时支持链式调用也是构建者模式的一个优点。  </p>
+<h1 id="构建者模式说明"><a href="#构建者模式说明" class="headerlink" title="构建者模式说明"></a>构建者模式说明</h1><p>构建者模式，也称生成器模式，是一种创建型的设计模式。将一个复杂对象的具体创建过程与其表示进行分离，客户端只需要知道具体的构建者类型，而无需知道具体的构建过程;同时支持链式调用也是构建者模式的一个优点。  </p>
 <p>一个标准的构建者模式由<code>Director（指挥者）</code>、<code>abstractBuilder(抽象构建者)</code>、<code>concreteBuilder（具体构建者）</code>和<code>Product（产品）</code>四个角色组成。</p>
-<h2 id="构建者模式的UML图"><a href="#构建者模式的UML图" class="headerlink" title="构建者模式的UML图"></a>构建者模式的UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/34.png" alt="img"></p>
+<h1 id="构建者模式的UML图"><a href="#构建者模式的UML图" class="headerlink" title="构建者模式的UML图"></a>构建者模式的UML图</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/8/34.png" alt="img"></p>
 <p>图中几种角色的说明:</p>
 <blockquote>
 <ol>
@@ -270,10 +270,10 @@
 <li>client(场景类): 测试类，在此对象中我们需要创建指挥者，并为指挥者指定具体的构造器。</li>
 </ol>
 </blockquote>
-<h2 id="构建者模式的示例"><a href="#构建者模式的示例" class="headerlink" title="构建者模式的示例"></a>构建者模式的示例</h2><p>通过代码实现一个标准的构建者模式的示例，这个例子通过构建一台小汽车的方式来对构建者模式进行说明。</p>
-<h4 id="Product类的实现"><a href="#Product类的实现" class="headerlink" title="Product类的实现"></a>Product类的实现</h4><p>public class Car {<br>    private String wheel;  //轮子<br>    private String circle;  //方向盘<br>    private String engine;  //发动机<br>}</p>
+<h1 id="构建者模式的示例"><a href="#构建者模式的示例" class="headerlink" title="构建者模式的示例"></a>构建者模式的示例</h1><p>通过代码实现一个标准的构建者模式的示例，这个例子通过构建一台小汽车的方式来对构建者模式进行说明。</p>
+<h2 id="Product类的实现"><a href="#Product类的实现" class="headerlink" title="Product类的实现"></a>Product类的实现</h2><p>public class Car {<br>    private String wheel;  //轮子<br>    private String circle;  //方向盘<br>    private String engine;  //发动机<br>}</p>
 <p>这里的产品为一台汽车的构造。假设这个汽车主要由轮子、方向盘、发动机三部分组成。</p>
-<h4 id="AbstractBuilder抽象构建者的实现"><a href="#AbstractBuilder抽象构建者的实现" class="headerlink" title="AbstractBuilder抽象构建者的实现"></a>AbstractBuilder抽象构建者的实现</h4><pre><code>public abstract class AbstractBuilder {
+<h2 id="AbstractBuilder抽象构建者的实现"><a href="#AbstractBuilder抽象构建者的实现" class="headerlink" title="AbstractBuilder抽象构建者的实现 "></a>AbstractBuilder抽象构建者的实现 </h2><pre><code>public abstract class AbstractBuilder {
     protected abstract void buildWheel();
 
     protected abstract void buildCircle();
@@ -283,7 +283,7 @@
     protected abstract Car build();
 }
 </code></pre><p>这里主要是定义了相关部件的创建方法及产品对象的创建方法。由具体的实现类去实现相应的方法。</p>
-<h4 id="ConcreteBuilder具体构建者的实现"><a href="#ConcreteBuilder具体构建者的实现" class="headerlink" title="ConcreteBuilder具体构建者的实现"></a>ConcreteBuilder具体构建者的实现</h4><pre><code>public class ConcreteBuilder extends AbstractBuilder {
+<h2 id="ConcreteBuilder具体构建者的实现"><a href="#ConcreteBuilder具体构建者的实现" class="headerlink" title="ConcreteBuilder具体构建者的实现 "></a>ConcreteBuilder具体构建者的实现 </h2><pre><code>public class ConcreteBuilder extends AbstractBuilder {
     private Car car = new Car();
 
     @Override
@@ -307,7 +307,7 @@
     }
 }
 </code></pre><p>具体构建者通过成员变量的方式持有产品对象的实例。并实现了相应的构建方法来对产品的各部件进行构建，并返回了该构建的产品对象。</p>
-<h4 id="Director-指挥者-的实现"><a href="#Director-指挥者-的实现" class="headerlink" title="Director(指挥者)的实现"></a>Director(指挥者)的实现</h4><pre><code>public class Director {
+<h2 id="Director-指挥者-的实现"><a href="#Director-指挥者-的实现" class="headerlink" title="Director(指挥者)的实现 "></a>Director(指挥者)的实现 </h2><pre><code>public class Director {
     private AbstractBuilder builder;
 
     public Director(AbstractBuilder builder) {
@@ -322,7 +322,7 @@
     }
 }
 </code></pre><p>指挥者通过构造函数注入的方式，将具体的构建者传递了进来;然后，通过<code>constructor()</code>方法来指定各部分的创建次序，构建完成后，直接返回已经构建好了的对象。</p>
-<h4 id="Client-场景类-的实现"><a href="#Client-场景类-的实现" class="headerlink" title="Client(场景类)的实现"></a>Client(场景类)的实现</h4><pre><code>public class Client {
+<h2 id="Client-场景类-的实现"><a href="#Client-场景类-的实现" class="headerlink" title="Client(场景类)的实现 "></a>Client(场景类)的实现 </h2><pre><code>public class Client {
     public static void main(String[] args) {
         AbstractBuilder builder = new ConcreteBuilder();
         Director director = new Director(builder);
@@ -331,7 +331,7 @@
 }
 </code></pre><p>client(f场景类)主要指的就是使用者，使用者只需要创建相应的<code>Director</code>对象，并传入具体的构建者，调用相应的<code>Director</code>方法即可完成复杂对象的创建。</p>
 <p>到这里，一个标准的构建者模式的示例就编写完成了。大家有没有觉得哪儿有点多余？或者说和平时见到的构建者有什么不同？实际上，这里确实是有一点繁琐，完全可以把指挥者所做的事情，交由抽象构建者来完成。这里和模板方法结合了。在抽象构建者中定义了算法的骨架。</p>
-<h2 id="优化后的AbstractBuilder"><a href="#优化后的AbstractBuilder" class="headerlink" title="优化后的AbstractBuilder"></a>优化后的AbstractBuilder</h2><pre><code>public abstract class AbstractBuilder {
+<h1 id="优化后的AbstractBuilder"><a href="#优化后的AbstractBuilder" class="headerlink" title="优化后的AbstractBuilder"></a>优化后的AbstractBuilder</h1><pre><code>public abstract class AbstractBuilder {
     protected Car car = new Car();
 
     protected abstract void buildWheel();
@@ -356,7 +356,7 @@
 </blockquote>
 <p>改造后的代码比之前的标准的格式精简了不少，可是总感觉和平时见的构建者模式还是有些许不同。嗯！实际上我们一般在使用构建者模式时，一般是在复杂产品的内部创建一个内部类，然后，设置相应的属性，最后提供一个<code>build</code>方法来创建具体的产品对象。</p>
 <p>也就是说我们可以将生成器模式的代码写在同一个类里面。呵呵，是不是更精简了。</p>
-<h2 id="终极构建者模式"><a href="#终极构建者模式" class="headerlink" title="终极构建者模式"></a>终极构建者模式</h2><pre><code>public class Car {
+<h1 id="终极构建者模式"><a href="#终极构建者模式" class="headerlink" title="终极构建者模式"></a>终极构建者模式</h1><pre><code>public class Car {
     private String wheel;  //轮子
     private String circle;  //方向盘
     private String engine;  //发动机
@@ -424,18 +424,18 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
         .setEngine(&quot;benz engine&quot;)
         .build();
 </code></pre><p>上面就是调用终极构建者的代码，通过链式调用的方式代码非常的简洁。</p>
-<h2 id="构建者模式的总结"><a href="#构建者模式的总结" class="headerlink" title="构建者模式的总结"></a>构建者模式的总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
+<h1 id="构建者模式的总结"><a href="#构建者模式的总结" class="headerlink" title="构建者模式的总结"></a>构建者模式的总结</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><blockquote>
 <ol>
 <li>构建者模式将复杂对象的创建与表示分离，客户端不需要知道复杂对象的组成细节，使得相同的构造过程可以创建出不同的产品对象。</li>
 <li>具体的构建者相互独立，在新增构建者或者替换构建者都不会对代码造成影响，易于扩展，符合开闭原则。</li>
 </ol>
 </blockquote>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><blockquote>
 <ol>
 <li>构建者模式创建的产品对象特性大多相似，如果产品之前差异较大，则不适合使用构建者模式。</li>
 </ol>
 </blockquote>
-<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><blockquote>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景 "></a>应用场景 </h2><blockquote>
 <ol>
 <li>需要生成的产品内部相对复杂，该对象由多个属性组成。</li>
 <li>需要生成的产品相互关联，创建产品时有一定的顺序</li>
@@ -595,7 +595,7 @@ Car car = builder.setCircle(&quot;benz circle&quot;)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式说明"><span class="nav-text">构建者模式说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的UML图"><span class="nav-text">构建者模式的UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的示例"><span class="nav-text">构建者模式的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Product类的实现"><span class="nav-text">Product类的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractBuilder抽象构建者的实现"><span class="nav-text">AbstractBuilder抽象构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcreteBuilder具体构建者的实现"><span class="nav-text">ConcreteBuilder具体构建者的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Director-指挥者-的实现"><span class="nav-text">Director(指挥者)的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-场景类-的实现"><span class="nav-text">Client(场景类)的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化后的AbstractBuilder"><span class="nav-text">优化后的AbstractBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终极构建者模式"><span class="nav-text">终极构建者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建者模式的总结"><span class="nav-text">构建者模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-text">应用场景</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#构建者模式说明"><span class="nav-text">构建者模式说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建者模式的UML图"><span class="nav-text">构建者模式的UML图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建者模式的示例"><span class="nav-text">构建者模式的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Product类的实现"><span class="nav-text">Product类的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbstractBuilder抽象构建者的实现"><span class="nav-text">AbstractBuilder抽象构建者的实现 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcreteBuilder具体构建者的实现"><span class="nav-text">ConcreteBuilder具体构建者的实现 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Director-指挥者-的实现"><span class="nav-text">Director(指挥者)的实现 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-场景类-的实现"><span class="nav-text">Client(场景类)的实现 </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化后的AbstractBuilder"><span class="nav-text">优化后的AbstractBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终极构建者模式"><span class="nav-text">终极构建者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建者模式的总结"><span class="nav-text">构建者模式的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-text">应用场景 </span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
