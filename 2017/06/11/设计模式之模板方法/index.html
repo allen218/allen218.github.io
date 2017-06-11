@@ -59,21 +59,18 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ListView原理及设计模式浅析">
-<meta property="og:url" content="http://yoursite.com/2016/03/27/ListView原理解析/index.html">
+<meta property="og:title" content="设计模式之模板方法">
+<meta property="og:url" content="http://yoursite.com/2017/06/11/设计模式之模板方法/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/4.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/8.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/6.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/7.png">
-<meta property="og:updated_time" content="2016-04-02T11:30:20.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/38.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/39.png">
+<meta property="og:updated_time" content="2017-06-11T11:32:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ListView原理及设计模式浅析">
+<meta name="twitter:title" content="设计模式之模板方法">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/1/5.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/35.png">
 
 
 
@@ -91,7 +88,7 @@
   };
 </script>
 
-  <title> ListView原理及设计模式浅析 | Allen'Notes </title>
+  <title> 设计模式之模板方法 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -213,7 +210,7 @@
             
             
               
-                ListView原理及设计模式浅析
+                设计模式之模板方法
               
             
           </h1>
@@ -225,8 +222,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-27T20:24:13+08:00" content="2016-03-27">
-              2016-03-27
+            <time itemprop="dateCreated" datetime="2017-06-11T16:34:24+08:00" content="2017-06-11">
+              2017-06-11
             </time>
           </span>
 
@@ -236,8 +233,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/27/ListView原理解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/27/ListView原理解析/" itemprop="commentsCount"></span>
+                <a href="/2017/06/11/设计模式之模板方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/11/设计模式之模板方法/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -259,48 +256,76 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/1/5.png" alt="图1"><br><a id="more"></a></p>
-<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p><code>ListView</code>是Android使用频率非常高的一个控件，它以列表的形式展示内容，并且能够根据数据的长度自适应高度。</p>
-<h1 id="2-展示列表所需要的元素组成"><a href="#2-展示列表所需要的元素组成" class="headerlink" title="2.展示列表所需要的元素组成"></a>2.展示列表所需要的元素组成</h1><blockquote>
-<p>1.需要用来展示列表的<code>ListView</code><br>2.用来组织数据并映射到<code>ListView</code>的<code>Adapter</code><br>3.需要展示的数据集<br>4.需要展示的<code>View</code>模板</p>
-</blockquote>
-<h1 id="3-各组成之间的关系"><a href="#3-各组成之间的关系" class="headerlink" title="3.各组成之间的关系"></a>3.各组成之间的关系</h1><p><code>ListView</code>只负责加载、管理视图，至于有多少数据，每一项数据要怎么来展示，这些它都不关心。<br><code>Adapter</code>使用<code>Adapter</code>模式，使用抽象方式将用户需要指定的数据抽象出来，让用户去实现。比如：有多少数据需要展示、用什么方式来进行展示等等。<br>需要实现的<code>Adapter</code>的函数为：</p>
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/35.png" alt="图1"></p>
+<a id="more"></a>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>模板方法模式是行为型设计模式中的一种，在开发中使用的频率相对还是比较高的，主要用来定义一些逻辑的执行流程，也就是算法的骨架。同时呢，模板方法也是相对比较简单的一种设计模式，其涉及的结构，相关的类相较其它的模式来说，比较的少。一般的，只会涉及父类子类这一种关系，父类负责定义算法的骨架，而具体的实现由子类去完成。</p>
+<h2 id="模板方法UML图"><a href="#模板方法UML图" class="headerlink" title="模板方法UML图"></a>模板方法UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/38.png" alt="图1"></p>
+<p>从图中我们可以看出，模板方法主要由两部分组成:</p>
 <blockquote>
-<p>1.getCount():指定当前有多少数据需要展示<br>2.getItem(int):获取当前<code>position</code>位置的数据<br>3.getItemId(int):直接返回当前对应的<code>position</code><br>4.getView(int,View,ViewGroup):返回当前<code>position</code>对应的<code>item</code>的<code>view</code></p>
+<ol>
+<li>抽象模板类: 主要定义算法的结构，也就是业务逻辑的执行流程。这里模板方法里的流程可分为固定的和非固定的两部分，如果是固定的就由抽象类自己去实现，而将非固定的，让子类去实现具体的方法。一般，模板的方法需要使用<code>final</code>来进行修辞，意思是，不能让子类去修改父类模板方法的所定义的业务逻辑。</li>
+<li>具体模板类: 主要是根据具体的类型去实现相应逻辑。子类可以有很多个，每个具体模板类的具体方法实现是不一样的。</li>
+</ol>
 </blockquote>
-<h1 id="4-ListView原理"><a href="#4-ListView原理" class="headerlink" title="4.ListView原理"></a>4.ListView原理</h1><p>当处理较大的数据时，<code>Listview</code>并不是一次性加载所有数据，而是只加载铺满整个屏幕的数据。当屏幕向下滚动时，第一个元素离开了屏幕之后会进入到<code>Listview</code>里的一个<code>Recycler</code>集合中，<code>Recycler</code>会将当前视图缓存。这时最下面需要填充一个新的元素，<code>ListView</code>会先去<code>Recycler</code>集合里去取，如果有就会复用此视图，如果没有就接着创建。通过<code>getView(int,View,ViewGroup)</code>方法将所取到的数据传递给用户来进行复用，如果没有传递的<code>convertView</code>将为<code>null</code>.<br><img width="480" height="360" src="/uploads/img/AndroidAdvanceDevelop/1/4.png"><br>上面这张图很好的说明了<code>ListView</code>的复用原理。</p>
-<pre><code>@Override
-public View getView(int position, View convertView, ViewGroup parent) {
-    View mView = null;
-    if (convertView != null)
-        mView = convertView;
-    else {
-        //重新加载视图
-        mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, null);
-    }
-    //这里将数据和视图进行绑定
+<h2 id="模板方法的简单例子"><a href="#模板方法的简单例子" class="headerlink" title="模板方法的简单例子"></a>模板方法的简单例子</h2><p>比如，我们手机里通过会下载一些游戏，比如：王者荣耀，魂斗罗…当我们要玩具体某一个游戏的时候，固定的步骤是先打开游戏，然后开始玩游戏，当不想玩的时候，我们会退出游戏，实现上，这就是一个典型的模板方法设计模式的体现。我们下面使用代码的方式来对其进行实现。</p>
+<h4 id="抽象模板类"><a href="#抽象模板类" class="headerlink" title="抽象模板类"></a>抽象模板类</h4><pre><code>public abstract class AbstractMethodClass {
 
-    return mView;
+    /**
+     * 定义算法的执行流程
+     */
+    protected final void templateMethod() {
+        openGame();
+        playGame();
+        exitGame();
+    }
+
+    protected abstract void exitGame();
+
+    protected abstract void playGame();
+
+    protected abstract void openGame();
+
 }
-</code></pre><p>这里的<code>position</code>表示当前<code>item</code>是第几项数据，<code>convertView</code>表示缓存的<code>item view</code>，<code>parent</code>表示<code>item view</code>的父视图，这里所指的就是我们的<code>Listview</code>。这里最重要的就是<code>convertView</code>，如果<code>convertView</code>不为空，可以直接复用该视图，如果为空，就要重新创建视图，最后返回当前<code>item</code>所对应的已绑定数据的<code>view</code>.</p>
-<h1 id="5-ListView设计模式解析"><a href="#5-ListView设计模式解析" class="headerlink" title="5.ListView设计模式解析"></a>5.ListView设计模式解析</h1><p><code>listView</code>运用了<code>Adapter</code>模式，而在<code>Adapter</code>类中却还运用了观察者模式，<code>Adapter</code>内部有一个被观察者类，<code>ListView</code>作为它的一个观察者,在将<code>Adapter</code>设置给<code>ListView</code>时，<code>ListView</code>就被当作观察者注册到了<code>Adapter</code>内的被观察者对象上了。<br>我们以<code>ListView</code>的数据刷新来通过源码实现来看看其设计模式</p>
-<pre><code>@Override
-public void setAdapter(ListAdapter adapter) {
-    //代码省略...
-    super.setAdapter(adapter);
-        //代码省略...
-    mDataSetObserver = new AdapterDataSetObserver();
-    mAdapter.registerDataSetObserver(mDataSetObserver);
-        //代码省略...
+</code></pre><p>通过<code>templateMethod()</code>方法定义了三个抽象方法，分别是打开游戏，玩游戏和退出游戏。而具体打开哪个游戏，怎么玩以及退出哪个游戏我们是不清楚的，只有在玩具体的游戏的时候才能确定。</p>
+<h2 id="具体模板类"><a href="#具体模板类" class="headerlink" title="具体模板类"></a>具体模板类</h2><pre><code>public class KingGame extends PlayGameClass {
+    @Override
+    protected void exitGame() {
+        System.out.println(&quot;退出王者荣耀&quot;);
+    }
+
+    @Override
+    protected void playGame() {
+        System.out.println(&quot;和兄弟们正在发起对敌人的进攻&quot;);
+
+    }
+
+    @Override
+    protected void openGame() {
+        System.out.println(&quot;打开王者荣耀&quot;);
+
+    }
 }
-</code></pre><p>上面源码说明在<code>setAdapter</code>方法里创建了一个<code>AdapterDataSetObserver</code>对象，并把该对象注册到了<code>mAdapter</code>。</p>
-<p>再来看看我们<code>Adapter</code>的父类<code>BaseAdapter</code></p>
-<p>在<code>BaseAdapter</code>基类中我们看到了上面的<code>AdapterDataSetObserver</code>类被注册到了<code>DataSetObservable</code>被观察者对象中。<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/8.png"></p>
-<p>接下来我们来看看<code>DataSetObservable</code>类<br><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/5.png"><br>从图上可以看出<code>DataSetObservable</code>就是继承了<code>Java</code>提供的被观察者对象，并通过<code>notifyChanged</code>来通知注册了的观察者对象。</p>
-<p>到这里还是没有看到<code>ListView</code>注册了<code>Adapter</code>。而注册的是<code>AdapterDataSetObserver</code>对象。那我们就去看看这个<code>AdapterDataSetObservable</code>这个对象的实现吧。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/6.png"><br>从图上可以看出，这是一个典型的Observer的实现，通过实现<code>onChanged</code>来接收被观察都传递过来的数据。在<code>onChanged</code>方法里调用了父类的方法，我们去父类一探究竟。</p>
-<p><img width="640" height="480" src="/uploads/img/AndroidAdvanceDevelop/1/7.png"><br>在<code>AdapterDataSetObserver</code>的<code>onChanged</code>方法中，我们获取了<code>item</code>的个数，以及调用<code>requestLayout</code>方法来进行重新布局，绘制整个<code>listView</code>的<code>item View</code>.执行完此过程后，<code>ListView</code>中的数据就得到了刷新。</p>
-<p>这里的<code>AdapterDataSetObserver</code>对象里调用的都是<code>AdapterView</code>或者<code>ViewGroup</code>类的属性或方法完成功能.而<code>ListView</code>继承自<code>AdapterView</code>.因此，只可以说<code>AdapterDataSetObserver</code>只是在外层做了一下包装，核心的功能应该是<code>ListView</code>，确切的说是<code>AdapterView</code>。<code>ListView</code>通过<code>Adapter</code>模式、观察者模式、以及使用<code>item View</code>复用来高效的展示列表数据</p>
+</code></pre><p>魂半罗类和此类是类似的代码，就不贴了，这里分别针对不同的游戏来做出了相应的实现。</p>
+<h2 id="模板方法的扩展"><a href="#模板方法的扩展" class="headerlink" title="模板方法的扩展"></a>模板方法的扩展</h2><p>当在使用模板方法的时候，根据实际情况，我们可以在抽象类中，给相应的方法以默认的实现，可以是空实现或者是一个默认的实现。如果子类 有特殊的需求，可以通过覆盖相对应的方法来更改其实现。 比如:我们在写<code>ListView</code>的<code>adapter</code>时，如果继承自<code>BaseAdapter</code>时，其中的<code>getItemViewType</code>和<code>getViewTypeCount</code>都是有默认的实现，而如果我们需要在<code>listView</code>中使用多种类型的<code>item</code>的话，就需要覆写这两个方法，来替换父类中的默认实现。</p>
+<p><img src="/uploads/img/AndroidAdvanceDevelop/8/39.png" alt="图1"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
+<ol>
+<li>容易扩展。只需实现相应的抽象方法，就可以针对具体的情况很容易实现功能的扩展。</li>
+<li>便于维护。模板方法统一了业务流程，如果需要对业务流程进行修改，只需要维护模板方法一处地方，而普通的实现，业务逻辑都散落在各个类中，修改起来就比较麻烦。</li>
+</ol>
+</blockquote>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
+<ol>
+<li>每一个不同的实现都需要新建一个类，会导致类个数的膨胀。</li>
+</ol>
+</blockquote>
+<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><blockquote>
+<ol>
+<li>需要统一算法的执行流程时。</li>
+<li>需要对各子类中的行为进行抽象，以避免代码重复时。</li>
+<li>需要控制子类的扩展时。</li>
+</ol>
+</blockquote>
 
       
     </div>
@@ -318,17 +343,13 @@ public void setAdapter(ListAdapter adapter) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/27/Android开发进阶第一章—Android的构成基石读后笔记/" rel="next" title="Android开发进阶第一章—Android的构成基石读书笔记">
-                <i class="fa fa-chevron-left"></i> Android开发进阶第一章—Android的构成基石读书笔记
+              <a href="/2017/06/05/设计模式之责任链模式/" rel="next" title="设计模式之责任链模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之责任链模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/30/PulltoRefresh源码分析/" rel="prev" title="PulltoRefresh源码分析">
-                PulltoRefresh源码分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -354,8 +375,8 @@ public void setAdapter(ListAdapter adapter) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/27/ListView原理解析/"
-           data-title="ListView原理及设计模式浅析" data-url="http://yoursite.com/2016/03/27/ListView原理解析/">
+      <div class="ds-thread" data-thread-key="2017/06/11/设计模式之模板方法/"
+           data-title="设计模式之模板方法" data-url="http://yoursite.com/2017/06/11/设计模式之模板方法/">
       </div>
     
   </div>
@@ -454,7 +475,7 @@ public void setAdapter(ListAdapter adapter) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介"><span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-展示列表所需要的元素组成"><span class="nav-text">2.展示列表所需要的元素组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-各组成之间的关系"><span class="nav-text">3.各组成之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-ListView原理"><span class="nav-text">4.ListView原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ListView设计模式解析"><span class="nav-text">5.ListView设计模式解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法UML图"><span class="nav-text">模板方法UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法的简单例子"><span class="nav-text">模板方法的简单例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象模板类"><span class="nav-text">抽象模板类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体模板类"><span class="nav-text">具体模板类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法的扩展"><span class="nav-text">模板方法的扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用场景"><span class="nav-text">适用场景</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
