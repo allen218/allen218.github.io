@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/40.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/38.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/39.png">
-<meta property="og:updated_time" content="2017-06-11T12:59:10.000Z">
+<meta property="og:updated_time" content="2017-06-11T13:01:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之模板方法">
 <meta name="twitter:description">
@@ -258,8 +258,8 @@
       
         <p><img src="/uploads/img/AndroidAdvanceDevelop/8/40.png" alt="图1"></p>
 <a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>模板方法模式是行为型设计模式中的一种，在开发中使用的频率相对还是比较高的，主要用来定义一些逻辑的执行流程，也就是算法的骨架。同时呢，模板方法也是相对比较简单的一种设计模式，其涉及的结构，相关的类相较其它的模式来说，比较的少。一般的，只会涉及父类子类这一种关系，父类负责定义算法的骨架，而具体的实现由子类去完成。</p>
-<h2 id="模板方法UML图"><a href="#模板方法UML图" class="headerlink" title="模板方法UML图"></a>模板方法UML图</h2><p><img src="/uploads/img/AndroidAdvanceDevelop/8/38.png" alt="图1"></p>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>模板方法模式是行为型设计模式中的一种，在开发中使用的频率相对还是比较高的，主要用来定义一些逻辑的执行流程，也就是算法的骨架。同时呢，模板方法也是相对比较简单的一种设计模式，其涉及的结构，相关的类相较其它的模式来说，比较的少。一般的，只会涉及父类子类这一种关系，父类负责定义算法的骨架，而具体的实现由子类去完成。</p>
+<h1 id="模板方法UML图"><a href="#模板方法UML图" class="headerlink" title="模板方法UML图"></a>模板方法UML图</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/8/38.png" alt="图1"></p>
 <p>从图中我们可以看出，模板方法主要由两部分组成:</p>
 <blockquote>
 <ol>
@@ -267,7 +267,7 @@
 <li>具体模板类: 主要是根据具体的类型去实现相应逻辑。子类可以有很多个，每个具体模板类的具体方法实现是不一样的。</li>
 </ol>
 </blockquote>
-<h2 id="模板方法的简单例子"><a href="#模板方法的简单例子" class="headerlink" title="模板方法的简单例子"></a>模板方法的简单例子</h2><p>比如，我们手机里通过会下载一些游戏，比如：王者荣耀，魂斗罗…当我们要玩具体某一个游戏的时候，固定的步骤是先打开游戏，然后开始玩游戏，当不想玩的时候，我们会退出游戏，实现上，这就是一个典型的模板方法设计模式的体现。我们下面使用代码的方式来对其进行实现。</p>
+<h1 id="模板方法的简单例子"><a href="#模板方法的简单例子" class="headerlink" title="模板方法的简单例子"></a>模板方法的简单例子</h1><p>比如，我们手机里通过会下载一些游戏，比如：王者荣耀，魂斗罗…当我们要玩具体某一个游戏的时候，固定的步骤是先打开游戏，然后开始玩游戏，当不想玩的时候，我们会退出游戏，实现上，这就是一个典型的模板方法设计模式的体现。我们下面使用代码的方式来对其进行实现。</p>
 <h4 id="抽象模板类"><a href="#抽象模板类" class="headerlink" title="抽象模板类"></a>抽象模板类</h4><pre><code>public abstract class AbstractMethodClass {
 
     /**
@@ -306,10 +306,9 @@
     }
 }
 </code></pre><p>魂半罗类和此类是类似的代码，就不贴了，这里分别针对不同的游戏来做出了相应的实现。</p>
-<p>##模板方法的扩展</p>
-<p>当在使用模板方法的时候，根据实际情况，我们可以在抽象类中，给相应的方法以默认的实现，可以是空实现或者是一个默认的实现。如果子类 有特殊的需求，可以通过覆盖相对应的方法来更改其实现。 比如:我们在写<code>ListView</code>的<code>adapter</code>时，如果继承自<code>BaseAdapter</code>时，其中的<code>getItemViewType</code>和<code>getViewTypeCount</code>都是有默认的实现，而如果我们需要在<code>listView</code>中使用多种类型的<code>item</code>的话，就需要覆写这两个方法，来替换父类中的默认实现。</p>
+<h1 id="模板方法的扩展"><a href="#模板方法的扩展" class="headerlink" title="模板方法的扩展"></a>模板方法的扩展</h1><p>当在使用模板方法的时候，根据实际情况，我们可以在抽象类中，给相应的方法以默认的实现，可以是空实现或者是一个默认的实现。如果子类 有特殊的需求，可以通过覆盖相对应的方法来更改其实现。 比如:我们在写<code>ListView</code>的<code>adapter</code>时，如果继承自<code>BaseAdapter</code>时，其中的<code>getItemViewType</code>和<code>getViewTypeCount</code>都是有默认的实现，而如果我们需要在<code>listView</code>中使用多种类型的<code>item</code>的话，就需要覆写这两个方法，来替换父类中的默认实现。</p>
 <p><img src="/uploads/img/AndroidAdvanceDevelop/8/39.png" alt="图1"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
 <ol>
 <li>容易扩展。只需实现相应的抽象方法，就可以针对具体的情况很容易实现功能的扩展。</li>
 <li>便于维护。模板方法统一了业务流程，如果需要对业务流程进行修改，只需要维护模板方法一处地方，而普通的实现，业务逻辑都散落在各个类中，修改起来就比较麻烦。</li>
@@ -476,7 +475,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法UML图"><span class="nav-text">模板方法UML图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法的简单例子"><span class="nav-text">模板方法的简单例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象模板类"><span class="nav-text">抽象模板类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体模板类"><span class="nav-text">具体模板类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用场景"><span class="nav-text">适用场景</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板方法UML图"><span class="nav-text">模板方法UML图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板方法的简单例子"><span class="nav-text">模板方法的简单例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象模板类"><span class="nav-text">抽象模板类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体模板类"><span class="nav-text">具体模板类</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板方法的扩展"><span class="nav-text">模板方法的扩展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用场景"><span class="nav-text">适用场景</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
