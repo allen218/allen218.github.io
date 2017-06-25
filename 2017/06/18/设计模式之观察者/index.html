@@ -59,18 +59,17 @@
 
 <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android性能优化之Bitmap优化">
-<meta property="og:url" content="http://yoursite.com/2017/04/09/Android性能优化之Bitmap优化/index.html">
+<meta property="og:title" content="设计模式之观察者">
+<meta property="og:url" content="http://yoursite.com/2017/06/18/设计模式之观察者/index.html">
 <meta property="og:site_name" content="Allen'Notes">
 <meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T14:46:39.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/42.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/41.png">
+<meta property="og:updated_time" content="2017-06-25T14:24:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android性能优化之Bitmap优化">
+<meta name="twitter:title" content="设计模式之观察者">
 <meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/42.png">
 
 
 
@@ -88,7 +87,7 @@
   };
 </script>
 
-  <title> Android性能优化之Bitmap优化 | Allen'Notes </title>
+  <title> 设计模式之观察者 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -210,7 +209,7 @@
             
             
               
-                Android性能优化之Bitmap优化
+                设计模式之观察者
               
             
           </h1>
@@ -222,8 +221,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-09T11:06:31+08:00" content="2017-04-09">
-              2017-04-09
+            <time itemprop="dateCreated" datetime="2017-06-18T12:47:06+08:00" content="2017-06-18">
+              2017-06-18
             </time>
           </span>
 
@@ -233,8 +232,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/04/09/Android性能优化之Bitmap优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/09/Android性能优化之Bitmap优化/" itemprop="commentsCount"></span>
+                <a href="/2017/06/18/设计模式之观察者/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/18/设计模式之观察者/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -256,62 +255,65 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/25.png" alt="img"><br><a id="more"></a><br>今天我们来讲讲关于<code>Bitmap</code>相关的优化。通常在开发中，<code>Bitmap</code>都是让人头痛的问题，它是内存消耗大户，经常会由于<code>Bitmap</code>的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  </p>
-<p>鉴于<code>Bitmap</code>在开发都带来的种种棘手的问题，就迫使我们在做性能优化时，不得不考虑<code>Bitmap</code>的优化。今天，我们会从<code>质量压缩</code>、<code>尺寸压缩</code>、<code>采样率压缩</code>以及<code>终极压缩</code>等方面来对<code>Bitmap</code>来进行优化。</p>
-<h1 id="质量压缩优化"><a href="#质量压缩优化" class="headerlink" title="质量压缩优化"></a>质量压缩优化</h1><p>在质量压缩优化里，主要用到的就是我们<code>Bitmap</code>自带的<code>compress(CompressFormat format, int quality, OutputStream stream)</code>里的参数<code>quality</code>，这个参数的值为<code>0~100</code>。</p>
-<p>质量压缩并没有改变像素的多少，也就是说质量压缩并不会减少像素，而在内存里，<code>Bitmap</code>所占用的内存大小，是与我们图片像素的多少密切相关的。所以，质量压缩改变的只是保存到本地时，实际图片的大小，而对内存这一块并没有改变什么。</p>
-<pre><code>private void qualityCompress(Bitmap bitmap) {
-    try {
-        int quality = 20;
-        File file = new File(&quot;/sdcard/img/&quot;, &quot;质量压缩.jpg&quot;);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/42.png" alt="图1"></p>
+<a id="more"></a>
+<h1 id="观察者模式说明"><a href="#观察者模式说明" class="headerlink" title="观察者模式说明"></a>观察者模式说明</h1><p>观察者模式是我们在开发中使用得非常频繁的一种设计模式，它比较好的解决了在开发中对象之间的联动关系，即一个对象的状态或者特性改变后，其它一个或者多个对象需要随之改变的联动关系。</p>
+<p>观察者分为两种模型，一种是推模型，一种是拉模型。推模型主要是当被观察者发生改变时，主动的推送观察者感兴趣的具体东西;而拉模型同样的也是推给观察者，但不同的是，此时被观察者并不知道观察者对什么东西感兴趣，所以将自己本身作为一个对象传递给了观察者，然后让观察者自己去拉感兴趣的东西。</p>
+<p>同时，java也给我们定义好了观察者与被观察者的接口，我们只需要对应的实现接口就可以 实现观察者模式。推模型和拉模型都可以通过此接口来实现。</p>
+<h1 id="观察者模式uml图"><a href="#观察者模式uml图" class="headerlink" title="观察者模式uml图"></a>观察者模式uml图</h1><p><img src="/uploads/img/AndroidAdvanceDevelop/8/41.png" alt="图1"></p>
+<blockquote>
+<p>Observer: 观察者接口，主要有<code>update</code>等方法，用于接收被观察者推送过来的更新。该方法接收的参数一般为具体的包括一部分被观察者的对象，或者是整个被观察者对象。 </p>
+<p>ConcreteObserver: 观察者接口的实现类，该类一般有一到n多个，主要对接收到更新后的行为处理。</p>
+<p>Observable: 被观察者抽象类,主要有<code>attach</code>，<code>detach</code>和<code>notifyUpdate</code>等方法，其中<code>attach</code>主要用于注册观察者；<code>detach</code>用于解除注册观察者;<code>notifyUpdate</code>用于下发状态变化后的更新。 相应的方法一般都由自己实现，只是<code>notifyUpdate</code>中会接收子类传递进来的参数用于推送给观察者。 </p>
+<p>ConcreteObservable: 具体被观察者，该对象里一般并不实现父类中的方法，而是会提供触发更新的方法，也就是接收观察者感兴趣的相应的参数信息，然后将其通知给观察者。</p>
+</blockquote>
+<h1 id="观察者模式示例"><a href="#观察者模式示例" class="headerlink" title="观察者模式示例"></a>观察者模式示例</h1><h2 id="1-抽象被观察者-Observable"><a href="#1-抽象被观察者-Observable" class="headerlink" title="1. 抽象被观察者(Observable)"></a>1. 抽象被观察者(Observable)</h2><pre><code>public abstract class Observable {
+    List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();
 
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(baos.toByteArray());
-        fileOutputStream.flush();
-        fileOutputStream.close();
+    protected void attach(Observer o) {
+        observers.add(o);
+    }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+    protected void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    /**
+     * 接收观察者感兴趣的数据并推送更新
+     *
+     * @param content
+     */
+    protected void notifyUpdate(String content) {
+        for (int i = 0; i &lt; observers.size(); i++) {
+            observers.get(i).update(content);
+        }
     }
 }
-</code></pre><p>原图<code>3.7M</code>，通过<code>quality=20</code>质量压缩后，剩下<code>270k</code>.这里的原图指的是加载到内存后的<code>Bitmap</code>的大小。</p>
-<p>我们都知道，像<code>jpg</code>这样的图片都是图片压缩算法后的图片，所以，我把<code>jpg</code>的图片加载到内存后，通过<code>quality=100</code>，将其变成原图后输出，而直接从网上下载下来的<code>jpg</code>文件，原本只有<code>167k</code>。</p>
-<h1 id="尺寸压缩优化"><a href="#尺寸压缩优化" class="headerlink" title="尺寸压缩优化"></a>尺寸压缩优化</h1><p>尺寸压缩主要是通过改变图片像素来达到减少图片占用内存的大小。这里我们一般会创建一个空的<code>bitmap</code>,这个空的<code>bitmap</code>的宽和高都是通过比例压缩后的宽和高。然后，通过<code>Canvas</code>将原<code>bitmap</code>画到新的<code>Bitmap</code>上，而由于宽和高都是经过比例缩放后的值，所以，也就减小了<code>Bitmap</code>实际占用的内存大小。</p>
-<p>原图的分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/23.png" alt="img"></p>
-<p>而经过尺寸压缩后的图片分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/24.png" alt="img"></p>
-<p>也就是宽和高分别减少为原来的1/4.而大小也从<code>3.7M</code>就了<code>396K</code>.注意了，这里的压缩不仅仅是占用的内存被压缩了，实际存储到本地的图片也被压缩了。</p>
-<h1 id="采样率压缩优化"><a href="#采样率压缩优化" class="headerlink" title="采样率压缩优化"></a>采样率压缩优化</h1><p>采样率压缩主要是使用<code>BitmapFactory.options</code>的<code>inSampleSize</code>来做的。这个其实有点类似于尺寸压缩，都是通过缩小图片的宽和高来减少像素达到减少内存占用和减少本地存储占用。但有点区别的是，尺寸可以针对宽和高分别进行设置缩放比例，而采样率压缩是对宽和高同时做等比例缩放。</p>
-<p>使用采样率压缩，同时也要使用到<code>BitmapFactory.options</code>中的另外一个参数<code>inJustDecodeBounds=true</code>来在不加载图片到内存的情况下获取图片的宽高情况，然后通过原图的宽高和目标宽高得出一个比例值，用于<code>inSampleSize</code>来作用采样率来对图片进行缩放。</p>
-<pre><code>private void sampleSizeCompress() {
-    int inSampleSize = 8;
-    BitmapFactory.Options options = new BitmapFactory.Options();
-    options.inJustDecodeBounds = false;
-    options.inSampleSize = inSampleSize;
-    Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image, options);
+</code></pre><p>这里主要是创建了一个用于缓存观察者的集合，然后提供了<code>attach</code>方法来注册观察者，<code>detach</code>方法来解除注册观察者，<code>notifyUpdate</code>方法用于推送更新给观察者。</p>
+<h2 id="2-具体观察者-ConcreteObservable"><a href="#2-具体观察者-ConcreteObservable" class="headerlink" title="2. 具体观察者(ConcreteObservable)"></a>2. 具体观察者(ConcreteObservable)</h2><pre><code>public class ConcreteObservable extends Observable {
+    private String content;  //用于存储观察者感兴趣的信息
 
-    //输出经过采样率优化后的图片
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-    File file = new File(&quot;/sdcard/img/&quot;, &quot;采样率.jpg&quot;);
-    try {
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(outputStream.toByteArray());
-        fileOutputStream.flush();
-        fileOutputStream.close();
-    } catch (Exception e) {
-        e.printStackTrace();
+    public void setContent(String content) {
+        this.content = content;
+        notifyUpdate(content);
+    }
+
+    public String getContent() {
+        return content;
     }
 }
-</code></pre><h1 id="终极压缩优化"><a href="#终极压缩优化" class="headerlink" title="终极压缩优化"></a>终极压缩优化</h1><p>这里主要会用于<code>ndk</code>相关的东西了。这里主要是跟<code>Android</code>系统采用的图片算法有关。</p>
-<p><code>Android</code>使用的是第二代<code>JPEG</code>图片算法引擎<code>SKIA</code>的阉割版，采用的是定长编码的方式来对图片进行编码，而这样处理的好处就是，消耗的资源比较少，不需要经过cpu大量的计算；缺点就是：因为使用的是定长编码，占用的空间就会比较大，同样的质量的图片需要更大的空间来存储。</p>
-<p>而相比完整版的<code>SKIA</code>,阉割版的去除了哈夫曼编码。哈夫曼编码最大的特点是可变字长编码，通过对要编码的图片进行大量运算后，根据字符出现的概率进行编码，得到最佳编码。</p>
-<p>而为什么<code>Android</code>没有采用<code>Huffman</code>编码呢？原因主要是，最初的<code>Android</code>设备配置差，不适合进行大量的cpu运算，被迫使用其他算法。而现在的<code>Android</code>设备的配置已经非常的高，完全可以引入哈夫曼编码来减小图片的存储大小。</p>
-<p>目前，在微信中就用到了此编码。来解决图片传输过程中过大的问题。我们要解决的也就是绕过<code>Bitmap API</code>层，来自己编码实现，使用哈夫曼编码。</p>
-<p>我们使用一个大神编译好的<code>so</code>库来演示一下效果吧。由于是别人编译的库，所以，<code>Native</code>方法所在的包名不能更改，因为<code>so</code>里面的<code>jni</code>接口已经在编译时被写死了。  </p>
-<p>项目地址:</p>
-<p><a href="https://github.com/allen218/BitmapCompress" target="_blank" rel="external">https://github.com/allen218/BitmapCompress</a></p>
+</code></pre><p>该具体观察者主要用于缓存观察者感兴趣的信息，并提供<code>setContent</code>方法用于触发更新。</p>
+<h2 id="3-观察者接口-Observer"><a href="#3-观察者接口-Observer" class="headerlink" title="3. 观察者接口(Observer)"></a>3. 观察者接口(Observer)</h2><pre><code>public interface Observer {
+    void update(String content);
+}
+</code></pre><p>观察者接口只提供一个方法，用于接收推送信息。</p>
+<h2 id="4-具体观察者-ConcreteObserver"><a href="#4-具体观察者-ConcreteObserver" class="headerlink" title="4. 具体观察者(ConcreteObserver)"></a>4. 具体观察者(ConcreteObserver)</h2><pre><code>public class ConcreteObserver implements Observer {
+    @Override
+    public void update(String content) {
+        System.out.println(&quot;接收到的信息:&quot; + content);
+    }
+}
+</code></pre><p>具体观察者主要是接收被观察者推送过来的信息进行处理。</p>
 
       
     </div>
@@ -329,17 +331,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/26/Android性能优化之内存泄漏优化/" rel="next" title="Android性能优化之内存泄漏优化">
-                <i class="fa fa-chevron-left"></i> Android性能优化之内存泄漏优化
+              <a href="/2017/06/11/设计模式之模板方法/" rel="next" title="设计模式之模板方法">
+                <i class="fa fa-chevron-left"></i> 设计模式之模板方法
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/19/设计模式之工厂模式/" rel="prev" title="设计模式之工厂模式">
-                设计模式之工厂模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -365,8 +363,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/09/Android性能优化之Bitmap优化/"
-           data-title="Android性能优化之Bitmap优化" data-url="http://yoursite.com/2017/04/09/Android性能优化之Bitmap优化/">
+      <div class="ds-thread" data-thread-key="2017/06/18/设计模式之观察者/"
+           data-title="设计模式之观察者" data-url="http://yoursite.com/2017/06/18/设计模式之观察者/">
       </div>
     
   </div>
@@ -465,7 +463,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩优化"><span class="nav-text">尺寸压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采样率压缩优化"><span class="nav-text">采样率压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终极压缩优化"><span class="nav-text">终极压缩优化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式说明"><span class="nav-text">观察者模式说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式uml图"><span class="nav-text">观察者模式uml图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式示例"><span class="nav-text">观察者模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-抽象被观察者-Observable"><span class="nav-text">1. 抽象被观察者(Observable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-具体观察者-ConcreteObservable"><span class="nav-text">2. 具体观察者(ConcreteObservable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-观察者接口-Observer"><span class="nav-text">3. 观察者接口(Observer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-具体观察者-ConcreteObserver"><span class="nav-text">4. 具体观察者(ConcreteObserver)</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
