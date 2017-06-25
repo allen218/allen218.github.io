@@ -65,7 +65,7 @@
 <meta property="og:description">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/42.png">
 <meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/41.png">
-<meta property="og:updated_time" content="2017-06-25T15:32:05.000Z">
+<meta property="og:updated_time" content="2017-06-25T15:50:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之观察者">
 <meta name="twitter:description">
@@ -422,7 +422,21 @@ public class ConcreteObservable extends Observable {
 </code></pre><p>java自带的观察者通过实现系统自带的被观察者抽象类和观察者接口，同时实现了推模型和拉模型，我们可以选择其中一种方式来根据需求来进行观察者模式的实现。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="1-观察者模式的优点"><a href="#1-观察者模式的优点" class="headerlink" title="1. 观察者模式的优点"></a>1. 观察者模式的优点</h2><blockquote>
 <ol>
-<li></li>
+<li>很好的解决了对象间一对多的通信关系。同时通过接口进行通信，低耦合。</li>
+<li>支持广播的传播方式。</li>
+<li>提供推和拉两种模式，让用户按需选择。</li>
+</ol>
+</blockquote>
+<h2 id="2-观察者模式的缺点"><a href="#2-观察者模式的缺点" class="headerlink" title="2. 观察者模式的缺点"></a>2. 观察者模式的缺点</h2><blockquote>
+<ol>
+<li>在拉模型中，用户需要知道具体的被观察者的实现。导致了不必要的耦合度。</li>
+<li>由于观察者模式每次都是广播通信，不管需不需要每个观察者都会被调用update方法。如果观察者不需要执行相应的方法，调用了方法导致误更新那就麻烦了。</li>
+</ol>
+</blockquote>
+<h2 id="3-适用场景"><a href="#3-适用场景" class="headerlink" title="3. 适用场景"></a>3. 适用场景</h2><blockquote>
+<ol>
+<li>当一个对象或者多个对象会随着另一个对象的行为状态发生改变而变化时。</li>
+<li>当一个对象需要通知其它对象，而又希望和被通知对象的关系是松散耦合的</li>
 </ol>
 </blockquote>
 
@@ -574,7 +588,7 @@ public class ConcreteObservable extends Observable {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式说明"><span class="nav-text">观察者模式说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式uml图"><span class="nav-text">观察者模式uml图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式示例"><span class="nav-text">观察者模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-抽象被观察者-Observable"><span class="nav-text">1. 抽象被观察者(Observable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-具体观察者-ConcreteObservable"><span class="nav-text">2. 具体观察者(ConcreteObservable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-观察者接口-Observer"><span class="nav-text">3. 观察者接口(Observer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-具体观察者-ConcreteObserver"><span class="nav-text">4. 具体观察者(ConcreteObserver)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者推模型和拉模型"><span class="nav-text">观察者推模型和拉模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者拉模型的示例"><span class="nav-text">观察者拉模型的示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java自带观察者的实现"><span class="nav-text">java自带观察者的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-观察者模式的优点"><span class="nav-text">1. 观察者模式的优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式说明"><span class="nav-text">观察者模式说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式uml图"><span class="nav-text">观察者模式uml图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式示例"><span class="nav-text">观察者模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-抽象被观察者-Observable"><span class="nav-text">1. 抽象被观察者(Observable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-具体观察者-ConcreteObservable"><span class="nav-text">2. 具体观察者(ConcreteObservable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-观察者接口-Observer"><span class="nav-text">3. 观察者接口(Observer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-具体观察者-ConcreteObserver"><span class="nav-text">4. 具体观察者(ConcreteObserver)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者推模型和拉模型"><span class="nav-text">观察者推模型和拉模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者拉模型的示例"><span class="nav-text">观察者拉模型的示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java自带观察者的实现"><span class="nav-text">java自带观察者的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-观察者模式的优点"><span class="nav-text">1. 观察者模式的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-观察者模式的缺点"><span class="nav-text">2. 观察者模式的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-适用场景"><span class="nav-text">3. 适用场景</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
