@@ -57,20 +57,20 @@
 
 
 
-<meta name="description">
+<meta name="description" content="主流实现方式现在很多的应用都有了动态换肤的功能，像 QQ 音乐，网易音乐等。这些应用主要是通过网上下载皮肤包，然后应用。我们可以通过查看 QQ 音乐或者网易云音乐安装包下面的文件，就可以发现有一些带 xxx.skinxxx 等等的一些文件，而把这些文件 push 到桌面上，然后用 ZIP 工具打开，会发现，这个皮肤包和一般的 APk  唯一的区别就是里面没有 src 目录（也就是说里面没有代码部分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android性能优化之Bitmap优化">
-<meta property="og:url" content="http://yoursite.com/2017/04/09/Android性能优化之Bitmap优化/index.html">
+<meta property="og:title" content="Android动态主题实现原理">
+<meta property="og:url" content="http://yoursite.com/2019/03/29/Android动态主题实现原理/index.html">
 <meta property="og:site_name" content="Allen'Notes">
-<meta property="og:description">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/23.png">
-<meta property="og:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/24.png">
-<meta property="og:updated_time" content="2017-04-09T14:46:39.000Z">
+<meta property="og:description" content="主流实现方式现在很多的应用都有了动态换肤的功能，像 QQ 音乐，网易音乐等。这些应用主要是通过网上下载皮肤包，然后应用。我们可以通过查看 QQ 音乐或者网易云音乐安装包下面的文件，就可以发现有一些带 xxx.skinxxx 等等的一些文件，而把这些文件 push 到桌面上，然后用 ZIP 工具打开，会发现，这个皮肤包和一般的 APk  唯一的区别就是里面没有 src 目录（也就是说里面没有代码部分">
+<meta property="og:image" content="http://yoursite.com/uploads/img/dynamic_skin/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/dynamic_skin/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/img/dynamic_skin/3.png">
+<meta property="og:updated_time" content="2019-03-29T06:02:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android性能优化之Bitmap优化">
-<meta name="twitter:description">
-<meta name="twitter:image" content="http://yoursite.com/uploads/img/AndroidAdvanceDevelop/8/25.png">
+<meta name="twitter:title" content="Android动态主题实现原理">
+<meta name="twitter:description" content="主流实现方式现在很多的应用都有了动态换肤的功能，像 QQ 音乐，网易音乐等。这些应用主要是通过网上下载皮肤包，然后应用。我们可以通过查看 QQ 音乐或者网易云音乐安装包下面的文件，就可以发现有一些带 xxx.skinxxx 等等的一些文件，而把这些文件 push 到桌面上，然后用 ZIP 工具打开，会发现，这个皮肤包和一般的 APk  唯一的区别就是里面没有 src 目录（也就是说里面没有代码部分">
+<meta name="twitter:image" content="http://yoursite.com/uploads/img/dynamic_skin/1.png">
 
 
 
@@ -88,7 +88,7 @@
   };
 </script>
 
-  <title> Android性能优化之Bitmap优化 | Allen'Notes </title>
+  <title> Android动态主题实现原理 | Allen'Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -210,7 +210,7 @@
             
             
               
-                Android性能优化之Bitmap优化
+                Android动态主题实现原理
               
             
           </h1>
@@ -222,8 +222,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-09T11:06:31+08:00" content="2017-04-09">
-              2017-04-09
+            <time itemprop="dateCreated" datetime="2019-03-29T12:07:01+08:00" content="2019-03-29">
+              2019-03-29
             </time>
           </span>
 
@@ -233,8 +233,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/04/09/Android性能优化之Bitmap优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/09/Android性能优化之Bitmap优化/" itemprop="commentsCount"></span>
+                <a href="/2019/03/29/Android动态主题实现原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/29/Android动态主题实现原理/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -256,62 +256,18 @@
       
 
       
-        <p><img src="/uploads/img/AndroidAdvanceDevelop/8/25.png" alt="img"><br><a id="more"></a><br>今天我们来讲讲关于<code>Bitmap</code>相关的优化。通常在开发中，<code>Bitmap</code>都是让人头痛的问题，它是内存消耗大户，经常会由于<code>Bitmap</code>的内存泄露，而导致内存溢出；同时，它也是本地存储的消耗大户，现在手机的像素越来越大，一张图片动不动都是好几兆的大小，不仅仅占用本地存储，如果，将其让在网络中传输，特别是在用户被动的情况下，那画面真是太美了。  </p>
-<p>鉴于<code>Bitmap</code>在开发都带来的种种棘手的问题，就迫使我们在做性能优化时，不得不考虑<code>Bitmap</code>的优化。今天，我们会从<code>质量压缩</code>、<code>尺寸压缩</code>、<code>采样率压缩</code>以及<code>终极压缩</code>等方面来对<code>Bitmap</code>来进行优化。</p>
-<h1 id="质量压缩优化"><a href="#质量压缩优化" class="headerlink" title="质量压缩优化"></a>质量压缩优化</h1><p>在质量压缩优化里，主要用到的就是我们<code>Bitmap</code>自带的<code>compress(CompressFormat format, int quality, OutputStream stream)</code>里的参数<code>quality</code>，这个参数的值为<code>0~100</code>。</p>
-<p>质量压缩并没有改变像素的多少，也就是说质量压缩并不会减少像素，而在内存里，<code>Bitmap</code>所占用的内存大小，是与我们图片像素的多少密切相关的。所以，质量压缩改变的只是保存到本地时，实际图片的大小，而对内存这一块并没有改变什么。</p>
-<pre><code>private void qualityCompress(Bitmap bitmap) {
-    try {
-        int quality = 20;
-        File file = new File(&quot;/sdcard/img/&quot;, &quot;质量压缩.jpg&quot;);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
-
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(baos.toByteArray());
-        fileOutputStream.flush();
-        fileOutputStream.close();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-</code></pre><p>原图<code>3.7M</code>，通过<code>quality=20</code>质量压缩后，剩下<code>270k</code>.这里的原图指的是加载到内存后的<code>Bitmap</code>的大小。</p>
-<p>我们都知道，像<code>jpg</code>这样的图片都是图片压缩算法后的图片，所以，我把<code>jpg</code>的图片加载到内存后，通过<code>quality=100</code>，将其变成原图后输出，而直接从网上下载下来的<code>jpg</code>文件，原本只有<code>167k</code>。</p>
-<h1 id="尺寸压缩优化"><a href="#尺寸压缩优化" class="headerlink" title="尺寸压缩优化"></a>尺寸压缩优化</h1><p>尺寸压缩主要是通过改变图片像素来达到减少图片占用内存的大小。这里我们一般会创建一个空的<code>bitmap</code>,这个空的<code>bitmap</code>的宽和高都是通过比例压缩后的宽和高。然后，通过<code>Canvas</code>将原<code>bitmap</code>画到新的<code>Bitmap</code>上，而由于宽和高都是经过比例缩放后的值，所以，也就减小了<code>Bitmap</code>实际占用的内存大小。</p>
-<p>原图的分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/23.png" alt="img"></p>
-<p>而经过尺寸压缩后的图片分辨率为:<br><img src="/uploads/img/AndroidAdvanceDevelop/8/24.png" alt="img"></p>
-<p>也就是宽和高分别减少为原来的1/4.而大小也从<code>3.7M</code>就了<code>396K</code>.注意了，这里的压缩不仅仅是占用的内存被压缩了，实际存储到本地的图片也被压缩了。</p>
-<h1 id="采样率压缩优化"><a href="#采样率压缩优化" class="headerlink" title="采样率压缩优化"></a>采样率压缩优化</h1><p>采样率压缩主要是使用<code>BitmapFactory.options</code>的<code>inSampleSize</code>来做的。这个其实有点类似于尺寸压缩，都是通过缩小图片的宽和高来减少像素达到减少内存占用和减少本地存储占用。但有点区别的是，尺寸可以针对宽和高分别进行设置缩放比例，而采样率压缩是对宽和高同时做等比例缩放。</p>
-<p>使用采样率压缩，同时也要使用到<code>BitmapFactory.options</code>中的另外一个参数<code>inJustDecodeBounds=true</code>来在不加载图片到内存的情况下获取图片的宽高情况，然后通过原图的宽高和目标宽高得出一个比例值，用于<code>inSampleSize</code>来作用采样率来对图片进行缩放。</p>
-<pre><code>private void sampleSizeCompress() {
-    int inSampleSize = 8;
-    BitmapFactory.Options options = new BitmapFactory.Options();
-    options.inJustDecodeBounds = false;
-    options.inSampleSize = inSampleSize;
-    Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image, options);
-
-    //输出经过采样率优化后的图片
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-    File file = new File(&quot;/sdcard/img/&quot;, &quot;采样率.jpg&quot;);
-    try {
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(outputStream.toByteArray());
-        fileOutputStream.flush();
-        fileOutputStream.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-</code></pre><h1 id="终极压缩优化"><a href="#终极压缩优化" class="headerlink" title="终极压缩优化"></a>终极压缩优化</h1><p>这里主要会用于<code>ndk</code>相关的东西了。这里主要是跟<code>Android</code>系统采用的图片算法有关。</p>
-<p><code>Android</code>使用的是第二代<code>JPEG</code>图片算法引擎<code>SKIA</code>的阉割版，采用的是定长编码的方式来对图片进行编码，而这样处理的好处就是，消耗的资源比较少，不需要经过cpu大量的计算；缺点就是：因为使用的是定长编码，占用的空间就会比较大，同样的质量的图片需要更大的空间来存储。</p>
-<p>而相比完整版的<code>SKIA</code>,阉割版的去除了哈夫曼编码。哈夫曼编码最大的特点是可变字长编码，通过对要编码的图片进行大量运算后，根据字符出现的概率进行编码，得到最佳编码。</p>
-<p>而为什么<code>Android</code>没有采用<code>Huffman</code>编码呢？原因主要是，最初的<code>Android</code>设备配置差，不适合进行大量的cpu运算，被迫使用其他算法。而现在的<code>Android</code>设备的配置已经非常的高，完全可以引入哈夫曼编码来减小图片的存储大小。</p>
-<p>目前，在微信中就用到了此编码。来解决图片传输过程中过大的问题。我们要解决的也就是绕过<code>Bitmap API</code>层，来自己编码实现，使用哈夫曼编码。</p>
-<p>我们使用一个大神编译好的<code>so</code>库来演示一下效果吧。由于是别人编译的库，所以，<code>Native</code>方法所在的包名不能更改，因为<code>so</code>里面的<code>jni</code>接口已经在编译时被写死了。  </p>
-<p>项目地址:</p>
-<p><a href="https://github.com/allen218/BitmapCompress" target="_blank" rel="external">https://github.com/allen218/BitmapCompress</a></p>
+        <h2 id="主流实现方式"><a href="#主流实现方式" class="headerlink" title="主流实现方式"></a>主流实现方式</h2><p>现在很多的应用都有了动态换肤的功能，像 QQ 音乐，网易音乐等。这些应用主要是通过网上下载皮肤包，然后应用。我们可以通过查看 QQ 音乐或者网易云音乐安装包下面的文件，就可以发现有一些带 <code>xxx.skinxxx</code> 等等的一些文件，而把这些文件 push 到桌面上，然后用 ZIP 工具打开，会发现，这个皮肤包和一般的 <code>APk</code>  唯一的区别就是里面没有 <code>src</code> 目录（也就是说里面没有代码部分），除此之外，没有任何区别。而我们今天要讨论及实现的换肤框架也是如此，通过 <code>Hook</code> 等类似加载插件的方式来实现。</p>
+<h2 id="实现后功能"><a href="#实现后功能" class="headerlink" title="实现后功能"></a>实现后功能</h2><ol>
+<li>XML 中 View 属性值的动态替换</li>
+<li>导航栏和状态栏颜色的动态替换</li>
+<li>应用中字体的动态替换</li>
+</ol>
+<h2 id="Inflate-实现原理"><a href="#Inflate-实现原理" class="headerlink" title="Inflate 实现原理"></a>Inflate 实现原理</h2><p>页面中 XML 布局文件的加载，都是通过 <code>LayoutInflate.inflate</code> 方法来实现的，而我们需要调用 动态替换 XML 中的属性的设置，就需要从这个方法入手，去分析 Framework 里是如何实现的。</p>
+<p><img src="/uploads/img/dynamic_skin/1.png" alt=""></p>
+<p>从图上我们可以看出，通过 <code>setConentView</code> 方法设置的布局文件都是通过 <code>LayoutInflate.inflate</code> 方法来加载的。接着往下看：</p>
+<p><img src="/uploads/img/dynamic_skin/2.png" alt=""></p>
+<p>可以看出我们的 XML 文件是由 <code>XmlResourceParser</code> 解析工具来进行解析的。继续往下：</p>
+<p><img src="/uploads/img/dynamic_skin/3.png" alt=""></p>
 
       
     </div>
@@ -329,17 +285,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/26/Android性能优化之内存泄漏优化/" rel="next" title="Android性能优化之内存泄漏优化">
-                <i class="fa fa-chevron-left"></i> Android性能优化之内存泄漏优化
+              <a href="/2017/07/02/设计模式之状态模式/" rel="next" title="设计模式之状态模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之状态模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/19/设计模式之工厂模式/" rel="prev" title="设计模式之工厂模式">
-                设计模式之工厂模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -365,8 +317,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/09/Android性能优化之Bitmap优化/"
-           data-title="Android性能优化之Bitmap优化" data-url="http://yoursite.com/2017/04/09/Android性能优化之Bitmap优化/">
+      <div class="ds-thread" data-thread-key="2019/03/29/Android动态主题实现原理/"
+           data-title="Android动态主题实现原理" data-url="http://yoursite.com/2019/03/29/Android动态主题实现原理/">
       </div>
     
   </div>
@@ -465,7 +417,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#质量压缩优化"><span class="nav-text">质量压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺寸压缩优化"><span class="nav-text">尺寸压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采样率压缩优化"><span class="nav-text">采样率压缩优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终极压缩优化"><span class="nav-text">终极压缩优化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主流实现方式"><span class="nav-text">主流实现方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现后功能"><span class="nav-text">实现后功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inflate-实现原理"><span class="nav-text">Inflate 实现原理</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

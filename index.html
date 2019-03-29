@@ -214,6 +214,113 @@
             
               
                 
+                <a class="post-title-link" href="/2019/03/29/Android动态主题实现原理/" itemprop="url">
+                  Android动态主题实现原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-03-29T12:07:01+08:00" content="2019-03-29">
+              2019-03-29
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/03/29/Android动态主题实现原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/29/Android动态主题实现原理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="主流实现方式"><a href="#主流实现方式" class="headerlink" title="主流实现方式"></a>主流实现方式</h2><p>现在很多的应用都有了动态换肤的功能，像 QQ 音乐，网易音乐等。这些应用主要是通过网上下载皮肤包，然后应用。我们可以通过查看 QQ 音乐或者网易云音乐安装包下面的文件，就可以发现有一些带 <code>xxx.skinxxx</code> 等等的一些文件，而把这些文件 push 到桌面上，然后用 ZIP 工具打开，会发现，这个皮肤包和一般的 <code>APk</code>  唯一的区别就是里面没有 <code>src</code> 目录（也就是说里面没有代码部分），除此之外，没有任何区别。而我们今天要讨论及实现的换肤框架也是如此，通过 <code>Hook</code> 等类似加载插件的方式来实现。</p>
+<h2 id="实现后功能"><a href="#实现后功能" class="headerlink" title="实现后功能"></a>实现后功能</h2><ol>
+<li>XML 中 View 属性值的动态替换</li>
+<li>导航栏和状态栏颜色的动态替换</li>
+<li>应用中字体的动态替换</li>
+</ol>
+<h2 id="Inflate-实现原理"><a href="#Inflate-实现原理" class="headerlink" title="Inflate 实现原理"></a>Inflate 实现原理</h2><p>页面中 XML 布局文件的加载，都是通过 <code>LayoutInflate.inflate</code> 方法来实现的，而我们需要调用 动态替换 XML 中的属性的设置，就需要从这个方法入手，去分析 Framework 里是如何实现的。</p>
+<p><img src="/uploads/img/dynamic_skin/1.png" alt=""></p>
+<p>从图上我们可以看出，通过 <code>setConentView</code> 方法设置的布局文件都是通过 <code>LayoutInflate.inflate</code> 方法来加载的。接着往下看：</p>
+<p><img src="/uploads/img/dynamic_skin/2.png" alt=""></p>
+<p>可以看出我们的 XML 文件是由 <code>XmlResourceParser</code> 解析工具来进行解析的。继续往下：</p>
+<p><img src="/uploads/img/dynamic_skin/3.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/02/设计模式之状态模式/" itemprop="url">
                   设计模式之状态模式
                 </a>
@@ -1075,104 +1182,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/26/Android性能优化之内存泄漏优化/" itemprop="url">
-                  Android性能优化之内存泄漏优化
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-26T16:37:01+08:00" content="2017-03-26">
-              2017-03-26
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/26/Android性能优化之内存泄漏优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/26/Android性能优化之内存泄漏优化/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/uploads/img/AndroidAdvanceDevelop/8/8.jpg" alt="图1"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/03/26/Android性能优化之内存泄漏优化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1219,7 +1228,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1278,7 +1287,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
