@@ -278,10 +278,15 @@
 <p><img src="/uploads/img/dynamic_skin/3.png" alt=""></p>
 <p>最终我们从图上看到了，原来我们的 View 对象是由<code>mFactory2</code> 或者 <code>mFactory</code> 来创建的。我们再看看这个两个对象是否可以 <code>Hook</code> ？由程序来接管 View 的创建。</p>
 <p><img src="/uploads/img/dynamic_skin/4.png" alt=""></p>
-<p>可以看到，<code>mFactory2</code> 和 <code>mFactory</code> 两个成员变量都提供了对应的 set 方法，且方法都是由 <code>public</code> 修辞的。由此我们就可以偷梁换柱的方法把 <code>mFactory2</code> 替换成我们自己的 <code>Factory2</code> 的实现类，并通过反射的方式把我们自己的 <code>factory2</code> 来进行替换。</p>
+<p>可以看到，<code>mFactory2</code> 和 <code>mFactory</code> 两个成员变量都提供了对应的 set 方法，且方法都是由 <code>public</code> 修辞的。由此我们就可以偷梁换柱的方法把 <code>mFactory2</code> 替换成我们自己的 <code>Factory2</code> 的实现类，并通过反射的方式把我们自己的 <code>factory2</code> 来进行替换。当然，这里其实不需要 <code>Hook</code>,因为系统已经提供了一个 <code>LayoutInflaterCompat</code> 对象，我们可以直接通过它来进行设置。</p>
 <p><strong>注意</strong></p>
 <p>在通过反射调用 <code>setFactory2()</code> 的时候，有一个对 <code>mFactorySet</code> 变量是否为真的判断，所以我们在反射之前，需要把 <code>mFactorySet</code> 的值设置为 <code>false</code>.</p>
-
+<p>接下来，我们来看一下 <code>LayoutInflate</code> 是如何创建 View 的。</p>
+<p><img src="/uploads/img/dynamic_skin/5.png" alt=""><br><img src="/uploads/img/dynamic_skin/6.png" alt=""></p>
+<p>这里主要是判断从 XML 文件中解析到的 TAG 名称是否是带 <code>.</code> 的，如果没有带点，说明是标准控件（如：TextView），则进行前缀拼接，而如果带 <code>.</code> 的，说明是自定义控件，则不进行接拼。最后，我们来看一下 View 的最终创建的部分。</p>
+<p><img src="/uploads/img/dynamic_skin/7.png" alt=""></p>
+<p>已经很清楚了，这里直接通过 ClassLoader 的 loadClass() 直接通过全类名去加载，并通过反射获取到两个参数的构造函数，去创建 View 对象。同时，这里对 loadClass 的操作还进行的缓存，以避免同一个布局文件里存在多个同样的控件而多次 loadClass 的情况。</p>
+<h2 id="整体实现类图"><a href="#整体实现类图" class="headerlink" title="整体实现类图"></a>整体实现类图</h2>
           
         
       
