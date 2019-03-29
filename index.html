@@ -276,6 +276,11 @@
 <p><img src="/uploads/img/dynamic_skin/2.png" alt=""></p>
 <p>可以看出我们的 XML 文件是由 <code>XmlResourceParser</code> 解析工具来进行解析的。继续往下：</p>
 <p><img src="/uploads/img/dynamic_skin/3.png" alt=""></p>
+<p>最终我们从图上看到了，原来我们的 View 对象是由<code>mFactory2</code> 或者 <code>mFactory</code> 来创建的。我们再看看这个两个对象是否可以 <code>Hook</code> ？由程序来接管 View 的创建。</p>
+<p><img src="/uploads/img/dynamic_skin/4.png" alt=""></p>
+<p>可以看到，<code>mFactory2</code> 和 <code>mFactory</code> 两个成员变量都提供了对应的 set 方法，且方法都是由 <code>public</code> 修辞的。由此我们就可以偷梁换柱的方法把 <code>mFactory2</code> 替换成我们自己的 <code>Factory2</code> 的实现类，并通过反射的方式把我们自己的 <code>factory2</code> 来进行替换。</p>
+<p><strong>注意</strong></p>
+<p>在通过反射调用 <code>setFactory2()</code> 的时候，有一个对 <code>mFactorySet</code> 变量是否为真的判断，所以我们在反射之前，需要把 <code>mFactorySet</code> 的值设置为 <code>false</code>.</p>
 
           
         
